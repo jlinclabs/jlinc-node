@@ -5,7 +5,7 @@
   "private": true,
   "main": "./jlinc/index.js",
   "scripts": {
-    "test": "./scripts/test"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
