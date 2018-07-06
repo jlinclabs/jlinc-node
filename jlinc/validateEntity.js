@@ -2,7 +2,7 @@
 
 const b64 = require('urlsafe-base64');
 
-module.exports = function validateEntity(entity){
+module.exports = function validateEntity({ entity }){
   if (typeof entity !== 'object')
     throw new Error('entity must be of type object');
 

@@ -2,7 +2,7 @@
 
 const jsonwebtoken = require('jsonwebtoken');
 
-module.exports = function validateSisaOffering(sisaOffering) {
+module.exports = function validateSisaOffering({ sisaOffering }) {
   if (typeof sisaOffering !== 'object')
     throw new Error('sisaOffering must be of type object');
 

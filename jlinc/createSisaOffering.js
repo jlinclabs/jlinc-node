@@ -5,8 +5,8 @@ const jsonwebtoken = require('jsonwebtoken');
 module.exports = function createSisaOffering(options = {}) {
   const { sisaAgreement, dataCustodian } = options;
 
-  this.validateSisaAgreement(sisaAgreement);
-  this.validateDataCustodian(dataCustodian);
+  this.validateSisaAgreement({ sisaAgreement });
+  this.validateDataCustodian({ dataCustodian });
 
   const agreementJwt = jsonwebtoken.sign(sisaAgreement, dataCustodian.secretKey);
   const dataCustodianSig = this.signItem({

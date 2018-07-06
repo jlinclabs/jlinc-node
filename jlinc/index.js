@@ -10,7 +10,7 @@ module.exports.validateSignature = require('./validateSignature');
 module.exports.createEntity = require('./createEntity');
 module.exports.validateEntity = require('./validateEntity');
 module.exports.validateDataCustodian = require('./validateDataCustodian');
-// module.exports.validateRightsHolder = require('./validateRightsHolder');
+module.exports.validateRightsHolder = require('./validateRightsHolder');
 
 module.exports.createSisaAgreement = require('./createSisaAgreement');
 module.exports.validateSisaAgreement = require('./validateSisaAgreement');

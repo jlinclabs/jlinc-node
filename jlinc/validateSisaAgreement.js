@@ -1,6 +1,7 @@
 'use strict';
 
-module.exports = function validateSisaAgreement(sisaAgreement) {
+module.exports = function validateSisaAgreement({ sisaAgreement }) {
+    console.log({ sisaAgreement })
   if (typeof sisaAgreement !== 'object')
     throw new Error('sisaAgreement must be of type object');
 
@@ -40,4 +41,6 @@ module.exports = function validateSisaAgreement(sisaAgreement) {
 
   if (sisaAgreement.iat > Date.now())
     throw new Error('sisaAgreement["iat"] cannot be in the future');
+
+  return true;
 };
