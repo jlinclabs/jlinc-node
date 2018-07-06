@@ -1,0 +1,5 @@
+--full-trace
+--exit
+--reporter spec
+--colors
+--recursive

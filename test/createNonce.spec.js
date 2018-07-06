@@ -13,8 +13,8 @@ describe('JLINC.createNonce', function() {
 
   it('should create a collision resistant nonce', function(){
     const uniqueNonces = new Set();
-    Array(10000).fill().forEach(() => { uniqueNonces.add(JLINC.createNonce()); });
-    expect(uniqueNonces.size).to.equal(10000);
+    Array(1000).fill().forEach(() => { uniqueNonces.add(JLINC.createNonce()); });
+    expect(uniqueNonces.size).to.equal(1000);
   });
 
 });
