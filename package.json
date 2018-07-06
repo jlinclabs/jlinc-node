@@ -1,0 +1,25 @@
+{
+  "name": "jlinc-node",
+  "version": "0.0.1",
+  "description": "A node implementation of the JLINC protocol",
+  "private": true,
+  "main": "./jlinc/index.js",
+  "scripts": {
+    "test": "./scripts/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlinclabs/jlinc-node.git"
+  },
+  "keywords": [
+    "node",
+    "JLINC",
+    "jlinclabs"
+  ],
+  "author": "JLINC Labs",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/jlinclabs/jlinc-node/issues"
+  },
+  "homepage": "https://github.com/jlinclabs/jlinc-node#readme"
+}
