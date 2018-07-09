@@ -43,12 +43,23 @@ module.exports = function validateOfferedSisa({ offeredSisa }) {
   if (typeof offeredSisa.dataCustodianID !== 'string')
     throw new Error('offeredSisa.dataCustodianID must be of type string');
 
+  if (offeredSisa.dataCustodianID.length !== 43)
+    throw new Error('offeredSisa.dataCustodianID must be of length 43');
+
   // validating offeredSisa.dataCustodianSig
   if (!('dataCustodianSig' in offeredSisa))
     throw new Error('offeredSisa must have key "dataCustodianSig"');
 
   if (typeof offeredSisa.dataCustodianSig !== 'string')
     throw new Error('offeredSisa.dataCustodianSig must be of type string');
+
+  const validSignature = this.validateSignature({
+    itemSigned: offeredSisa.agreementJwt,
+    signature: offeredSisa.dataCustodianSig,
+    publicKey: offeredSisa.dataCustodianID,
+  });
+  if (!validSignature)
+    throw new Error('offeredSisa.dataCustodianSig is invalid');
 
   // validating offeredSisa.iat
   if (!('iat' in offeredSisa))

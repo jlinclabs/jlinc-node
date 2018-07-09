@@ -109,7 +109,18 @@ describe('JLINC.validateOfferedSisa', function() {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
-          dataCustodianID: dataCustodian.id,
+          dataCustodianID: 'fake dataCustodian id here',
+        },
+      });
+    }).to.throw('offeredSisa.dataCustodianID must be of length 43');
+
+    expect(() => {
+      JLINC.validateOfferedSisa({
+        offeredSisa: {
+          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          agreementJwt: offeredSisa.agreementJwt,
+          dataCustodianSigType: 'sha256:ed25519',
+          dataCustodianID: '0123456789012345678901234567890123456789012',
         },
       });
     }).to.throw('offeredSisa must have key "dataCustodianSig"');
@@ -125,6 +136,18 @@ describe('JLINC.validateOfferedSisa', function() {
         },
       });
     }).to.throw('offeredSisa.dataCustodianSig must be of type string');
+
+    expect(() => {
+      JLINC.validateOfferedSisa({
+        offeredSisa: {
+          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          agreementJwt: offeredSisa.agreementJwt,
+          dataCustodianSigType: 'sha256:ed25519',
+          dataCustodianID: dataCustodian.id,
+          dataCustodianSig: 'jsdhfjkdshfjkdsfhdjkshfdsjkfhdsjkfhjk',
+        },
+      });
+    }).to.throw('offeredSisa.dataCustodianSig is invalid');
 
     expect(() => {
       JLINC.validateOfferedSisa({
