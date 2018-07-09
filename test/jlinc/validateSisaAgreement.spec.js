@@ -37,7 +37,7 @@ describe('JLINC.validateSisaAgreement', function() {
           jlincID: 42,
         },
       });
-    }).to.throw('sisaAgreement["jlincID"] must be of type string');
+    }).to.throw('sisaAgreement.jlincID must be of type string');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -46,7 +46,7 @@ describe('JLINC.validateSisaAgreement', function() {
           jlincID: 'my wack jlinc ID',
         },
       });
-    }).to.throw('sisaAgreement["jlincID"] is invalid');
+    }).to.throw('sisaAgreement.jlincID is invalid');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -65,7 +65,7 @@ describe('JLINC.validateSisaAgreement', function() {
           agreementURI: 'http://agreeeeeeeeeeee.ment',
         },
       });
-    }).to.throw('sisaAgreement["agreementURI"] is invalid');
+    }).to.throw('sisaAgreement.agreementURI is invalid');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -86,7 +86,7 @@ describe('JLINC.validateSisaAgreement', function() {
           iat: undefined,
         },
       });
-    }).to.throw('sisaAgreement["iat"] must be of type number');
+    }).to.throw('sisaAgreement.iat must be of type number');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -97,7 +97,7 @@ describe('JLINC.validateSisaAgreement', function() {
           iat: 12345,
         },
       });
-    }).to.throw('sisaAgreement["iat"] is too old');
+    }).to.throw('sisaAgreement.iat is too old');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -108,7 +108,7 @@ describe('JLINC.validateSisaAgreement', function() {
           iat: Date.now() + 1000,
         },
       });
-    }).to.throw('sisaAgreement["iat"] cannot be in the future');
+    }).to.throw('sisaAgreement.iat cannot be in the future');
 
     expect(() => {
       JLINC.validateSisaAgreement({
