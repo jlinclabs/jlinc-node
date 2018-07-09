@@ -13,26 +13,35 @@ Spec: https://protocol.jlinc.org/#5-sisa-events
 
 
 ```js
+'use strict';
 
 const JLINC = require('jlinc');
 
+
+// done by bob on the B API
+
 const dataCustodian = JLINC.createEntity();
+JLINC.validateDataCustodian({ dataCustodian });
 
 const sisaAgreement = JLINC.createSisaAgreement();
-
 JLINC.validateSisaAgreement({ sisaAgreement });
 
-const sisaOffering = JLINC.createSisaOffering({
-  sisaAgreement,
-  dataCustodian,
-});
+const sisaOffering = JLINC.createSisaOffering({ sisaAgreement, dataCustodian });
 
-JLINC.validateSisaOffering({ sisaOffering, dataCustodian });
+// done by alice on the A API
+
+const { offeredSisa } = sisaOffering;
+JLINC.validateOfferedSisa({ offeredSisa });
 
 const rightsHolder = JLINC.createEntity();
+JLINC.validateRightsHolder({ rightsHolder });
 
-const acceptedSisa = JLINC.acceptSisa({ sisaOffering, rightsHolder });
+const acceptedSisa = JLINC.acceptSisa({ offeredSisa, rightsHolder });
 
 
+// done by bob on the B API
+JLINC.validateAcceptedSisa({ acceptedSisa });
+
+const expandedAcceptedSisa = JLINC.expandAcceptedSisa({ acceptedSisa });
 
 ```
