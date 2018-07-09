@@ -23,8 +23,18 @@ module.exports = function validateOfferedSisa({ offeredSisa }) {
   if (!offeredSisa.agreementJwt.match(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/))
     throw new Error('offeredSisa.agreementJwt is invalid');
 
-  if (jsonwebtoken.decode(offeredSisa.agreementJwt) === null)
+  const sisaAgreement = jsonwebtoken.decode(offeredSisa.agreementJwt);
+  if (sisaAgreement === null)
     throw new Error('offeredSisa.agreementJwt is invalid');
+
+  try{
+    this.validateSisaAgreement({ sisaAgreement });
+  }catch(error){
+    if (error.message.includes('sisaAgreement')){
+      error.message = error.message.replace('sisaAgreement', 'acceptedSisa.agreement');
+    }
+    throw error;
+  }
 
   // validating offeredSisa.dataCustodianSigType
   if (!('dataCustodianSigType' in offeredSisa))

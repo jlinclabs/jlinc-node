@@ -1,5 +1,7 @@
 'use strict';
 
+const jsonwebtoken = require('jsonwebtoken');
+
 require('../setup');
 
 describe('JLINC.validateOfferedSisa', function() {
@@ -201,5 +203,19 @@ describe('JLINC.validateOfferedSisa', function() {
     ).to.be.true;
 
     expect( JLINC.validateOfferedSisa({ offeredSisa }) ).to.be.true;
+
+
+    expect(() => {
+      JLINC.validateOfferedSisa({
+        offeredSisa: {
+          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          agreementJwt: jsonwebtoken.sign({}, 'xx'),
+          dataCustodianSigType: 'sha256:ed25519',
+          dataCustodianID: dataCustodian.id,
+          dataCustodianSig: offeredSisa.dataCustodianSig,
+          iat: Date.now(),
+        },
+      });
+    }).to.throw('acceptedSisa.agreement must have key "@context"');
   });
 });
