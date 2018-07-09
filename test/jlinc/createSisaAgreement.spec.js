@@ -1,6 +1,6 @@
 'use strict';
 
-require('./setup');
+require('../setup');
 
 describe('JLINC.createSisaAgreement', function() {
   it('should create a valid SISA Agreement', function(){

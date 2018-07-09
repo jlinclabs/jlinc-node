@@ -10,7 +10,7 @@ module.exports = {
     "process": true,
   },
   "parserOptions": {
-    "ecmaVersion": 2017,
+    "ecmaVersion": 2018,
   },
   "plugins": [
   ],

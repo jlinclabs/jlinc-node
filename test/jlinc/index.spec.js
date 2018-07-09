@@ -1,6 +1,6 @@
 'use strict';
 
-require('./setup');
+require('../setup');
 
 describe('JLINC', function() {
   describe('.version', function() {

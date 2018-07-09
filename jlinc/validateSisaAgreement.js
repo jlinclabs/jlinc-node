@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = function validateSisaAgreement({ sisaAgreement }) {
-    console.log({ sisaAgreement })
   if (typeof sisaAgreement !== 'object')
     throw new Error('sisaAgreement must be of type object');
 

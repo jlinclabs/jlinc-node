@@ -1,13 +1,15 @@
 'use strict';
 
-require('./setup');
+require('../setup');
 
 describe('JLINC.createSisaOffering', function() {
   it('should require and validate a given sisaAgreement', function() {
     const sisaAgreement = JLINC.createSisaAgreement();
 
     expect(() => {
-      JLINC.createSisaOffering();
+      JLINC.createSisaOffering({
+
+      });
     }).to.throw('sisaAgreement must be of type object');
 
     expect(() => {
@@ -39,11 +41,11 @@ describe('JLINC.createSisaOffering', function() {
     );
     expect(sisaOffering.offeredSisa['@context']).to.equal('https://context.jlinc.org/v05/jlinc.jsonld');
     expect(sisaOffering.offeredSisa.agreementJwt).to.be.aJWTSignedWith(dataCustodian.secretKey);
-    expect(sisaOffering.offeredSisa.agreementJwt).to.be.aJWTencodingOf(sisaAgreement);
+    expect(sisaOffering.offeredSisa.agreementJwt).to.be.aJWTEncodingOf(sisaAgreement);
     expect(sisaOffering.offeredSisa.dataCustodianSigType).to.be.a('string');
     expect(sisaOffering.offeredSisa.dataCustodianID).to.equal(dataCustodian.id);
     expect(sisaOffering.offeredSisa.dataCustodianSig).to.be.a('string');
-    expect(sisaOffering.offeredSisa.iat).to.be.within(Date.now() - 100, Date.now());
+    expect(sisaOffering.offeredSisa.iat).to.be.aRecentSecondsFromEpochInteger();
 
     expect(
       JLINC.validateSignature({

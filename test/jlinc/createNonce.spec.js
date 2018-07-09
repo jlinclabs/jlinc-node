@@ -1,6 +1,6 @@
 'use strict';
 
-require('./setup');
+require('../setup');
 
 describe('JLINC.createNonce', function() {
 

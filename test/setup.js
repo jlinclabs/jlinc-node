@@ -17,7 +17,7 @@ chai.Assertion.addMethod('aJWTSignedWith', function(secretOrPrivateKey){
   jsonwebtoken.verify(this._obj, secretOrPrivateKey);
 });
 
-chai.Assertion.addMethod('aJWTencodingOf', function(expectedObject){
+chai.Assertion.addMethod('aJWTEncodingOf', function(expectedObject){
   expect(this._obj).to.be.aJWT();
   expect( jsonwebtoken.decode(this._obj) ).to.deep.equal(expectedObject);
 });
@@ -26,4 +26,8 @@ chai.Assertion.addMethod('aBase64EncodedString', function(){
   expect(this._obj).to.be.a('string');
   // taken from https://github.com/RGBboy/urlsafe-base64/blob/master/lib/urlsafe-base64.js#L75
   expect(this._obj).to.match(/^[A-Za-z0-9\-_]+$/);
+});
+
+chai.Assertion.addMethod('aRecentSecondsFromEpochInteger', function(){
+  expect(this._obj).to.be.within(Date.now() - 100, Date.now());
 });

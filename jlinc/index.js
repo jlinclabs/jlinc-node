@@ -17,3 +17,9 @@ module.exports.validateSisaAgreement = require('./validateSisaAgreement');
 
 module.exports.createSisaOffering = require('./createSisaOffering');
 module.exports.validateSisaOffering = require('./validateSisaOffering');
+module.exports.validateOfferedSisa = require('./validateOfferedSisa');
+
+module.exports.acceptSisa = require('./acceptSisa');
+module.exports.validateAcceptedSisa = require('./validateAcceptedSisa');
+
+module.exports.expandAcceptedSisa = require('./expandAcceptedSisa');
