@@ -204,7 +204,7 @@ describe('JLINC.validateOfferedSisa', function() {
 
     expect( JLINC.validateOfferedSisa({ offeredSisa }) ).to.be.true;
 
-
+    // when given an invalid agreementJwt
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
@@ -217,5 +217,44 @@ describe('JLINC.validateOfferedSisa', function() {
         },
       });
     }).to.throw('acceptedSisa.agreement must have key "@context"');
+
+    // when alice is checking that the offeredSisa is from the correct dataCustodian
+    expect(() => {
+      JLINC.validateOfferedSisa({
+        offeredSisa,
+        dataCustodian: {
+          id: 'bad dataCustodian id',
+        }
+      });
+    }).to.throw();
+
+    expect(() => {
+      JLINC.validateOfferedSisa({
+        offeredSisa,
+        dataCustodian: {
+          id: dataCustodian.id,
+        }
+      });
+    }).to.not.throw();
+
+    // when bob is checking that the offeredSisa is from him, and it is
+    expect(() => {
+      JLINC.validateOfferedSisa({
+        offeredSisa,
+        dataCustodian,
+      });
+    }).to.not.throw();
+
+    // when bob is checking that the offeredSisa is from him, and it is not
+    expect(() => {
+      JLINC.validateOfferedSisa({
+        offeredSisa,
+        dataCustodian: {
+          id: dataCustodian.id,
+          secretKey: 'bad dataCustodian secretKey',
+        },
+      });
+    }).to.throw('offeredSisa.agreementJwt was not signed by the given dataCustodian');
+
   });
 });

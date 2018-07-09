@@ -307,5 +307,26 @@ describe('JLINC.validateAcceptedSisa', function() {
         },
       });
     }).to.throw('acceptedSisa.offeredSisa must have key "@context"');
+
+    expect(
+      JLINC.validateAcceptedSisa({ acceptedSisa: this.our.acceptedSisa })
+    ).to.be.true;
+
+
+    // when bob is checking that the acceptedSisa is from him, and it is
+    expect(() => {
+      JLINC.validateAcceptedSisa({
+        acceptedSisa: this.our.acceptedSisa,
+        dataCustodian: this.our.dataCustodian,
+      });
+    }).to.not.throw();
+
+    // when bob is checking that the acceptedSisa is from him, and it is not
+    expect(() => {
+      JLINC.validateAcceptedSisa({
+        acceptedSisa: this.other.acceptedSisa,
+        dataCustodian: this.our.dataCustodian,
+      });
+    }).to.throw('acceptedSisa.offeredSisa.agreementJwt was not signed by the given dataCustodian');
   });
 });

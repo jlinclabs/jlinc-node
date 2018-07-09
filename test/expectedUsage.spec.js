@@ -17,7 +17,7 @@ it('expected usage', function() {
   // done by alice on the A API
 
   const { offeredSisa } = sisaOffering;
-  expect( JLINC.validateOfferedSisa({ offeredSisa }) ).to.be.true;
+  expect( JLINC.validateOfferedSisa({ offeredSisa, dataCustodian: { id: dataCustodian.id } }) ).to.be.true;
 
   const rightsHolder = JLINC.createEntity();
   expect( JLINC.validateRightsHolder({ rightsHolder }) ).to.be.true;
@@ -26,7 +26,7 @@ it('expected usage', function() {
 
 
   // done by bob on the B API
-  expect( JLINC.validateAcceptedSisa({ acceptedSisa }) ).to.be.true;
+  expect( JLINC.validateAcceptedSisa({ acceptedSisa, dataCustodian }) ).to.be.true;
 
   const expandedAcceptedSisa = JLINC.expandAcceptedSisa({ acceptedSisa });
 

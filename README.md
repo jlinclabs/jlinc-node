@@ -31,7 +31,7 @@ const sisaOffering = JLINC.createSisaOffering({ sisaAgreement, dataCustodian });
 // done by alice on the A API
 
 const { offeredSisa } = sisaOffering;
-JLINC.validateOfferedSisa({ offeredSisa });
+JLINC.validateOfferedSisa({ offeredSisa, dataCustodian: { id: dataCustodianId } });
 
 const rightsHolder = JLINC.createEntity();
 JLINC.validateRightsHolder({ rightsHolder });
@@ -40,7 +40,7 @@ const acceptedSisa = JLINC.acceptSisa({ offeredSisa, rightsHolder });
 
 
 // done by bob on the B API
-JLINC.validateAcceptedSisa({ acceptedSisa });
+JLINC.validateAcceptedSisa({ acceptedSisa, dataCustodian });
 
 const expandedAcceptedSisa = JLINC.expandAcceptedSisa({ acceptedSisa });
 

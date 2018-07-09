@@ -2,7 +2,7 @@
 
 const jsonwebtoken = require('jsonwebtoken');
 
-module.exports = function validateAcceptedSisa({ acceptedSisa }){
+module.exports = function validateAcceptedSisa({ acceptedSisa, dataCustodian }){
   if (typeof acceptedSisa !== 'object')
     throw new Error('acceptedSisa must be of type object');
 
@@ -28,7 +28,7 @@ module.exports = function validateAcceptedSisa({ acceptedSisa }){
     throw new Error('acceptedSisa.offeredSisaJwt is invalid');
 
   try{
-    this.validateOfferedSisa({ offeredSisa });
+    this.validateOfferedSisa({ offeredSisa, dataCustodian });
   }catch(error){
     if (error.message.includes('offeredSisa')){
       error.message = error.message.replace('offeredSisa', 'acceptedSisa.offeredSisa');

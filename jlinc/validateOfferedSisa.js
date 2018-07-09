@@ -2,7 +2,7 @@
 
 const jsonwebtoken = require('jsonwebtoken');
 
-module.exports = function validateOfferedSisa({ offeredSisa }) {
+module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
   if (typeof offeredSisa !== 'object')
     throw new Error('offeredSisa must be of type object');
 
@@ -26,6 +26,17 @@ module.exports = function validateOfferedSisa({ offeredSisa }) {
   const sisaAgreement = jsonwebtoken.decode(offeredSisa.agreementJwt);
   if (sisaAgreement === null)
     throw new Error('offeredSisa.agreementJwt is invalid');
+
+  if (dataCustodian && dataCustodian.secretKey){
+    try{
+      jsonwebtoken.verify(offeredSisa.agreementJwt, dataCustodian.secretKey);
+    }catch(error){
+      if (error.message.includes('invalid signature')){
+        throw new Error('offeredSisa.agreementJwt was not signed by the given dataCustodian');
+      }
+      throw error;
+    }
+  }
 
   try{
     this.validateSisaAgreement({ sisaAgreement });
@@ -55,6 +66,11 @@ module.exports = function validateOfferedSisa({ offeredSisa }) {
 
   if (offeredSisa.dataCustodianID.length !== 43)
     throw new Error('offeredSisa.dataCustodianID must be of length 43');
+
+  if (dataCustodian && dataCustodian.id){
+    if (offeredSisa.dataCustodianID !== dataCustodian.id)
+      throw new Error('offeredSisa.dataCustodianID does not match given dataCustodianID');
+  }
 
   // validating offeredSisa.dataCustodianSig
   if (!('dataCustodianSig' in offeredSisa))
