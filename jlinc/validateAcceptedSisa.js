@@ -27,7 +27,14 @@ module.exports = function validateAcceptedSisa({ acceptedSisa }){
   if (offeredSisa === null)
     throw new Error('acceptedSisa.offeredSisaJwt is invalid');
 
-  this.validateOfferedSisa({ offeredSisa });
+  try{
+    this.validateOfferedSisa({ offeredSisa });
+  }catch(error){
+    if (error.message.includes('offeredSisa')){
+      error.message = error.message.replace('offeredSisa', 'acceptedSisa.offeredSisa');
+    }
+    throw error;
+  }
 
   // validating acceptedSisa.rightsHolderSigType
   if (!('rightsHolderSigType' in acceptedSisa))
