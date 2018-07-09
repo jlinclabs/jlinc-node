@@ -16,11 +16,11 @@ it('expected usage', function() {
 
   const sisaOffering = JLINC.createSisaOffering({ sisaAgreement, dataCustodian });
   // console.log('\nsisaOffering:\n', sisaOffering);
-  expect( JLINC.validateSisaOffering({ sisaOffering, dataCustodian }) ).to.be.true;
 
   // done by alice on the A API
 
   const { offeredSisa } = sisaOffering;
+  expect( JLINC.validateOfferedSisa({ offeredSisa }) ).to.be.true;
   // console.log('\nofferedSisa:\n', offeredSisa);
 
   const rightsHolder = JLINC.createEntity();
@@ -33,4 +33,6 @@ it('expected usage', function() {
 
   const expandedAcceptedSisa = JLINC.expandAcceptedSisa({ acceptedSisa });
   // console.log('\nexpandedAcceptedSisa:\n', expandedAcceptedSisa);
+
+  // done by bob on the B API
 });
