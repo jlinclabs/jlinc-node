@@ -23,8 +23,11 @@ module.exports = function validateAcceptedSisa({ acceptedSisa }){
   if (!acceptedSisa.offeredSisaJwt.match(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/))
     throw new Error('acceptedSisa.offeredSisaJwt is invalid');
 
-  if (jsonwebtoken.decode(acceptedSisa.offeredSisaJwt) === null)
+  const offeredSisa = jsonwebtoken.decode(acceptedSisa.offeredSisaJwt);
+  if (offeredSisa === null)
     throw new Error('acceptedSisa.offeredSisaJwt is invalid');
+
+  this.validateOfferedSisa({ offeredSisa });
 
   // validating acceptedSisa.rightsHolderSigType
   if (!('rightsHolderSigType' in acceptedSisa))
@@ -43,12 +46,23 @@ module.exports = function validateAcceptedSisa({ acceptedSisa }){
   if (typeof acceptedSisa.rightsHolderID !== 'string')
     throw new Error('acceptedSisa.rightsHolderID must be of type string');
 
+  if (acceptedSisa.rightsHolderID.length !== 43)
+    throw new Error('acceptedSisa.rightsHolderID must be of length 43');
+
   // validating acceptedSisa.rightsHolderSig
   if (!('rightsHolderSig' in acceptedSisa))
     throw new Error('acceptedSisa must have key "rightsHolderSig"');
 
   if (typeof acceptedSisa.rightsHolderSig !== 'string')
     throw new Error('acceptedSisa.rightsHolderSig must be of type string');
+
+  const validSignature = this.validateSignature({
+    itemSigned: acceptedSisa.offeredSisaJwt,
+    signature: acceptedSisa.rightsHolderSig,
+    publicKey: acceptedSisa.rightsHolderID,
+  });
+  if (!validSignature)
+    throw new Error('acceptedSisa.rightsHolderSig is invalid');
 
   // validating acceptedSisa.iat
   if (!('iat' in acceptedSisa))
