@@ -16,7 +16,9 @@ chai.Assertion.addMethod('aJWTSignedWith', function(secretOrPrivateKey){
 
 chai.Assertion.addMethod('aJWTEncodingOf', function(expectedObject){
   expect(this._obj).to.be.aJWT();
-  expect( jsonwebtoken.decode(this._obj) ).to.deep.equal(expectedObject);
+  const decoded = jsonwebtoken.decode(this._obj);
+  if (!('iat' in expectedObject)) delete decoded.iat;
+  expect( decoded ).to.deep.equal(expectedObject);
 });
 
 chai.Assertion.addMethod('aBase64EncodedString', function(){
