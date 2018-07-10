@@ -6,7 +6,6 @@ const JLINC = require('../jlinc');
 it('expected usage', function() {
 
   // done by bob on the B API
-
   const dataCustodian = JLINC.createEntity();
   expect( JLINC.validateDataCustodian({ dataCustodian }) ).to.be.true;
 
@@ -16,7 +15,6 @@ it('expected usage', function() {
   const sisaOffering = JLINC.createSisaOffering({ sisaAgreement, dataCustodian });
 
   // done by alice on the A API
-
   const { offeredSisa } = sisaOffering;
   expect( JLINC.validateOfferedSisa({ offeredSisa, dataCustodian: { id: dataCustodian.id } }) ).to.be.true;
   expect(() => {
@@ -40,5 +38,8 @@ it('expected usage', function() {
   }).to.throw('sisa.acceptedSisa.offeredSisa.agreementJwt was not signed by the given dataCustodian');
 
   const expandedSisa = JLINC.expandSisa({ sisa });
+
+  expect(expandedSisa.acceptedSisa.rightsHolderID).to.equal(rightsHolder.id);
+  expect(expandedSisa.acceptedSisa.offeredSisa.dataCustodianID).to.equal(dataCustodian.id);
 
 });
