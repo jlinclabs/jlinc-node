@@ -34,11 +34,11 @@ it('expected usage', function() {
   const { offeredSisa } = sisaOffering;
 
   // alice validates that this offered sisa was signed by the bob she's expecting
-  expect( JLINC.validateOfferedSisa({ offeredSisa, dataCustodian: { id: dataCustodian.id } }) ).to.be.true;
+  expect( JLINC.validateOfferedSisa({ offeredSisa, dataCustodian: { publicKey: dataCustodian.publicKey } }) ).to.be.true;
 
   // an error is thrown when the offered sisa was not signed by the bob alice is expecting
   expect(() => {
-    JLINC.validateOfferedSisa({ offeredSisa, dataCustodian: { id: JLINC.createEntity().id } });
+    JLINC.validateOfferedSisa({ offeredSisa, dataCustodian: { publicKey: JLINC.createEntity().publicKey } });
   }).to.throw('offeredSisa.dataCustodianId does not match given dataCustodian');
 
   // alice is a rights holder, she needs these keys for every sisa she signs

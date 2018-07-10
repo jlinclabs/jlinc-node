@@ -27,9 +27,9 @@ module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
   if (sisaAgreement === null)
     throw new Error('offeredSisa.agreementJwt is invalid');
 
-  if (dataCustodian && dataCustodian.secretKey){
+  if (dataCustodian && dataCustodian.privateKey){
     try{
-      jsonwebtoken.verify(offeredSisa.agreementJwt, dataCustodian.secretKey);
+      jsonwebtoken.verify(offeredSisa.agreementJwt, dataCustodian.privateKey);
     }catch(error){
       if (error.message.includes('invalid signature')){
         throw new Error('offeredSisa.agreementJwt was not signed by the given dataCustodian');
@@ -67,8 +67,8 @@ module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
   if (offeredSisa.dataCustodianId.length !== 43)
     throw new Error('offeredSisa.dataCustodianId must be of length 43');
 
-  if (dataCustodian && dataCustodian.id){
-    if (offeredSisa.dataCustodianId !== dataCustodian.id)
+  if (dataCustodian && dataCustodian.publicKey){
+    if (offeredSisa.dataCustodianId !== dataCustodian.publicKey)
       throw new Error('offeredSisa.dataCustodianId does not match given dataCustodian');
   }
 

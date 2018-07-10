@@ -15,85 +15,85 @@ describe('JLINC.validateEntity', function() {
       JLINC.validateEntity({
         entity: {},
       });
-    }).to.throw('entity must have key "id"');
+    }).to.throw('entity must have key "publicKey"');
 
     expect(() => {
       JLINC.validateEntity({
         entity: {
-          id: 42,
+          publicKey: 42,
         },
       });
-    }).to.throw('entity.id must be of type string');
+    }).to.throw('entity.publicKey must be of type string');
 
     expect(() => {
       JLINC.validateEntity({
         entity: {
-          id: 'same shit id',
+          publicKey: 'same shit id',
         },
       });
-    }).to.throw('entity.id must be of length 43');
+    }).to.throw('entity.publicKey must be of length 43');
 
     expect(() => {
       JLINC.validateEntity({
         entity: {
-          id: validEntity.id,
+          publicKey: validEntity.publicKey,
         },
       });
-    }).to.throw('entity must have key "secretKey"');
+    }).to.throw('entity must have key "privateKey"');
 
     expect(() => {
       JLINC.validateEntity({
         entity: {
-          id: validEntity.id,
-          secretKey: undefined,
+          publicKey: validEntity.publicKey,
+          privateKey: undefined,
         },
       });
-    }).to.throw('entity.secretKey must be of type string');
+    }).to.throw('entity.privateKey must be of type string');
 
     expect(() => {
       JLINC.validateEntity({
         entity: {
-          id: validEntity.id,
-          secretKey:'same shit secretKey',
+          publicKey: validEntity.publicKey,
+          privateKey:'same shit privateKey',
         },
       });
-    }).to.throw('entity.secretKey must be of length 86');
+    }).to.throw('entity.privateKey must be of length 86');
 
     expect(() => {
       JLINC.validateEntity({
         entity: {
-          id: validEntity.id,
-          secretKey: validEntity.secretKey,
+          publicKey: validEntity.publicKey,
+          privateKey: validEntity.privateKey,
         },
       });
-    }).to.throw('entity must have key "nonce"');
+    }).to.throw('entity must have key "secret"');
 
     expect(() => {
       JLINC.validateEntity({
         entity: {
-          id: validEntity.id,
-          secretKey: validEntity.secretKey,
-          nonce: 99999,
+          publicKey: validEntity.publicKey,
+          privateKey: validEntity.privateKey,
+          secret: 99999,
         },
       });
-    }).to.throw('entity.nonce must be of type string');
+    }).to.throw('entity.secret must be of type string');
 
     expect(() => {
       JLINC.validateEntity({
         entity: {
-          id: validEntity.id,
-          secretKey: validEntity.secretKey,
-          nonce: 'some bunk nonce',
+          publicKey: validEntity.publicKey,
+          privateKey: validEntity.privateKey,
+          secret: 'some bunk secret',
         },
       });
-    }).to.throw('entity.nonce must be of length 32');
+    }).to.throw('entity.secret must be of length 32');
 
     expect(
       JLINC.validateEntity({
         entity: {
-          id: validEntity.id,
-          secretKey: validEntity.secretKey,
-          nonce:  validEntity.nonce,
+          publicKey: validEntity.publicKey,
+          privateKey: validEntity.privateKey,
+          secret:  validEntity.secret,
         },
       })
     ).to.be.true;

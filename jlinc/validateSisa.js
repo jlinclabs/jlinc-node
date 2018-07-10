@@ -94,8 +94,8 @@ module.exports = function validateSisa({ sisa, dataCustodian, rightsHolder }){
   if (acceptedSisa.rightsHolderId.length !== 43)
     throw new Error('sisa.acceptedSisa.rightsHolderId must be of length 43');
 
-  if (rightsHolder && rightsHolder.id){
-    if (acceptedSisa.rightsHolderId !== rightsHolder.id)
+  if (rightsHolder && rightsHolder.publicKey){
+    if (acceptedSisa.rightsHolderId !== rightsHolder.publicKey)
       throw new Error('sisa.acceptedSisa.rightsHolderId does not match given rightsHolder');
   }
 

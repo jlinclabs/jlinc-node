@@ -8,14 +8,14 @@ const JLINC = require('../../jlinc');
 
 describe('JLINC.signItem', function() {
 
-  it('should sign the given item with the given secretKey', function(){
+  it('should sign the given item with the given privateKey', function(){
     const entity = JLINC.createEntity();
     const itemToSign = 'people be swimming!';
 
-    const signature = JLINC.signItem({ itemToSign, secretKey: entity.secretKey });
+    const signature = JLINC.signItem({ itemToSign, privateKey: entity.privateKey });
     expect(signature).to.aBase64EncodedString();
 
-    const decrypted = sodium.crypto_sign_open(b64.decode(signature), b64.decode(entity.id));
+    const decrypted = sodium.crypto_sign_open(b64.decode(signature), b64.decode(entity.publicKey));
     expect(decrypted).to.exist;
 
     const hashedItemToSign = sodium.crypto_hash_sha256(Buffer.from(itemToSign));

@@ -134,7 +134,7 @@ describe('JLINC.validateOfferedSisa', function() {
           '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
-          dataCustodianId: dataCustodian.id,
+          dataCustodianId: dataCustodian.publicKey,
           dataCustodianSig: 123,
         },
       });
@@ -146,7 +146,7 @@ describe('JLINC.validateOfferedSisa', function() {
           '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
-          dataCustodianId: dataCustodian.id,
+          dataCustodianId: dataCustodian.publicKey,
           dataCustodianSig: 'jsdhfjkdshfjkdsfhdjkshfdsjkfhdsjkfhjk',
         },
       });
@@ -158,7 +158,7 @@ describe('JLINC.validateOfferedSisa', function() {
           '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
-          dataCustodianId: dataCustodian.id,
+          dataCustodianId: dataCustodian.publicKey,
           dataCustodianSig: offeredSisa.dataCustodianSig,
         },
       });
@@ -170,7 +170,7 @@ describe('JLINC.validateOfferedSisa', function() {
           '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
-          dataCustodianId: dataCustodian.id,
+          dataCustodianId: dataCustodian.publicKey,
           dataCustodianSig: offeredSisa.dataCustodianSig,
           iat: 123,
         },
@@ -183,7 +183,7 @@ describe('JLINC.validateOfferedSisa', function() {
           '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
-          dataCustodianId: dataCustodian.id,
+          dataCustodianId: dataCustodian.publicKey,
           dataCustodianSig: offeredSisa.dataCustodianSig,
           iat: Math.floor(Date.now() / 1000) + 10,
         },
@@ -196,7 +196,7 @@ describe('JLINC.validateOfferedSisa', function() {
           '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
-          dataCustodianId: dataCustodian.id,
+          dataCustodianId: dataCustodian.publicKey,
           dataCustodianSig: offeredSisa.dataCustodianSig,
           iat: Math.floor(Date.now() / 1000),
         },
@@ -212,7 +212,7 @@ describe('JLINC.validateOfferedSisa', function() {
           '@context': JLINC.contextUrl,
           agreementJwt: jsonwebtoken.sign({}, 'xx'),
           dataCustodianSigType: 'sha256:ed25519',
-          dataCustodianId: dataCustodian.id,
+          dataCustodianId: dataCustodian.publicKey,
           dataCustodianSig: offeredSisa.dataCustodianSig,
           iat: Math.floor(Date.now() / 1000),
         },
@@ -224,7 +224,7 @@ describe('JLINC.validateOfferedSisa', function() {
       JLINC.validateOfferedSisa({
         offeredSisa,
         dataCustodian: {
-          id: 'bad dataCustodian id',
+          publicKey: 'bad dataCustodian publicKey',
         }
       });
     }).to.throw();
@@ -233,7 +233,7 @@ describe('JLINC.validateOfferedSisa', function() {
       JLINC.validateOfferedSisa({
         offeredSisa,
         dataCustodian: {
-          id: dataCustodian.id,
+          publicKey: dataCustodian.publicKey,
         }
       });
     }).to.not.throw();
@@ -251,8 +251,8 @@ describe('JLINC.validateOfferedSisa', function() {
       JLINC.validateOfferedSisa({
         offeredSisa,
         dataCustodian: {
-          id: dataCustodian.id,
-          secretKey: 'bad dataCustodian secretKey',
+          publicKey: dataCustodian.publicKey,
+          privateKey: 'bad dataCustodian privateKey',
         },
       });
     }).to.throw('offeredSisa.agreementJwt was not signed by the given dataCustodian');

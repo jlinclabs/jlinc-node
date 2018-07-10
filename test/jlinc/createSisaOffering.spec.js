@@ -41,10 +41,10 @@ describe('JLINC.createSisaOffering', function() {
       'iat',
     );
     expect(sisaOffering.offeredSisa['@context']).to.equal(JLINC.contextUrl);
-    expect(sisaOffering.offeredSisa.agreementJwt).to.be.aJWTSignedWith(dataCustodian.secretKey);
+    expect(sisaOffering.offeredSisa.agreementJwt).to.be.aJWTSignedWith(dataCustodian.privateKey);
     expect(sisaOffering.offeredSisa.agreementJwt).to.be.aJWTEncodingOf(sisaAgreement);
     expect(sisaOffering.offeredSisa.dataCustodianSigType).to.be.a('string');
-    expect(sisaOffering.offeredSisa.dataCustodianId).to.equal(dataCustodian.id);
+    expect(sisaOffering.offeredSisa.dataCustodianId).to.equal(dataCustodian.publicKey);
     expect(sisaOffering.offeredSisa.dataCustodianSig).to.be.a('string');
     expect(sisaOffering.offeredSisa.iat).to.be.aRecentSecondsFromEpochInteger();
 
@@ -52,7 +52,7 @@ describe('JLINC.createSisaOffering', function() {
       JLINC.validateSignature({
         itemSigned: sisaOffering.offeredSisa.agreementJwt,
         signature: sisaOffering.offeredSisa.dataCustodianSig,
-        publicKey: dataCustodian.id
+        publicKey: dataCustodian.publicKey
       })
     ).to.be.true;
   });

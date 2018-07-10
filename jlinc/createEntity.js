@@ -5,11 +5,11 @@ const sodium = require('sodium').api;
 
 module.exports = function createEntity(){
   const { publicKey, secretKey } = sodium.crypto_sign_keypair();
-  const nonce = Buffer.alloc(sodium.crypto_secretbox_NONCEBYTES);
-  sodium.randombytes(nonce);
+  const secret = Buffer.alloc(sodium.crypto_secretbox_NONCEBYTES);
+  sodium.randombytes(secret);
   return {
-    id: b64.encode(publicKey),
-    secretKey: b64.encode(secretKey),
-    nonce: b64.encode(nonce),
+    publicKey: b64.encode(publicKey),
+    privateKey: b64.encode(secretKey),
+    secret: b64.encode(secret),
   };
 };

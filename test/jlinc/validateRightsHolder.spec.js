@@ -15,85 +15,85 @@ describe('JLINC.validateRightsHolder', function() {
       JLINC.validateRightsHolder({
         rightsHolder: {},
       });
-    }).to.throw('rightsHolder must have key "id"');
+    }).to.throw('rightsHolder must have key "publicKey"');
 
     expect(() => {
       JLINC.validateRightsHolder({
         rightsHolder: {
-          id: 42,
+          publicKey: 42,
         },
       });
-    }).to.throw('rightsHolder.id must be of type string');
+    }).to.throw('rightsHolder.publicKey must be of type string');
 
     expect(() => {
       JLINC.validateRightsHolder({
         rightsHolder: {
-          id: 'same shit id',
+          publicKey: 'same shit id',
         },
       });
-    }).to.throw('rightsHolder.id must be of length 43');
+    }).to.throw('rightsHolder.publicKey must be of length 43');
 
     expect(() => {
       JLINC.validateRightsHolder({
         rightsHolder: {
-          id: validRightsHolder.id,
+          publicKey: validRightsHolder.publicKey,
         },
       });
-    }).to.throw('rightsHolder must have key "secretKey"');
+    }).to.throw('rightsHolder must have key "privateKey"');
 
     expect(() => {
       JLINC.validateRightsHolder({
         rightsHolder: {
-          id: validRightsHolder.id,
-          secretKey: undefined,
+          publicKey: validRightsHolder.publicKey,
+          privateKey: undefined,
         },
       });
-    }).to.throw('rightsHolder.secretKey must be of type string');
+    }).to.throw('rightsHolder.privateKey must be of type string');
 
     expect(() => {
       JLINC.validateRightsHolder({
         rightsHolder: {
-          id: validRightsHolder.id,
-          secretKey:'same shit secretKey',
+          publicKey: validRightsHolder.publicKey,
+          privateKey:'same shit privateKey',
         },
       });
-    }).to.throw('rightsHolder.secretKey must be of length 86');
+    }).to.throw('rightsHolder.privateKey must be of length 86');
 
     expect(() => {
       JLINC.validateRightsHolder({
         rightsHolder: {
-          id: validRightsHolder.id,
-          secretKey: validRightsHolder.secretKey,
+          publicKey: validRightsHolder.publicKey,
+          privateKey: validRightsHolder.privateKey,
         },
       });
-    }).to.throw('rightsHolder must have key "nonce"');
+    }).to.throw('rightsHolder must have key "secret"');
 
     expect(() => {
       JLINC.validateRightsHolder({
         rightsHolder: {
-          id: validRightsHolder.id,
-          secretKey: validRightsHolder.secretKey,
-          nonce: 99999,
+          publicKey: validRightsHolder.publicKey,
+          privateKey: validRightsHolder.privateKey,
+          secret: 99999,
         },
       });
-    }).to.throw('rightsHolder.nonce must be of type string');
+    }).to.throw('rightsHolder.secret must be of type string');
 
     expect(() => {
       JLINC.validateRightsHolder({
         rightsHolder: {
-          id: validRightsHolder.id,
-          secretKey: validRightsHolder.secretKey,
-          nonce: 'some bunk nonce',
+          publicKey: validRightsHolder.publicKey,
+          privateKey: validRightsHolder.privateKey,
+          secret: 'some bunk secret',
         },
       });
-    }).to.throw('rightsHolder.nonce must be of length 32');
+    }).to.throw('rightsHolder.secret must be of length 32');
 
     expect(
       JLINC.validateRightsHolder({
         rightsHolder: {
-          id: validRightsHolder.id,
-          secretKey: validRightsHolder.secretKey,
-          nonce:  validRightsHolder.nonce,
+          publicKey: validRightsHolder.publicKey,
+          privateKey: validRightsHolder.privateKey,
+          secret:  validRightsHolder.secret,
         },
       })
     ).to.be.true;

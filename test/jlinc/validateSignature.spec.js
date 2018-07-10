@@ -14,13 +14,13 @@ describe('JLINC.validateSignature', function() {
 
     const signature = JLINC.signItem({
       itemToSign,
-      secretKey: entity.secretKey,
+      privateKey: entity.privateKey,
     });
 
     expect(
       JLINC.validateSignature({
         signature,
-        publicKey: entity.id,
+        publicKey: entity.publicKey,
         itemSigned: itemToSign,
       })
     ).to.be.true;
@@ -28,7 +28,7 @@ describe('JLINC.validateSignature', function() {
     expect(
       JLINC.validateSignature({
         signature: 'some fake signature i made up',
-        publicKey: entity.id,
+        publicKey: entity.publicKey,
         itemSigned: itemToSign,
       })
     ).to.be.false;
@@ -36,7 +36,7 @@ describe('JLINC.validateSignature', function() {
     expect(
       JLINC.validateSignature({
         signature,
-        publicKey: JLINC.createEntity().id, // using the wrong public key
+        publicKey: JLINC.createEntity().publicKey, // using the wrong public key
         itemSigned: itemToSign,
       })
     ).to.be.false;
@@ -44,7 +44,7 @@ describe('JLINC.validateSignature', function() {
     expect(
       JLINC.validateSignature({
         signature,
-        publicKey: entity.id,
+        publicKey: entity.publicKey,
         itemSigned: 'this is not the item that was signed',
       })
     ).to.be.false;

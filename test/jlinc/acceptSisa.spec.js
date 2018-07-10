@@ -43,7 +43,7 @@ describe('JLINC.acceptSisa', function() {
         offeredSisa: this.offeredSisa,
         rightsHolder: {},
       });
-    }).to.throw('rightsHolder must have key "id"');
+    }).to.throw('rightsHolder must have key "publicKey"');
 
     expect(() => {
       JLINC.acceptSisa({
@@ -61,15 +61,15 @@ describe('JLINC.acceptSisa', function() {
 
     expect(sisa).to.be.an('object');
     expect(sisa['@context']).to.equal(JLINC.contextUrl);
-    expect(sisa.acceptedSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.secretKey);
+    expect(sisa.acceptedSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.privateKey);
     expect(sisa.sisaId).to.be.a('string');
 
-    const acceptedSisa = jsonwebtoken.verify(sisa.acceptedSisaJwt, this.rightsHolder.secretKey);
+    const acceptedSisa = jsonwebtoken.verify(sisa.acceptedSisaJwt, this.rightsHolder.privateKey);
     expect(acceptedSisa['@context']).to.equal(JLINC.contextUrl);
-    expect(acceptedSisa.offeredSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.secretKey);
+    expect(acceptedSisa.offeredSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.privateKey);
     expect(acceptedSisa.offeredSisaJwt).to.be.aJWTEncodingOf(this.offeredSisa);
     expect(acceptedSisa.rightsHolderSigType).to.equal('sha256:ed25519');
-    expect(acceptedSisa.rightsHolderId).to.equal(this.rightsHolder.id);
+    expect(acceptedSisa.rightsHolderId).to.equal(this.rightsHolder.publicKey);
     expect(acceptedSisa.rightsHolderSig).to.be.a('string');
     expect(acceptedSisa.iat).to.be.aRecentSecondsFromEpochInteger();
 
@@ -77,7 +77,7 @@ describe('JLINC.acceptSisa', function() {
       JLINC.validateSignature({
         itemSigned: acceptedSisa.offeredSisaJwt,
         signature: acceptedSisa.rightsHolderSig,
-        publicKey: this.rightsHolder.id,
+        publicKey: this.rightsHolder.publicKey,
       })
     ).to.be.true;
   });
