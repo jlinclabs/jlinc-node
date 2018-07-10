@@ -20,3 +20,18 @@ describe('JLINC.defaultAgreementURI', function() {
     expect(JLINC.defaultAgreementURI).to.equal('https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4');
   });
 });
+
+describe('JLINC.sisaEventTypes', function() {
+  it('should be a frozen array', function(){
+    expect(JLINC.sisaEventTypes).to.deep.equal([
+      'dataEvent',
+      'permissionEvent',
+      'statusEvent',
+    ]);
+    expect(Object.isFrozen(JLINC.sisaEventTypes)).to.be.true;
+
+    expect(() => {
+      JLINC.sisaEventTypes.push('dog');
+    }).to.throw('object is not extensible');
+  });
+});
