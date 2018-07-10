@@ -1,7 +1,5 @@
 'use strict';
 
-const jsonwebtoken = require('jsonwebtoken');
-
 module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
   if (typeof offeredSisa !== 'object')
     throw new Error('offeredSisa must be of type object');
@@ -23,15 +21,15 @@ module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
   if (!offeredSisa.agreementJwt.match(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/))
     throw new Error('offeredSisa.agreementJwt is invalid');
 
-  const sisaAgreement = jsonwebtoken.decode(offeredSisa.agreementJwt);
+  const sisaAgreement = this.decodeJwt({ jwt: offeredSisa.agreementJwt });
   if (sisaAgreement === null)
     throw new Error('offeredSisa.agreementJwt is invalid');
 
   if (dataCustodian && dataCustodian.secret){
     try{
-      jsonwebtoken.verify(offeredSisa.agreementJwt, dataCustodian.secret);
+      this.decodeAndVerifyJwt({ jwt: offeredSisa.agreementJwt, secret: dataCustodian.secret });
     }catch(error){
-      if (error.message.includes('invalid signature')){
+      if (error.message === 'unable to verify jsonwebtoken'){
         throw new Error('offeredSisa.agreementJwt was not signed by the given dataCustodian');
       }
       throw error;

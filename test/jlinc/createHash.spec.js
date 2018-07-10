@@ -1,7 +1,5 @@
 'use strict';
 
-const jsonwebtoken = require('jsonwebtoken');
-
 require('../setup');
 const JLINC = require('../../jlinc');
 

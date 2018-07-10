@@ -1,7 +1,5 @@
 'use strict';
 
-const jsonwebtoken = require('jsonwebtoken');
-
 require('../setup');
 const JLINC = require('../../jlinc');
 
@@ -64,7 +62,10 @@ describe('JLINC.acceptSisa', function() {
     expect(sisa.acceptedSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.secret);
     expect(sisa.sisaId).to.be.a('string');
 
-    const acceptedSisa = jsonwebtoken.verify(sisa.acceptedSisaJwt, this.rightsHolder.secret);
+    const acceptedSisa = JLINC.decodeAndVerifyJwt({
+      jwt: sisa.acceptedSisaJwt,
+      secret: this.rightsHolder.secret,
+    });
     expect(acceptedSisa['@context']).to.equal(JLINC.contextUrl);
     expect(acceptedSisa.offeredSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.secret);
     expect(acceptedSisa.offeredSisaJwt).to.be.aJWTEncodingOf(this.offeredSisa);

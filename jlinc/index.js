@@ -9,6 +9,10 @@ module.exports =  {
   createNonce: require('./createNonce'),
   createHash: require('./createHash'),
 
+  createSignedJwt: require('./createSignedJwt'),
+  decodeJwt: require('./decodeJwt'),
+  decodeAndVerifyJwt: require('./decodeAndVerifyJwt'),
+
   signItem: require('./signItem'),
   validateSignature: require('./validateSignature'),
 

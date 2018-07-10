@@ -1,7 +1,5 @@
 'use strict';
 
-const jsonwebtoken = require('jsonwebtoken');
-
 require('./setup');
 
 const JLINC = require('../jlinc');
@@ -15,7 +13,7 @@ module.exports = {
     const rightsHolder = JLINC.createEntity();
     const sisa = JLINC.acceptSisa({ offeredSisa, rightsHolder });
 
-    const acceptedSisa = jsonwebtoken.decode(sisa.acceptedSisaJwt);
+    const acceptedSisa = JLINC.decodeJwt({ jwt: sisa.acceptedSisaJwt });
     const { offeredSisaJwt } = acceptedSisa;
     return {
       dataCustodian,

@@ -1,7 +1,5 @@
 'use strict';
 
-const jsonwebtoken = require('jsonwebtoken');
-
 require('../setup');
 const JLINC = require('../../jlinc');
 
@@ -210,7 +208,7 @@ describe('JLINC.validateOfferedSisa', function() {
       JLINC.validateOfferedSisa({
         offeredSisa: {
           '@context': JLINC.contextUrl,
-          agreementJwt: jsonwebtoken.sign({}, 'xx'),
+          agreementJwt: JLINC.createSignedJwt({ itemToSign: {}, secret: 'xx' }),
           dataCustodianSigType: 'sha256:ed25519',
           dataCustodianId: dataCustodian.publicKey,
           dataCustodianSig: offeredSisa.dataCustodianSig,

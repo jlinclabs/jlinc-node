@@ -1,12 +1,14 @@
 'use strict';
 
-const jsonwebtoken = require('jsonwebtoken');
-
 module.exports = function createSisaOffering({ sisaAgreement, dataCustodian }) {
   this.validateSisaAgreement({ sisaAgreement });
   this.validateDataCustodian({ dataCustodian });
 
-  const agreementJwt = jsonwebtoken.sign(sisaAgreement, dataCustodian.secret);
+  const agreementJwt = this.createSignedJwt({
+    itemToSign: sisaAgreement,
+    secret: dataCustodian.secret,
+  });
+
   const dataCustodianSig = this.signItem({
     itemToSign: agreementJwt,
     privateKey: dataCustodian.privateKey,

@@ -1,7 +1,5 @@
 'use strict';
 
-const jsonwebtoken = require('jsonwebtoken');
-
 require('../setup');
 const JLINC = require('../../jlinc');
 
@@ -92,7 +90,10 @@ describe('JLINC.validateSisa', function() {
     }).to.not.throw();
 
     const constructSisa = ({ acceptedSisa }) => {
-      const acceptedSisaJwt = jsonwebtoken.sign(acceptedSisa, this.our.rightsHolder.secret);
+      const acceptedSisaJwt = JLINC.createSignedJwt({
+        itemToSign: acceptedSisa,
+        secret: this.our.rightsHolder.secret,
+      });
       return {
         '@context': JLINC.contextUrl,
         acceptedSisaJwt,
@@ -412,7 +413,7 @@ describe('JLINC.validateSisa', function() {
         sisa: constructSisa({
           acceptedSisa: {
             '@context': JLINC.contextUrl,
-            offeredSisaJwt: jsonwebtoken.sign({}, 'xx'),
+            offeredSisaJwt: JLINC.createSignedJwt({ itemToSign: {}, secret: 'trees' }),
             rightsHolderSigType: 'sha256:ed25519',
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.other.acceptedSisa.rightsHolderSig,

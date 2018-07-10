@@ -1,12 +1,14 @@
 'use strict';
 
-const jsonwebtoken = require('jsonwebtoken');
-
 module.exports = function acceptSisa({ offeredSisa, rightsHolder }){
   this.validateOfferedSisa({ offeredSisa });
   this.validateRightsHolder({ rightsHolder });
 
-  const offeredSisaJwt = jsonwebtoken.sign(offeredSisa, rightsHolder.secret);
+  const offeredSisaJwt = this.createSignedJwt({
+    itemToSign: offeredSisa,
+    secret: rightsHolder.secret,
+  });
+
   const rightsHolderSig = this.signItem({
     itemToSign: offeredSisaJwt,
     privateKey: rightsHolder.privateKey,
@@ -21,7 +23,11 @@ module.exports = function acceptSisa({ offeredSisa, rightsHolder }){
     iat: this.now(),
   };
 
-  const acceptedSisaJwt = jsonwebtoken.sign(acceptedSisa, rightsHolder.secret);
+  const acceptedSisaJwt = this.createSignedJwt({
+    itemToSign: acceptedSisa,
+    secret: rightsHolder.secret,
+  });
+
   const sisaId = this.createHash({ itemToHash: acceptedSisaJwt });
 
   return {

@@ -1,7 +1,5 @@
 'use strict';
 
-const jsonwebtoken = require('jsonwebtoken');
-
 module.exports = function validateSisa({ sisa, dataCustodian, rightsHolder }){
 
   if (typeof sisa !== 'object')
@@ -24,7 +22,7 @@ module.exports = function validateSisa({ sisa, dataCustodian, rightsHolder }){
   if (!sisa.acceptedSisaJwt.match(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/))
     throw new Error('sisa.acceptedSisaJwt is invalid');
 
-  const acceptedSisa = jsonwebtoken.decode(sisa.acceptedSisaJwt);
+  const acceptedSisa = this.decodeJwt({ jwt: sisa.acceptedSisaJwt });
   if (acceptedSisa === null)
     throw new Error('sisa.acceptedSisaJwt is invalid');
 
@@ -61,7 +59,7 @@ module.exports = function validateSisa({ sisa, dataCustodian, rightsHolder }){
   if (!acceptedSisa.offeredSisaJwt.match(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/))
     throw new Error('sisa.acceptedSisa.offeredSisaJwt is invalid');
 
-  const offeredSisa = jsonwebtoken.decode(acceptedSisa.offeredSisaJwt);
+  const offeredSisa = this.decodeJwt({ jwt: acceptedSisa.offeredSisaJwt });
   if (offeredSisa === null)
     throw new Error('sisa.acceptedSisa.offeredSisaJwt is invalid');
 
