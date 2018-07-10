@@ -1,25 +1,27 @@
 'use strict';
 
-module.exports.version = require('../package.json').version;
+module.exports =  {
+  version: require('../package.json').version,
 
-module.exports.createNonce = require('./createNonce');
-module.exports.createHash = require('./createHash');
+  createNonce: require('./createNonce'),
+  createHash: require('./createHash'),
 
-module.exports.signItem = require('./signItem');
-module.exports.validateSignature = require('./validateSignature');
+  signItem: require('./signItem'),
+  validateSignature: require('./validateSignature'),
 
-module.exports.createEntity = require('./createEntity');
-module.exports.validateEntity = require('./validateEntity');
-module.exports.validateDataCustodian = require('./validateDataCustodian');
-module.exports.validateRightsHolder = require('./validateRightsHolder');
+  createEntity: require('./createEntity'),
+  validateEntity: require('./validateEntity'),
+  validateDataCustodian: require('./validateDataCustodian'),
+  validateRightsHolder: require('./validateRightsHolder'),
 
-module.exports.createSisaAgreement = require('./createSisaAgreement');
-module.exports.validateSisaAgreement = require('./validateSisaAgreement');
+  createSisaAgreement: require('./createSisaAgreement'),
+  validateSisaAgreement: require('./validateSisaAgreement'),
 
-module.exports.createSisaOffering = require('./createSisaOffering');
-module.exports.validateOfferedSisa = require('./validateOfferedSisa');
+  createSisaOffering: require('./createSisaOffering'),
+  validateOfferedSisa: require('./validateOfferedSisa'),
 
-module.exports.acceptSisa = require('./acceptSisa');
-module.exports.validateSisa = require('./validateSisa');
+  acceptSisa: require('./acceptSisa'),
+  validateSisa: require('./validateSisa'),
 
-module.exports.expandSisa = require('./expandSisa');
+  expandSisa: require('./expandSisa'),
+};
