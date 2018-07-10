@@ -69,7 +69,7 @@ module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
 
   if (dataCustodian && dataCustodian.id){
     if (offeredSisa.dataCustodianID !== dataCustodian.id)
-      throw new Error('offeredSisa.dataCustodianID does not match given dataCustodianID');
+      throw new Error('offeredSisa.dataCustodianID does not match given dataCustodian');
   }
 
   // validating offeredSisa.dataCustodianSig

@@ -2,7 +2,7 @@
 
 const jsonwebtoken = require('jsonwebtoken');
 
-module.exports = function validateSisa({ sisa, dataCustodian }){
+module.exports = function validateSisa({ sisa, dataCustodian, rightsHolder }){
 
   if (typeof sisa !== 'object')
     throw new Error('sisa must be of type object');
@@ -93,6 +93,11 @@ module.exports = function validateSisa({ sisa, dataCustodian }){
 
   if (acceptedSisa.rightsHolderID.length !== 43)
     throw new Error('sisa.acceptedSisa.rightsHolderID must be of length 43');
+
+  if (rightsHolder && rightsHolder.id){
+    if (acceptedSisa.rightsHolderID !== rightsHolder.id)
+      throw new Error('sisa.acceptedSisa.rightsHolderID does not match given rightsHolder');
+  }
 
   // validating acceptedSisa.rightsHolderSig
   if (!('rightsHolderSig' in acceptedSisa))

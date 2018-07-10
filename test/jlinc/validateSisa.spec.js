@@ -442,5 +442,21 @@ describe('JLINC.validateSisa', function() {
         dataCustodian: this.our.dataCustodian,
       });
     }).to.throw('sisa.acceptedSisa.offeredSisa.agreementJwt was not signed by the given dataCustodian');
+
+    // when alice is checking that the acceptedSisa is from her, and it is
+    expect(() => {
+      JLINC.validateSisa({
+        sisa: this.our.sisa,
+        rightsHolder: this.our.rightsHolder,
+      });
+    }).to.not.throw();
+
+    // when alice is checking that the acceptedSisa is from her, and it is not
+    expect(() => {
+      JLINC.validateSisa({
+        sisa: this.other.sisa,
+        rightsHolder: this.our.rightsHolder,
+      });
+    }).to.throw('sisa.acceptedSisa.rightsHolderID does not match given rightsHolder');
   });
 });
