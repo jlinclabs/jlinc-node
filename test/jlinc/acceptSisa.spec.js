@@ -61,12 +61,12 @@ describe('JLINC.acceptSisa', function() {
 
     expect(sisa).to.be.an('object');
     expect(sisa['@context']).to.equal(JLINC.contextUrl);
-    expect(sisa.acceptedSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.privateKey);
+    expect(sisa.acceptedSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.secret);
     expect(sisa.sisaId).to.be.a('string');
 
-    const acceptedSisa = jsonwebtoken.verify(sisa.acceptedSisaJwt, this.rightsHolder.privateKey);
+    const acceptedSisa = jsonwebtoken.verify(sisa.acceptedSisaJwt, this.rightsHolder.secret);
     expect(acceptedSisa['@context']).to.equal(JLINC.contextUrl);
-    expect(acceptedSisa.offeredSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.privateKey);
+    expect(acceptedSisa.offeredSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.secret);
     expect(acceptedSisa.offeredSisaJwt).to.be.aJWTEncodingOf(this.offeredSisa);
     expect(acceptedSisa.rightsHolderSigType).to.equal('sha256:ed25519');
     expect(acceptedSisa.rightsHolderId).to.equal(this.rightsHolder.publicKey);

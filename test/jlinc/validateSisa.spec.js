@@ -92,7 +92,7 @@ describe('JLINC.validateSisa', function() {
     }).to.not.throw();
 
     const constructSisa = ({ acceptedSisa }) => {
-      const acceptedSisaJwt = jsonwebtoken.sign(acceptedSisa, this.our.rightsHolder.privateKey);
+      const acceptedSisaJwt = jsonwebtoken.sign(acceptedSisa, this.our.rightsHolder.secret);
       return {
         '@context': JLINC.contextUrl,
         acceptedSisaJwt,

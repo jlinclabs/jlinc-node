@@ -252,7 +252,7 @@ describe('JLINC.validateOfferedSisa', function() {
         offeredSisa,
         dataCustodian: {
           publicKey: dataCustodian.publicKey,
-          privateKey: 'bad dataCustodian privateKey',
+          secret: 'bad dataCustodian secret',
         },
       });
     }).to.throw('offeredSisa.agreementJwt was not signed by the given dataCustodian');

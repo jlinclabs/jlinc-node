@@ -27,9 +27,9 @@ module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
   if (sisaAgreement === null)
     throw new Error('offeredSisa.agreementJwt is invalid');
 
-  if (dataCustodian && dataCustodian.privateKey){
+  if (dataCustodian && dataCustodian.secret){
     try{
-      jsonwebtoken.verify(offeredSisa.agreementJwt, dataCustodian.privateKey);
+      jsonwebtoken.verify(offeredSisa.agreementJwt, dataCustodian.secret);
     }catch(error){
       if (error.message.includes('invalid signature')){
         throw new Error('offeredSisa.agreementJwt was not signed by the given dataCustodian');

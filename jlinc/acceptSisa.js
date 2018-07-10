@@ -6,7 +6,7 @@ module.exports = function acceptSisa({ offeredSisa, rightsHolder }){
   this.validateOfferedSisa({ offeredSisa });
   this.validateRightsHolder({ rightsHolder });
 
-  const offeredSisaJwt = jsonwebtoken.sign(offeredSisa, rightsHolder.privateKey);
+  const offeredSisaJwt = jsonwebtoken.sign(offeredSisa, rightsHolder.secret);
   const rightsHolderSig = this.signItem({
     itemToSign: offeredSisaJwt,
     privateKey: rightsHolder.privateKey,
@@ -21,7 +21,7 @@ module.exports = function acceptSisa({ offeredSisa, rightsHolder }){
     iat: this.now(),
   };
 
-  const acceptedSisaJwt = jsonwebtoken.sign(acceptedSisa, rightsHolder.privateKey);
+  const acceptedSisaJwt = jsonwebtoken.sign(acceptedSisa, rightsHolder.secret);
   const sisaId = this.createHash({ itemToHash: acceptedSisaJwt });
 
   return {

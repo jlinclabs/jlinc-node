@@ -41,7 +41,7 @@ describe('JLINC.createSisaOffering', function() {
       'iat',
     );
     expect(sisaOffering.offeredSisa['@context']).to.equal(JLINC.contextUrl);
-    expect(sisaOffering.offeredSisa.agreementJwt).to.be.aJWTSignedWith(dataCustodian.privateKey);
+    expect(sisaOffering.offeredSisa.agreementJwt).to.be.aJWTSignedWith(dataCustodian.secret);
     expect(sisaOffering.offeredSisa.agreementJwt).to.be.aJWTEncodingOf(sisaAgreement);
     expect(sisaOffering.offeredSisa.dataCustodianSigType).to.be.a('string');
     expect(sisaOffering.offeredSisa.dataCustodianId).to.equal(dataCustodian.publicKey);

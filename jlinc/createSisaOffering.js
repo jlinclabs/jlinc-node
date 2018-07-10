@@ -6,7 +6,7 @@ module.exports = function createSisaOffering({ sisaAgreement, dataCustodian }) {
   this.validateSisaAgreement({ sisaAgreement });
   this.validateDataCustodian({ dataCustodian });
 
-  const agreementJwt = jsonwebtoken.sign(sisaAgreement, dataCustodian.privateKey);
+  const agreementJwt = jsonwebtoken.sign(sisaAgreement, dataCustodian.secret);
   const dataCustodianSig = this.signItem({
     itemToSign: agreementJwt,
     privateKey: dataCustodian.privateKey,
