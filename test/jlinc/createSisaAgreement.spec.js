@@ -8,7 +8,7 @@ describe('JLINC.createSisaAgreement', function() {
     const sisaAgreement = JLINC.createSisaAgreement();
     expect(sisaAgreement).to.be.an('object');
     expect(sisaAgreement['@context']).to.equal(JLINC.contextUrl);
-    expect(sisaAgreement.jlincId).to.match(/^[0-9a-f]{64}$/);
+    expect(sisaAgreement.jlincId).to.be.aNonce();
     expect(sisaAgreement.agreementURI).to.equal(JLINC.defaultAgreementURI);
     expect(sisaAgreement.iat).to.be.aRecentSecondsFromEpochInteger();
   });
@@ -18,7 +18,7 @@ describe('JLINC.createSisaAgreement', function() {
     const sisaAgreement = JLINC.createSisaAgreement({ agreementURI });
     expect(sisaAgreement).to.be.an('object');
     expect(sisaAgreement['@context']).to.equal(JLINC.contextUrl);
-    expect(sisaAgreement.jlincId).to.match(/^[0-9a-f]{64}$/);
+    expect(sisaAgreement.jlincId).to.be.aNonce();
     expect(sisaAgreement.agreementURI).to.equal(agreementURI);
     expect(sisaAgreement.iat).to.be.aRecentSecondsFromEpochInteger();
   });

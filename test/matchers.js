@@ -29,3 +29,7 @@ chai.Assertion.addMethod('aRecentSecondsFromEpochInteger', function(){
   const now = Math.floor(Date.now() / 1000);
   expect(this._obj).to.be.within(now - 1, now);
 });
+
+chai.Assertion.addMethod('aNonce', function(){
+  expect(this._obj).to.match(/^[0-9a-f]{64}$/);
+});
