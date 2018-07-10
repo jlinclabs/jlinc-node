@@ -185,7 +185,7 @@ describe('JLINC.validateOfferedSisa', function() {
           dataCustodianSigType: 'sha256:ed25519',
           dataCustodianId: dataCustodian.id,
           dataCustodianSig: offeredSisa.dataCustodianSig,
-          iat: Date.now() + 10000,
+          iat: Math.floor(Date.now() / 1000) + 10,
         },
       });
     }).to.throw('offeredSisa.iat cannot be in the future');
@@ -198,7 +198,7 @@ describe('JLINC.validateOfferedSisa', function() {
           dataCustodianSigType: 'sha256:ed25519',
           dataCustodianId: dataCustodian.id,
           dataCustodianSig: offeredSisa.dataCustodianSig,
-          iat: Date.now(),
+          iat: Math.floor(Date.now() / 1000),
         },
       })
     ).to.be.true;
@@ -214,7 +214,7 @@ describe('JLINC.validateOfferedSisa', function() {
           dataCustodianSigType: 'sha256:ed25519',
           dataCustodianId: dataCustodian.id,
           dataCustodianSig: offeredSisa.dataCustodianSig,
-          iat: Date.now(),
+          iat: Math.floor(Date.now() / 1000),
         },
       });
     }).to.throw('acceptedSisa.agreement must have key "@context"');

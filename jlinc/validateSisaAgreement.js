@@ -38,7 +38,7 @@ module.exports = function validateSisaAgreement({ sisaAgreement }) {
   if (sisaAgreement.iat < 1530903259)
     throw new Error('sisaAgreement.iat is too old');
 
-  if (sisaAgreement.iat > Date.now())
+  if (sisaAgreement.iat > Math.floor(Date.now() / 1000))
     throw new Error('sisaAgreement.iat cannot be in the future');
 
   return true;

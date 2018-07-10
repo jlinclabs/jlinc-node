@@ -106,7 +106,7 @@ describe('JLINC.validateSisaAgreement', function() {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
           jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
           agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
-          iat: Date.now() + 1000,
+          iat: Math.floor(Date.now() / 1000) + 10,
         },
       });
     }).to.throw('sisaAgreement.iat cannot be in the future');
@@ -117,7 +117,7 @@ describe('JLINC.validateSisaAgreement', function() {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
           jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
           agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
-          iat: Date.now(),
+          iat: Math.floor(Date.now() / 1000),
         },
       });
     }).to.not.throw();

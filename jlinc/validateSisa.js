@@ -124,7 +124,7 @@ module.exports = function validateSisa({ sisa, dataCustodian, rightsHolder }){
   if (acceptedSisa.iat < 1530903259)
     throw new Error('sisa.acceptedSisa.iat is too old');
 
-  if (acceptedSisa.iat > Date.now())
+  if (acceptedSisa.iat > Math.floor(Date.now() / 1000))
     throw new Error('sisa.acceptedSisa.iat cannot be in the future');
 
   return true;
