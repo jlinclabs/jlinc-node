@@ -1,6 +1,7 @@
 'use strict';
 
 require('../setup');
+const JLINC = require('../../jlinc');
 
 describe('JLINC.createSisaOffering', function() {
   it('should require and validate a given sisaAgreement', function() {

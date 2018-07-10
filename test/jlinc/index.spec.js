@@ -1,6 +1,7 @@
 'use strict';
 
 require('../setup');
+const JLINC = require('../../jlinc');
 
 describe('JLINC', function() {
   describe('.version', function() {

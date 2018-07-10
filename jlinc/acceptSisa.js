@@ -12,12 +12,21 @@ module.exports = function acceptSisa({ offeredSisa, rightsHolder }){
     secretKey: rightsHolder.secretKey,
   });
 
-  return {
+  const acceptedSisa = {
     '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
     offeredSisaJwt,
     rightsHolderSigType: 'sha256:ed25519',
     rightsHolderID: rightsHolder.id,
     rightsHolderSig,
-    iat: Date.now(),
+    // iat: Math.floor(Date.now() / 1000),
+  };
+
+  const acceptedSisaJwt = jsonwebtoken.sign(acceptedSisa, rightsHolder.secretKey);
+  const sisaID = this.createHash({ itemToHash: acceptedSisaJwt });
+
+  return {
+    '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+    acceptedSisaJwt,
+    sisaID,
   };
 };

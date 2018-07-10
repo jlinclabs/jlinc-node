@@ -94,7 +94,7 @@ module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
   if (typeof offeredSisa.iat !== 'number')
     throw new Error('offeredSisa.iat must be of type number');
 
-  if (offeredSisa.iat < 1530903259573)
+  if (offeredSisa.iat < 1530903259)
     throw new Error('offeredSisa.iat is too old');
 
   if (offeredSisa.iat > Date.now())

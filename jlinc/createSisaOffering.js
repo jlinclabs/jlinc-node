@@ -20,7 +20,7 @@ module.exports = function createSisaOffering({ sisaAgreement, dataCustodian }) {
       dataCustodianSigType: 'sha256:ed25519',
       dataCustodianID: dataCustodian.id,
       dataCustodianSig,
-      iat: Date.now(),
+      iat: Math.floor(Date.now() / 1000),
     }
   };
 };

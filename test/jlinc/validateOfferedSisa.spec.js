@@ -3,6 +3,7 @@
 const jsonwebtoken = require('jsonwebtoken');
 
 require('../setup');
+const JLINC = require('../../jlinc');
 
 describe('JLINC.validateOfferedSisa', function() {
   it('should validate a sisaOffering', function() {

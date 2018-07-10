@@ -3,6 +3,7 @@
 module.exports.version = require('../package.json').version;
 
 module.exports.createNonce = require('./createNonce');
+module.exports.createHash = require('./createHash');
 
 module.exports.signItem = require('./signItem');
 module.exports.validateSignature = require('./validateSignature');
@@ -19,6 +20,6 @@ module.exports.createSisaOffering = require('./createSisaOffering');
 module.exports.validateOfferedSisa = require('./validateOfferedSisa');
 
 module.exports.acceptSisa = require('./acceptSisa');
-module.exports.validateAcceptedSisa = require('./validateAcceptedSisa');
+module.exports.validateSisa = require('./validateSisa');
 
-module.exports.expandAcceptedSisa = require('./expandAcceptedSisa');
+module.exports.expandSisa = require('./expandSisa');

@@ -35,7 +35,7 @@ module.exports = function validateSisaAgreement({ sisaAgreement }) {
   if (typeof sisaAgreement.iat !== 'number')
     throw new Error('sisaAgreement.iat must be of type number');
 
-  if (sisaAgreement.iat < 1530903259573)
+  if (sisaAgreement.iat < 1530903259)
     throw new Error('sisaAgreement.iat is too old');
 
   if (sisaAgreement.iat > Date.now())

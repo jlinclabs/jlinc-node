@@ -1,6 +1,7 @@
 'use strict';
 
 require('./setup');
+const JLINC = require('../jlinc');
 
 it('expected usage', function() {
 
@@ -22,12 +23,11 @@ it('expected usage', function() {
   const rightsHolder = JLINC.createEntity();
   expect( JLINC.validateRightsHolder({ rightsHolder }) ).to.be.true;
 
-  const acceptedSisa = JLINC.acceptSisa({ offeredSisa, rightsHolder });
-
+  const sisa = JLINC.acceptSisa({ offeredSisa, rightsHolder });
 
   // done by bob on the B API
-  expect( JLINC.validateAcceptedSisa({ acceptedSisa, dataCustodian }) ).to.be.true;
+  // expect( JLINC.validateAcceptedSisa({ sisa, dataCustodian }) ).to.be.true;
 
-  const expandedAcceptedSisa = JLINC.expandAcceptedSisa({ acceptedSisa });
+  const expandedSisa = JLINC.expandSisa({ sisa });
 
 });

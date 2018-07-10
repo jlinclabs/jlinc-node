@@ -1,6 +1,7 @@
 'use strict';
 
 require('../setup');
+const JLINC = require('../../jlinc');
 
 describe('JLINC.validateRightsHolder', function() {
   it('should validate a given rightsHolder', function(){

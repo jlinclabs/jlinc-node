@@ -1,16 +1,24 @@
 'use strict';
 
+const jsonwebtoken = require('jsonwebtoken');
+
 require('../setup');
+const JLINC = require('../../jlinc');
 
 describe('JLINC.acceptSisa', function() {
 
   beforeEach(function() {
-    const dataCustodian = JLINC.createEntity();
-    const sisaAgreement = JLINC.createSisaAgreement();
-    const sisaOffering = JLINC.createSisaOffering({ sisaAgreement, dataCustodian });
-    const { offeredSisa } = sisaOffering;
+
+
+    const { offeredSisa, rightsHolder } = this.generateSisa();
     this.offeredSisa = offeredSisa;
-    this.rightsHolder = JLINC.createEntity();
+    this.rightsHolder = rightsHolder;
+    // const dataCustodian = JLINC.createEntity();
+    // const sisaAgreement = JLINC.createSisaAgreement();
+    // const sisaOffering = JLINC.createSisaOffering({ sisaAgreement, dataCustodian });
+    // const { offeredSisa } = sisaOffering;
+    // this.offeredSisa = offeredSisa;
+    // this.rightsHolder = JLINC.createEntity();
   });
 
   it('should validate the given offeredSisa and rightsHolder', function() {
@@ -46,12 +54,17 @@ describe('JLINC.acceptSisa', function() {
   });
 
   it('should sign the offeredSisa', function() {
-    const acceptedSisa = JLINC.acceptSisa({
+    const sisa = JLINC.acceptSisa({
       offeredSisa: this.offeredSisa,
       rightsHolder: this.rightsHolder,
     });
 
-    expect(acceptedSisa).to.be.an('object');
+    expect(sisa).to.be.an('object');
+    expect(sisa['@context']).to.equal('https://context.jlinc.org/v05/jlinc.jsonld');
+    expect(sisa.acceptedSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.secretKey);
+    expect(sisa.sisaID).to.be.a('string');
+
+    const acceptedSisa = jsonwebtoken.verify(sisa.acceptedSisaJwt, this.rightsHolder.secretKey);
     expect(acceptedSisa['@context']).to.equal('https://context.jlinc.org/v05/jlinc.jsonld');
     expect(acceptedSisa.offeredSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.secretKey);
     expect(acceptedSisa.offeredSisaJwt).to.be.aJWTEncodingOf(this.offeredSisa);
