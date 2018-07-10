@@ -1,7 +1,5 @@
 'use strict';
 
-const b64 = require('urlsafe-base64');
-
 module.exports = function validateEntity({ entity }){
   if (typeof entity !== 'object')
     throw new Error('entity must be of type object');
@@ -38,5 +36,15 @@ module.exports = function validateEntity({ entity }){
   if (entity.nonce.length !== 32)
     throw new Error('entity.nonce must be of length 32');
 
-  return true;
+  const itemToSign = this.createNonce();
+  const signature = this.signItem({
+    itemToSign,
+    secretKey: entity.secretKey,
+  });
+
+  return this.validateSignature({
+    itemSigned: itemToSign,
+    signature,
+    publicKey: entity.id,
+  });
 };
