@@ -57,19 +57,19 @@ module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
   if (offeredSisa.dataCustodianSigType !== 'sha256:ed25519')
     throw new Error('offeredSisa.dataCustodianSigType is invalid');
 
-  // validating offeredSisa.dataCustodianID
-  if (!('dataCustodianID' in offeredSisa))
-    throw new Error('offeredSisa must have key "dataCustodianID"');
+  // validating offeredSisa.dataCustodianId
+  if (!('dataCustodianId' in offeredSisa))
+    throw new Error('offeredSisa must have key "dataCustodianId"');
 
-  if (typeof offeredSisa.dataCustodianID !== 'string')
-    throw new Error('offeredSisa.dataCustodianID must be of type string');
+  if (typeof offeredSisa.dataCustodianId !== 'string')
+    throw new Error('offeredSisa.dataCustodianId must be of type string');
 
-  if (offeredSisa.dataCustodianID.length !== 43)
-    throw new Error('offeredSisa.dataCustodianID must be of length 43');
+  if (offeredSisa.dataCustodianId.length !== 43)
+    throw new Error('offeredSisa.dataCustodianId must be of length 43');
 
   if (dataCustodian && dataCustodian.id){
-    if (offeredSisa.dataCustodianID !== dataCustodian.id)
-      throw new Error('offeredSisa.dataCustodianID does not match given dataCustodian');
+    if (offeredSisa.dataCustodianId !== dataCustodian.id)
+      throw new Error('offeredSisa.dataCustodianId does not match given dataCustodian');
   }
 
   // validating offeredSisa.dataCustodianSig
@@ -82,7 +82,7 @@ module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
   const validSignature = this.validateSignature({
     itemSigned: offeredSisa.agreementJwt,
     signature: offeredSisa.dataCustodianSig,
-    publicKey: offeredSisa.dataCustodianID,
+    publicKey: offeredSisa.dataCustodianId,
   });
   if (!validSignature)
     throw new Error('offeredSisa.dataCustodianSig is invalid');

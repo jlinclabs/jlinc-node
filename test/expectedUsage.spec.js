@@ -19,7 +19,7 @@ it('expected usage', function() {
   expect( JLINC.validateOfferedSisa({ offeredSisa, dataCustodian: { id: dataCustodian.id } }) ).to.be.true;
   expect(() => {
     JLINC.validateOfferedSisa({ offeredSisa, dataCustodian: { id: JLINC.createEntity().id } });
-  }).to.throw('offeredSisa.dataCustodianID does not match given dataCustodian');
+  }).to.throw('offeredSisa.dataCustodianId does not match given dataCustodian');
 
   const rightsHolder = JLINC.createEntity();
   expect( JLINC.validateRightsHolder({ rightsHolder }) ).to.be.true;
@@ -28,7 +28,7 @@ it('expected usage', function() {
   expect( JLINC.validateSisa({ sisa, rightsHolder }) ).to.be.true;
   expect(() => {
     JLINC.validateSisa({ sisa, rightsHolder: JLINC.createEntity() });
-  }).to.throw('sisa.acceptedSisa.rightsHolderID does not match given rightsHolder');
+  }).to.throw('sisa.acceptedSisa.rightsHolderId does not match given rightsHolder');
 
 
   // done by bob on the B API
@@ -39,7 +39,7 @@ it('expected usage', function() {
 
   const expandedSisa = JLINC.expandSisa({ sisa });
 
-  expect(expandedSisa.acceptedSisa.rightsHolderID).to.equal(rightsHolder.id);
-  expect(expandedSisa.acceptedSisa.offeredSisa.dataCustodianID).to.equal(dataCustodian.id);
+  expect(expandedSisa.acceptedSisa.rightsHolderId).to.equal(rightsHolder.id);
+  expect(expandedSisa.acceptedSisa.offeredSisa.dataCustodianId).to.equal(dataCustodian.id);
 
 });

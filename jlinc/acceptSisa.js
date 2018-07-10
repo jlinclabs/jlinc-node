@@ -16,17 +16,17 @@ module.exports = function acceptSisa({ offeredSisa, rightsHolder }){
     '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
     offeredSisaJwt,
     rightsHolderSigType: 'sha256:ed25519',
-    rightsHolderID: rightsHolder.id,
+    rightsHolderId: rightsHolder.id,
     rightsHolderSig,
     // iat: Math.floor(Date.now() / 1000),
   };
 
   const acceptedSisaJwt = jsonwebtoken.sign(acceptedSisa, rightsHolder.secretKey);
-  const sisaID = this.createHash({ itemToHash: acceptedSisaJwt });
+  const sisaId = this.createHash({ itemToHash: acceptedSisaJwt });
 
   return {
     '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
     acceptedSisaJwt,
-    sisaID,
+    sisaId,
   };
 };

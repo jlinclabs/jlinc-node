@@ -59,34 +59,34 @@ describe('JLINC.validateSisa', function() {
           acceptedSisaJwt: this.our.sisa.acceptedSisaJwt,
         },
       });
-    }).to.throw('sisa must have key "sisaID"');
+    }).to.throw('sisa must have key "sisaId"');
 
     expect(() => {
       JLINC.validateSisa({
         sisa: {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
           acceptedSisaJwt: this.our.sisa.acceptedSisaJwt,
-          sisaID: 45,
+          sisaId: 45,
         },
       });
-    }).to.throw('sisa.sisaID must be of type string');
+    }).to.throw('sisa.sisaId must be of type string');
 
     expect(() => {
       JLINC.validateSisa({
         sisa: {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
           acceptedSisaJwt: this.our.sisa.acceptedSisaJwt,
-          sisaID: 'love',
+          sisaId: 'love',
         },
       });
-    }).to.throw('sisa.sisaID is not a hash of sisa.acceptedSisaJwt');
+    }).to.throw('sisa.sisaId is not a hash of sisa.acceptedSisaJwt');
 
     expect(() => {
       JLINC.validateSisa({
         sisa: {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
           acceptedSisaJwt: this.our.sisa.acceptedSisaJwt,
-          sisaID: this.our.sisa.sisaID,
+          sisaId: this.our.sisa.sisaId,
         }
       });
     }).to.not.throw();
@@ -96,7 +96,7 @@ describe('JLINC.validateSisa', function() {
       return {
         '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
         acceptedSisaJwt,
-        sisaID: JLINC.createHash({ itemToHash: acceptedSisaJwt }),
+        sisaId: JLINC.createHash({ itemToHash: acceptedSisaJwt }),
       };
     };
 
@@ -217,7 +217,7 @@ describe('JLINC.validateSisa', function() {
           },
         }),
       });
-    }).to.throw('sisa.acceptedSisa must have key "rightsHolderID"');
+    }).to.throw('sisa.acceptedSisa must have key "rightsHolderId"');
 
     expect(() => {
       JLINC.validateSisa({
@@ -226,11 +226,11 @@ describe('JLINC.validateSisa', function() {
             '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
-            rightsHolderID: 89.
+            rightsHolderId: 89.
           },
         }),
       });
-    }).to.throw('sisa.acceptedSisa.rightsHolderID must be of type string');
+    }).to.throw('sisa.acceptedSisa.rightsHolderId must be of type string');
 
     expect(() => {
       JLINC.validateSisa({
@@ -239,11 +239,11 @@ describe('JLINC.validateSisa', function() {
             '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
-            rightsHolderID: 'fourtytwo',
+            rightsHolderId: 'fourtytwo',
           },
         }),
       });
-    }).to.throw('sisa.acceptedSisa.rightsHolderID must be of length 43');
+    }).to.throw('sisa.acceptedSisa.rightsHolderId must be of length 43');
 
     expect(() => {
       JLINC.validateSisa({
@@ -252,7 +252,7 @@ describe('JLINC.validateSisa', function() {
             '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
-            rightsHolderID: this.our.rightsHolder.id,
+            rightsHolderId: this.our.rightsHolder.id,
           },
         }),
       });
@@ -265,7 +265,7 @@ describe('JLINC.validateSisa', function() {
             '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
-            rightsHolderID: this.our.rightsHolder.id,
+            rightsHolderId: this.our.rightsHolder.id,
             rightsHolderSig: 0,
           },
         }),
@@ -279,7 +279,7 @@ describe('JLINC.validateSisa', function() {
             '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
-            rightsHolderID: this.our.rightsHolder.id,
+            rightsHolderId: this.our.rightsHolder.id,
             rightsHolderSig: 'signatureatron',
           },
         }),
@@ -295,7 +295,7 @@ describe('JLINC.validateSisa', function() {
     //            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
     //            offeredSisaJwt: this.our.offeredSisaJwt,
     //            rightsHolderSigType: 'sha256:ed25519',
-    //            rightsHolderID: this.our.rightsHolder.id,
+    //            rightsHolderId: this.our.rightsHolder.id,
     //            rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
     //          },
     //        }),
@@ -309,7 +309,7 @@ describe('JLINC.validateSisa', function() {
     //            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
     //            offeredSisaJwt: this.our.offeredSisaJwt,
     //            rightsHolderSigType: 'sha256:ed25519',
-    //            rightsHolderID: this.our.rightsHolder.id,
+    //            rightsHolderId: this.our.rightsHolder.id,
     //            rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
     //            iat: 'now',
     //          },
@@ -323,7 +323,7 @@ describe('JLINC.validateSisa', function() {
     //          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
     //          offeredSisaJwt: this.our.offeredSisaJwt,
     //          rightsHolderSigType: 'sha256:ed25519',
-    //          rightsHolderID: this.our.rightsHolder.id,
+    //          rightsHolderId: this.our.rightsHolder.id,
     //          rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
     //          iat: 12,
     //        },
@@ -336,7 +336,7 @@ describe('JLINC.validateSisa', function() {
     //          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
     //          offeredSisaJwt: this.our.offeredSisaJwt,
     //          rightsHolderSigType: 'sha256:ed25519',
-    //          rightsHolderID: this.our.rightsHolder.id,
+    //          rightsHolderId: this.our.rightsHolder.id,
     //          rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
     //          iat: 23487328473289473892,
     //        },
@@ -350,7 +350,7 @@ describe('JLINC.validateSisa', function() {
             '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
-            rightsHolderID: this.our.rightsHolder.id,
+            rightsHolderId: this.our.rightsHolder.id,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
           },
         }),
@@ -369,7 +369,7 @@ describe('JLINC.validateSisa', function() {
             '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
             offeredSisaJwt: this.other.acceptedSisa.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
-            rightsHolderID: this.our.rightsHolder.id,
+            rightsHolderId: this.our.rightsHolder.id,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
             iat: Date.now(),
           },
@@ -384,7 +384,7 @@ describe('JLINC.validateSisa', function() {
             '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
-            rightsHolderID: this.other.acceptedSisa.rightsHolderID,
+            rightsHolderId: this.other.acceptedSisa.rightsHolderId,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
             iat: Date.now(),
           },
@@ -399,7 +399,7 @@ describe('JLINC.validateSisa', function() {
             '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
-            rightsHolderID: this.our.rightsHolder.id,
+            rightsHolderId: this.our.rightsHolder.id,
             rightsHolderSig: this.other.acceptedSisa.rightsHolderSig,
             iat: Date.now(),
           },
@@ -414,7 +414,7 @@ describe('JLINC.validateSisa', function() {
             '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
             offeredSisaJwt: jsonwebtoken.sign({}, 'xx'),
             rightsHolderSigType: 'sha256:ed25519',
-            rightsHolderID: this.our.rightsHolder.id,
+            rightsHolderId: this.our.rightsHolder.id,
             rightsHolderSig: this.other.acceptedSisa.rightsHolderSig,
             iat: Date.now(),
           },
@@ -457,6 +457,6 @@ describe('JLINC.validateSisa', function() {
         sisa: this.other.sisa,
         rightsHolder: this.our.rightsHolder,
       });
-    }).to.throw('sisa.acceptedSisa.rightsHolderID does not match given rightsHolder');
+    }).to.throw('sisa.acceptedSisa.rightsHolderId does not match given rightsHolder');
   });
 });

@@ -11,15 +11,15 @@ module.exports = function validateSisaAgreement({ sisaAgreement }) {
   if (sisaAgreement['@context'] !== 'https://context.jlinc.org/v05/jlinc.jsonld')
     throw new Error('sisaAgreement["@context"] is invalid');
 
-  // sisaAgreement.jlincID
-  if (!('jlincID' in sisaAgreement))
-    throw new Error('sisaAgreement must have key "jlincID"');
+  // sisaAgreement.jlincId
+  if (!('jlincId' in sisaAgreement))
+    throw new Error('sisaAgreement must have key "jlincId"');
 
-  if (typeof sisaAgreement.jlincID !== 'string')
-    throw new Error('sisaAgreement.jlincID must be of type string');
+  if (typeof sisaAgreement.jlincId !== 'string')
+    throw new Error('sisaAgreement.jlincId must be of type string');
 
-  if (!sisaAgreement.jlincID.match(/^[0-9a-f]{64}$/))
-    throw new Error('sisaAgreement.jlincID is invalid');
+  if (!sisaAgreement.jlincId.match(/^[0-9a-f]{64}$/))
+    throw new Error('sisaAgreement.jlincId is invalid');
 
   // sisaAgreement.agreementURI
   if (!('agreementURI' in sisaAgreement))

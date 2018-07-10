@@ -29,31 +29,31 @@ describe('JLINC.validateSisaAgreement', function() {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
         },
       });
-    }).to.throw('sisaAgreement must have key "jlincID"');
+    }).to.throw('sisaAgreement must have key "jlincId"');
 
     expect(() => {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
-          jlincID: 42,
+          jlincId: 42,
         },
       });
-    }).to.throw('sisaAgreement.jlincID must be of type string');
+    }).to.throw('sisaAgreement.jlincId must be of type string');
 
     expect(() => {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
-          jlincID: 'my wack jlinc ID',
+          jlincId: 'my wack jlinc Id',
         },
       });
-    }).to.throw('sisaAgreement.jlincID is invalid');
+    }).to.throw('sisaAgreement.jlincId is invalid');
 
     expect(() => {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
-          jlincID: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
+          jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
         },
       });
     }).to.throw('sisaAgreement must have key "agreementURI"');
@@ -62,7 +62,7 @@ describe('JLINC.validateSisaAgreement', function() {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
-          jlincID: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
+          jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
           agreementURI: 'http://agreeeeeeeeeeee.ment',
         },
       });
@@ -72,7 +72,7 @@ describe('JLINC.validateSisaAgreement', function() {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
-          jlincID: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
+          jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
           agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
         },
       });
@@ -82,7 +82,7 @@ describe('JLINC.validateSisaAgreement', function() {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
-          jlincID: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
+          jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
           agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
           iat: undefined,
         },
@@ -93,7 +93,7 @@ describe('JLINC.validateSisaAgreement', function() {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
-          jlincID: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
+          jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
           agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
           iat: 12345,
         },
@@ -104,7 +104,7 @@ describe('JLINC.validateSisaAgreement', function() {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
-          jlincID: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
+          jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
           agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
           iat: Date.now() + 1000,
         },
@@ -115,7 +115,7 @@ describe('JLINC.validateSisaAgreement', function() {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
           '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
-          jlincID: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
+          jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
           agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
           iat: Date.now(),
         },

@@ -28,16 +28,16 @@ module.exports = function validateSisa({ sisa, dataCustodian, rightsHolder }){
   if (acceptedSisa === null)
     throw new Error('sisa.acceptedSisaJwt is invalid');
 
-  // validating sisa.sisaID
-  if (!('sisaID' in sisa))
-    throw new Error('sisa must have key "sisaID"');
+  // validating sisa.sisaId
+  if (!('sisaId' in sisa))
+    throw new Error('sisa must have key "sisaId"');
 
-  if (typeof sisa.sisaID !== 'string')
-    throw new Error('sisa.sisaID must be of type string');
+  if (typeof sisa.sisaId !== 'string')
+    throw new Error('sisa.sisaId must be of type string');
 
-  const expectedSisaID = this.createHash({ itemToHash: sisa.acceptedSisaJwt });
-  if (sisa.sisaID !== expectedSisaID)
-    throw new Error('sisa.sisaID is not a hash of sisa.acceptedSisaJwt');
+  const expectedSisaId = this.createHash({ itemToHash: sisa.acceptedSisaJwt });
+  if (sisa.sisaId !== expectedSisaId)
+    throw new Error('sisa.sisaId is not a hash of sisa.acceptedSisaJwt');
 
 
 
@@ -84,19 +84,19 @@ module.exports = function validateSisa({ sisa, dataCustodian, rightsHolder }){
   if (acceptedSisa.rightsHolderSigType !== 'sha256:ed25519')
     throw new Error('sisa.acceptedSisa.rightsHolderSigType is invalid');
 
-  // validating acceptedSisa.rightsHolderID
-  if (!('rightsHolderID' in acceptedSisa))
-    throw new Error('sisa.acceptedSisa must have key "rightsHolderID"');
+  // validating acceptedSisa.rightsHolderId
+  if (!('rightsHolderId' in acceptedSisa))
+    throw new Error('sisa.acceptedSisa must have key "rightsHolderId"');
 
-  if (typeof acceptedSisa.rightsHolderID !== 'string')
-    throw new Error('sisa.acceptedSisa.rightsHolderID must be of type string');
+  if (typeof acceptedSisa.rightsHolderId !== 'string')
+    throw new Error('sisa.acceptedSisa.rightsHolderId must be of type string');
 
-  if (acceptedSisa.rightsHolderID.length !== 43)
-    throw new Error('sisa.acceptedSisa.rightsHolderID must be of length 43');
+  if (acceptedSisa.rightsHolderId.length !== 43)
+    throw new Error('sisa.acceptedSisa.rightsHolderId must be of length 43');
 
   if (rightsHolder && rightsHolder.id){
-    if (acceptedSisa.rightsHolderID !== rightsHolder.id)
-      throw new Error('sisa.acceptedSisa.rightsHolderID does not match given rightsHolder');
+    if (acceptedSisa.rightsHolderId !== rightsHolder.id)
+      throw new Error('sisa.acceptedSisa.rightsHolderId does not match given rightsHolder');
   }
 
   // validating acceptedSisa.rightsHolderSig
@@ -109,7 +109,7 @@ module.exports = function validateSisa({ sisa, dataCustodian, rightsHolder }){
   const validSignature = this.validateSignature({
     itemSigned: acceptedSisa.offeredSisaJwt,
     signature: acceptedSisa.rightsHolderSig,
-    publicKey: acceptedSisa.rightsHolderID,
+    publicKey: acceptedSisa.rightsHolderId,
   });
   if (!validSignature)
     throw new Error('sisa.acceptedSisa.rightsHolderSig is invalid');
