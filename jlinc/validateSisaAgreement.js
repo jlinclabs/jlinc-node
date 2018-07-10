@@ -25,8 +25,11 @@ module.exports = function validateSisaAgreement({ sisaAgreement }) {
   if (!('agreementURI' in sisaAgreement))
     throw new Error('sisaAgreement must have key "agreementURI"');
 
-  if (sisaAgreement.agreementURI !== 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4')
-    throw new Error('sisaAgreement.agreementURI is invalid');
+  if (typeof sisaAgreement.agreementURI !== 'string')
+    throw new Error('sisaAgreement.agreementURI must be of type string');
+
+  if (!sisaAgreement.agreementURI.match(/^https?:\/\//))
+    throw new Error('sisaAgreement.agreementURI must be a url');
 
   // sisaAgreement.iat
   if (!('iat' in sisaAgreement))

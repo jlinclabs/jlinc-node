@@ -63,10 +63,20 @@ describe('JLINC.validateSisaAgreement', function() {
         sisaAgreement: {
           '@context': JLINC.contextUrl,
           jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
-          agreementURI: 'http://agreeeeeeeeeeee.ment',
+          agreementURI: null,
         },
       });
-    }).to.throw('sisaAgreement.agreementURI is invalid');
+    }).to.throw('sisaAgreement.agreementURI must be of type string');
+
+    expect(() => {
+      JLINC.validateSisaAgreement({
+        sisaAgreement: {
+          '@context': JLINC.contextUrl,
+          jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
+          agreementURI: 'booohyakahshaaaa',
+        },
+      });
+    }).to.throw('sisaAgreement.agreementURI must be a url');
 
     expect(() => {
       JLINC.validateSisaAgreement({

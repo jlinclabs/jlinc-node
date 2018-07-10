@@ -17,4 +17,10 @@ describe('JLINC', function() {
     });
   });
 
+  describe('.defaultAgreementURI', function() {
+    it('should be "https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4"', function(){
+      expect(JLINC.defaultAgreementURI).to.equal('https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4');
+    });
+  });
+
 });
