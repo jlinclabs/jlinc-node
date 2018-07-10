@@ -29,7 +29,7 @@ describe('JLINC.validateSisa', function() {
     expect(() => {
       JLINC.validateSisa({
         sisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
         },
       });
     }).to.throw('sisa must have key "acceptedSisaJwt"');
@@ -37,7 +37,7 @@ describe('JLINC.validateSisa', function() {
     expect(() => {
       JLINC.validateSisa({
         sisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           acceptedSisaJwt: 89,
         },
       });
@@ -46,7 +46,7 @@ describe('JLINC.validateSisa', function() {
     expect(() => {
       JLINC.validateSisa({
         sisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           acceptedSisaJwt: 'foobarskeyz',
         },
       });
@@ -55,7 +55,7 @@ describe('JLINC.validateSisa', function() {
     expect(() => {
       JLINC.validateSisa({
         sisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           acceptedSisaJwt: this.our.sisa.acceptedSisaJwt,
         },
       });
@@ -64,7 +64,7 @@ describe('JLINC.validateSisa', function() {
     expect(() => {
       JLINC.validateSisa({
         sisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           acceptedSisaJwt: this.our.sisa.acceptedSisaJwt,
           sisaId: 45,
         },
@@ -74,7 +74,7 @@ describe('JLINC.validateSisa', function() {
     expect(() => {
       JLINC.validateSisa({
         sisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           acceptedSisaJwt: this.our.sisa.acceptedSisaJwt,
           sisaId: 'love',
         },
@@ -84,7 +84,7 @@ describe('JLINC.validateSisa', function() {
     expect(() => {
       JLINC.validateSisa({
         sisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           acceptedSisaJwt: this.our.sisa.acceptedSisaJwt,
           sisaId: this.our.sisa.sisaId,
         }
@@ -94,7 +94,7 @@ describe('JLINC.validateSisa', function() {
     const constructSisa = ({ acceptedSisa }) => {
       const acceptedSisaJwt = jsonwebtoken.sign(acceptedSisa, this.our.rightsHolder.secretKey);
       return {
-        '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+        '@context': JLINC.contextUrl,
         acceptedSisaJwt,
         sisaId: JLINC.createHash({ itemToHash: acceptedSisaJwt }),
       };
@@ -122,7 +122,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
           },
         })
       });
@@ -132,7 +132,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: 55,
           },
         })
@@ -143,7 +143,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: 'boooshatron5000',
           },
         })
@@ -154,7 +154,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: 'xxx'+this.our.offeredSisaJwt,
           },
         })
@@ -165,7 +165,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: 'xxxxx',
           },
         })
@@ -176,7 +176,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
           },
         })
@@ -187,7 +187,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 89,
           }
@@ -199,7 +199,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'flowers',
           },
@@ -211,7 +211,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
           },
@@ -223,7 +223,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
             rightsHolderId: 89.
@@ -236,7 +236,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
             rightsHolderId: 'fourtytwo',
@@ -249,7 +249,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
             rightsHolderId: this.our.rightsHolder.id,
@@ -262,7 +262,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
             rightsHolderId: this.our.rightsHolder.id,
@@ -276,7 +276,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
             rightsHolderId: this.our.rightsHolder.id,
@@ -292,7 +292,7 @@ describe('JLINC.validateSisa', function() {
     //      JLINC.validateSisa({
     //        sisa: constructSisa({
     //          acceptedSisa: {
-    //            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+    //            '@context': JLINC.contextUrl,
     //            offeredSisaJwt: this.our.offeredSisaJwt,
     //            rightsHolderSigType: 'sha256:ed25519',
     //            rightsHolderId: this.our.rightsHolder.id,
@@ -306,7 +306,7 @@ describe('JLINC.validateSisa', function() {
     //      JLINC.validateSisa({
     //        sisa: constructSisa({
     //          acceptedSisa: {
-    //            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+    //            '@context': JLINC.contextUrl,
     //            offeredSisaJwt: this.our.offeredSisaJwt,
     //            rightsHolderSigType: 'sha256:ed25519',
     //            rightsHolderId: this.our.rightsHolder.id,
@@ -320,7 +320,7 @@ describe('JLINC.validateSisa', function() {
     //    expect(() => {
     //      JLINC.validateSisa({
     //        acceptedSisa: {
-    //          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+    //          '@context': JLINC.contextUrl,
     //          offeredSisaJwt: this.our.offeredSisaJwt,
     //          rightsHolderSigType: 'sha256:ed25519',
     //          rightsHolderId: this.our.rightsHolder.id,
@@ -333,7 +333,7 @@ describe('JLINC.validateSisa', function() {
     //    expect(() => {
     //      JLINC.validateSisa({
     //        acceptedSisa: {
-    //          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+    //          '@context': JLINC.contextUrl,
     //          offeredSisaJwt: this.our.offeredSisaJwt,
     //          rightsHolderSigType: 'sha256:ed25519',
     //          rightsHolderId: this.our.rightsHolder.id,
@@ -347,7 +347,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
             rightsHolderId: this.our.rightsHolder.id,
@@ -366,7 +366,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: this.other.acceptedSisa.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
             rightsHolderId: this.our.rightsHolder.id,
@@ -381,7 +381,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
             rightsHolderId: this.other.acceptedSisa.rightsHolderId,
@@ -396,7 +396,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
             rightsHolderSigType: 'sha256:ed25519',
             rightsHolderId: this.our.rightsHolder.id,
@@ -411,7 +411,7 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({
         sisa: constructSisa({
           acceptedSisa: {
-            '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+            '@context': JLINC.contextUrl,
             offeredSisaJwt: jsonwebtoken.sign({}, 'xx'),
             rightsHolderSigType: 'sha256:ed25519',
             rightsHolderId: this.our.rightsHolder.id,

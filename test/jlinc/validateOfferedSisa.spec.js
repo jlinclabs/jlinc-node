@@ -33,7 +33,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
         },
       });
     }).to.throw('offeredSisa must have key "agreementJwt"');
@@ -41,7 +41,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: 'jay dubyah tea',
         },
       });
@@ -50,7 +50,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: 'jay dubyah tea',
         },
       });
@@ -59,7 +59,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
         },
       });
@@ -68,7 +68,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 4,
         },
@@ -78,7 +78,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'alpha:numeric:awesome',
         },
@@ -88,7 +88,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
         },
@@ -98,7 +98,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
           dataCustodianId: 44,
@@ -109,7 +109,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
           dataCustodianId: 'fake dataCustodian id here',
@@ -120,7 +120,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
           dataCustodianId: '0123456789012345678901234567890123456789012',
@@ -131,7 +131,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
           dataCustodianId: dataCustodian.id,
@@ -143,7 +143,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
           dataCustodianId: dataCustodian.id,
@@ -155,7 +155,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
           dataCustodianId: dataCustodian.id,
@@ -167,7 +167,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
           dataCustodianId: dataCustodian.id,
@@ -180,7 +180,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
           dataCustodianId: dataCustodian.id,
@@ -193,7 +193,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: offeredSisa.agreementJwt,
           dataCustodianSigType: 'sha256:ed25519',
           dataCustodianId: dataCustodian.id,
@@ -209,7 +209,7 @@ describe('JLINC.validateOfferedSisa', function() {
     expect(() => {
       JLINC.validateOfferedSisa({
         offeredSisa: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           agreementJwt: jsonwebtoken.sign({}, 'xx'),
           dataCustodianSigType: 'sha256:ed25519',
           dataCustodianId: dataCustodian.id,

@@ -13,9 +13,9 @@ module.exports = function createSisaOffering({ sisaAgreement, dataCustodian }) {
   });
 
   return {
-    '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+    '@context': this.contextUrl,
     offeredSisa: {
-      '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+      '@context': this.contextUrl,
       agreementJwt,
       dataCustodianSigType: 'sha256:ed25519',
       dataCustodianId: dataCustodian.id,

@@ -8,7 +8,7 @@ module.exports = function validateSisaAgreement({ sisaAgreement }) {
   if (!('@context' in sisaAgreement))
     throw new Error('sisaAgreement must have key "@context"');
 
-  if (sisaAgreement['@context'] !== 'https://context.jlinc.org/v05/jlinc.jsonld')
+  if (sisaAgreement['@context'] !== this.contextUrl)
     throw new Error('sisaAgreement["@context"] is invalid');
 
   // sisaAgreement.jlincId

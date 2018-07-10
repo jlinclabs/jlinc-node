@@ -31,7 +31,7 @@ describe('JLINC.createSisaOffering', function() {
 
     expect(sisaOffering).to.be.an('object');
     expect(sisaOffering).to.have.all.keys('@context', 'offeredSisa');
-    expect(sisaOffering['@context']).to.equal('https://context.jlinc.org/v05/jlinc.jsonld');
+    expect(sisaOffering['@context']).to.equal(JLINC.contextUrl);
     expect(sisaOffering.offeredSisa).to.have.all.keys(
       '@context',
       'agreementJwt',
@@ -40,7 +40,7 @@ describe('JLINC.createSisaOffering', function() {
       'dataCustodianSig',
       'iat',
     );
-    expect(sisaOffering.offeredSisa['@context']).to.equal('https://context.jlinc.org/v05/jlinc.jsonld');
+    expect(sisaOffering.offeredSisa['@context']).to.equal(JLINC.contextUrl);
     expect(sisaOffering.offeredSisa.agreementJwt).to.be.aJWTSignedWith(dataCustodian.secretKey);
     expect(sisaOffering.offeredSisa.agreementJwt).to.be.aJWTEncodingOf(sisaAgreement);
     expect(sisaOffering.offeredSisa.dataCustodianSigType).to.be.a('string');

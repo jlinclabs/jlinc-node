@@ -11,7 +11,7 @@ module.exports = function validateSisa({ sisa, dataCustodian, rightsHolder }){
   if (!('@context' in sisa))
     throw new Error('sisa must have key "@context"');
 
-  if (sisa['@context'] !== 'https://context.jlinc.org/v05/jlinc.jsonld')
+  if (sisa['@context'] !== this.contextUrl)
     throw new Error('sisa["@context"] is invalid');
 
   // validating sisa.acceptedSisaJwt
@@ -48,7 +48,7 @@ module.exports = function validateSisa({ sisa, dataCustodian, rightsHolder }){
   if (!('@context' in acceptedSisa))
     throw new Error('sisa.acceptedSisa must have key "@context"');
 
-  if (acceptedSisa['@context'] !== 'https://context.jlinc.org/v05/jlinc.jsonld')
+  if (acceptedSisa['@context'] !== this.contextUrl)
     throw new Error('sisa.acceptedSisa["@context"] is invalid');
 
   // validating acceptedSisa.offeredSisaJwt

@@ -13,7 +13,7 @@ module.exports = function acceptSisa({ offeredSisa, rightsHolder }){
   });
 
   const acceptedSisa = {
-    '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+    '@context': this.contextUrl,
     offeredSisaJwt,
     rightsHolderSigType: 'sha256:ed25519',
     rightsHolderId: rightsHolder.id,
@@ -25,7 +25,7 @@ module.exports = function acceptSisa({ offeredSisa, rightsHolder }){
   const sisaId = this.createHash({ itemToHash: acceptedSisaJwt });
 
   return {
-    '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+    '@context': this.contextUrl,
     acceptedSisaJwt,
     sisaId,
   };

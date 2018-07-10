@@ -26,7 +26,7 @@ describe('JLINC.validateSisaAgreement', function() {
     expect(() => {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
         },
       });
     }).to.throw('sisaAgreement must have key "jlincId"');
@@ -34,7 +34,7 @@ describe('JLINC.validateSisaAgreement', function() {
     expect(() => {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           jlincId: 42,
         },
       });
@@ -43,7 +43,7 @@ describe('JLINC.validateSisaAgreement', function() {
     expect(() => {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           jlincId: 'my wack jlinc Id',
         },
       });
@@ -52,7 +52,7 @@ describe('JLINC.validateSisaAgreement', function() {
     expect(() => {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
         },
       });
@@ -61,7 +61,7 @@ describe('JLINC.validateSisaAgreement', function() {
     expect(() => {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
           agreementURI: 'http://agreeeeeeeeeeee.ment',
         },
@@ -71,7 +71,7 @@ describe('JLINC.validateSisaAgreement', function() {
     expect(() => {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
           agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
         },
@@ -81,7 +81,7 @@ describe('JLINC.validateSisaAgreement', function() {
     expect(() => {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
           agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
           iat: undefined,
@@ -92,7 +92,7 @@ describe('JLINC.validateSisaAgreement', function() {
     expect(() => {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
           agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
           iat: 12345,
@@ -103,7 +103,7 @@ describe('JLINC.validateSisaAgreement', function() {
     expect(() => {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
           agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
           iat: Math.floor(Date.now() / 1000) + 10,
@@ -114,7 +114,7 @@ describe('JLINC.validateSisaAgreement', function() {
     expect(() => {
       JLINC.validateSisaAgreement({
         sisaAgreement: {
-          '@context': 'https://context.jlinc.org/v05/jlinc.jsonld',
+          '@context': JLINC.contextUrl,
           jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
           agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
           iat: Math.floor(Date.now() / 1000),

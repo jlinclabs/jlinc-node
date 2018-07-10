@@ -60,12 +60,12 @@ describe('JLINC.acceptSisa', function() {
     });
 
     expect(sisa).to.be.an('object');
-    expect(sisa['@context']).to.equal('https://context.jlinc.org/v05/jlinc.jsonld');
+    expect(sisa['@context']).to.equal(JLINC.contextUrl);
     expect(sisa.acceptedSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.secretKey);
     expect(sisa.sisaId).to.be.a('string');
 
     const acceptedSisa = jsonwebtoken.verify(sisa.acceptedSisaJwt, this.rightsHolder.secretKey);
-    expect(acceptedSisa['@context']).to.equal('https://context.jlinc.org/v05/jlinc.jsonld');
+    expect(acceptedSisa['@context']).to.equal(JLINC.contextUrl);
     expect(acceptedSisa.offeredSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.secretKey);
     expect(acceptedSisa.offeredSisaJwt).to.be.aJWTEncodingOf(this.offeredSisa);
     expect(acceptedSisa.rightsHolderSigType).to.equal('sha256:ed25519');

@@ -10,7 +10,7 @@ module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
   if (!('@context' in offeredSisa))
     throw new Error('offeredSisa must have key "@context"');
 
-  if (offeredSisa['@context'] !== 'https://context.jlinc.org/v05/jlinc.jsonld')
+  if (offeredSisa['@context'] !== this.contextUrl)
     throw new Error('offeredSisa["@context"] is invalid');
 
   // validating offeredSisa.agreementJwt
