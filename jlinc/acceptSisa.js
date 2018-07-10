@@ -18,7 +18,7 @@ module.exports = function acceptSisa({ offeredSisa, rightsHolder }){
     rightsHolderSigType: 'sha256:ed25519',
     rightsHolderId: rightsHolder.id,
     rightsHolderSig,
-    // iat: Math.floor(Date.now() / 1000),
+    iat: this.now(),
   };
 
   const acceptedSisaJwt = jsonwebtoken.sign(acceptedSisa, rightsHolder.secretKey);

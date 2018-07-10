@@ -97,7 +97,7 @@ module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
   if (offeredSisa.iat < 1530903259)
     throw new Error('offeredSisa.iat is too old');
 
-  if (offeredSisa.iat > Math.floor(Date.now() / 1000))
+  if (offeredSisa.iat > this.now())
     throw new Error('offeredSisa.iat cannot be in the future');
 
   return true;

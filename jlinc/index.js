@@ -4,6 +4,7 @@ module.exports =  {
   version: require('../package.json').version,
   contextUrl: 'https://context.jlinc.org/v05/jlinc.jsonld',
 
+  now: require('./now'),
   createNonce: require('./createNonce'),
   createHash: require('./createHash'),
 
