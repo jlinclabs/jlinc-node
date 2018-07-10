@@ -6,17 +6,9 @@ const JLINC = require('../../jlinc');
 describe('JLINC.acceptSisa', function() {
 
   beforeEach(function() {
-
-
     const { offeredSisa, rightsHolder } = this.generateSisa();
     this.offeredSisa = offeredSisa;
     this.rightsHolder = rightsHolder;
-    // const dataCustodian = JLINC.createEntity();
-    // const sisaAgreement = JLINC.createSisaAgreement();
-    // const sisaOffering = JLINC.createSisaOffering({ sisaAgreement, dataCustodian });
-    // const { offeredSisa } = sisaOffering;
-    // this.offeredSisa = offeredSisa;
-    // this.rightsHolder = JLINC.createEntity();
   });
 
   it('should validate the given offeredSisa and rightsHolder', function() {
