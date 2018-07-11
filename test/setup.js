@@ -17,6 +17,6 @@ global.console.json = function(...args) {
   return global.console.log(args.map(o => JSON.stringify(o, null, 2)).join("\n"));
 };
 
-beforeEach(function() {
+before(function() {
   Object.assign(this, helpers);
 });
