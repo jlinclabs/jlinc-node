@@ -52,7 +52,7 @@ describe('JLINC.createSisaOffering', function() {
       JLINC.validateSignature({
         itemSigned: sisaOffering.offeredSisa.agreementJwt,
         signature: sisaOffering.offeredSisa.dataCustodianSig,
-        publicKey: dataCustodian.publicKey
+        publicKey: dataCustodian.publicKey,
       })
     ).to.be.true;
   });
