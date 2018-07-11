@@ -7,13 +7,13 @@ describe('JLINC.validateSisaAgreement', function() {
   it('should validate a given SISA Agreement', function(){
     expect(() => {
       JLINC.validateSisaAgreement({});
-    }).to.throw('sisaAgreement must be of type object');
+    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement must be of type object');
 
     expect(() => {
       JLINC.validateSisaAgreement({
         sisaAgreement: {},
       });
-    }).to.throw('sisaAgreement must have key "@context"');
+    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement must have key "@context"');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -21,7 +21,7 @@ describe('JLINC.validateSisaAgreement', function() {
           '@context': 'yourface',
         },
       });
-    }).to.throw('sisaAgreement["@context"] is invalid');
+    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement["@context"] is invalid');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -29,7 +29,7 @@ describe('JLINC.validateSisaAgreement', function() {
           '@context': JLINC.contextUrl,
         },
       });
-    }).to.throw('sisaAgreement must have key "jlincId"');
+    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement must have key "jlincId"');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -38,7 +38,7 @@ describe('JLINC.validateSisaAgreement', function() {
           jlincId: 42,
         },
       });
-    }).to.throw('sisaAgreement.jlincId must be of type string');
+    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement.jlincId must be of type string');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -47,7 +47,7 @@ describe('JLINC.validateSisaAgreement', function() {
           jlincId: 'my wack jlinc Id',
         },
       });
-    }).to.throw('sisaAgreement.jlincId is invalid');
+    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement.jlincId is invalid');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -56,7 +56,7 @@ describe('JLINC.validateSisaAgreement', function() {
           jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
         },
       });
-    }).to.throw('sisaAgreement must have key "agreementURI"');
+    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement must have key "agreementURI"');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -66,7 +66,7 @@ describe('JLINC.validateSisaAgreement', function() {
           agreementURI: null,
         },
       });
-    }).to.throw('sisaAgreement.agreementURI must be of type string');
+    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement.agreementURI must be of type string');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -76,7 +76,7 @@ describe('JLINC.validateSisaAgreement', function() {
           agreementURI: 'booohyakahshaaaa',
         },
       });
-    }).to.throw('sisaAgreement.agreementURI must be a url');
+    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement.agreementURI must be a url');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -86,7 +86,7 @@ describe('JLINC.validateSisaAgreement', function() {
           agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
         },
       });
-    }).to.throw('sisaAgreement must have key "iat"');
+    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement must have key "iat"');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -97,7 +97,7 @@ describe('JLINC.validateSisaAgreement', function() {
           iat: undefined,
         },
       });
-    }).to.throw('sisaAgreement.iat must be of type number');
+    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement.iat must be of type number');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -108,7 +108,7 @@ describe('JLINC.validateSisaAgreement', function() {
           iat: 12345,
         },
       });
-    }).to.throw('sisaAgreement.iat is too old');
+    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement.iat is too old');
 
     expect(() => {
       JLINC.validateSisaAgreement({
@@ -119,7 +119,7 @@ describe('JLINC.validateSisaAgreement', function() {
           iat: Math.floor(Date.now() / 1000) + 10,
         },
       });
-    }).to.throw('sisaAgreement.iat cannot be in the future');
+    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement.iat cannot be in the future');
 
     expect(() => {
       JLINC.validateSisaAgreement({

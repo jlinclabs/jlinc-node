@@ -9,13 +9,13 @@ describe('JLINC.validateEntity', function() {
 
     expect(() => {
       JLINC.validateEntity({});
-    }).to.throw('entity must be of type object');
+    }).to.throw(JLINC.InvalidEntityError, 'entity must be of type object');
 
     expect(() => {
       JLINC.validateEntity({
         entity: {},
       });
-    }).to.throw('entity must have key "publicKey"');
+    }).to.throw(JLINC.InvalidEntityError, 'entity must have key "publicKey"');
 
     expect(() => {
       JLINC.validateEntity({
@@ -23,7 +23,7 @@ describe('JLINC.validateEntity', function() {
           publicKey: 42,
         },
       });
-    }).to.throw('entity.publicKey must be of type string');
+    }).to.throw(JLINC.InvalidEntityError, 'entity.publicKey must be of type string');
 
     expect(() => {
       JLINC.validateEntity({
@@ -31,7 +31,7 @@ describe('JLINC.validateEntity', function() {
           publicKey: 'same shit id',
         },
       });
-    }).to.throw('entity.publicKey must be of length 43');
+    }).to.throw(JLINC.InvalidEntityError, 'entity.publicKey must be of length 43');
 
     expect(() => {
       JLINC.validateEntity({
@@ -39,7 +39,7 @@ describe('JLINC.validateEntity', function() {
           publicKey: validEntity.publicKey,
         },
       });
-    }).to.throw('entity must have key "privateKey"');
+    }).to.throw(JLINC.InvalidEntityError, 'entity must have key "privateKey"');
 
     expect(() => {
       JLINC.validateEntity({
@@ -48,7 +48,7 @@ describe('JLINC.validateEntity', function() {
           privateKey: undefined,
         },
       });
-    }).to.throw('entity.privateKey must be of type string');
+    }).to.throw(JLINC.InvalidEntityError, 'entity.privateKey must be of type string');
 
     expect(() => {
       JLINC.validateEntity({
@@ -57,7 +57,7 @@ describe('JLINC.validateEntity', function() {
           privateKey:'same shit privateKey',
         },
       });
-    }).to.throw('entity.privateKey must be of length 86');
+    }).to.throw(JLINC.InvalidEntityError, 'entity.privateKey must be of length 86');
 
     expect(() => {
       JLINC.validateEntity({
@@ -66,7 +66,7 @@ describe('JLINC.validateEntity', function() {
           privateKey: validEntity.privateKey,
         },
       });
-    }).to.throw('entity must have key "secret"');
+    }).to.throw(JLINC.InvalidEntityError, 'entity must have key "secret"');
 
     expect(() => {
       JLINC.validateEntity({
@@ -76,7 +76,7 @@ describe('JLINC.validateEntity', function() {
           secret: 99999,
         },
       });
-    }).to.throw('entity.secret must be of type string');
+    }).to.throw(JLINC.InvalidEntityError, 'entity.secret must be of type string');
 
     expect(() => {
       JLINC.validateEntity({
@@ -86,7 +86,7 @@ describe('JLINC.validateEntity', function() {
           secret: 'some bunk secret',
         },
       });
-    }).to.throw('entity.secret must be of length 32');
+    }).to.throw(JLINC.InvalidEntityError, 'entity.secret must be of length 32');
 
     expect(
       JLINC.validateEntity({

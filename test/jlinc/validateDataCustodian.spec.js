@@ -9,13 +9,13 @@ describe('JLINC.validateDataCustodian', function() {
 
     expect(() => {
       JLINC.validateDataCustodian({});
-    }).to.throw('dataCustodian must be of type object');
+    }).to.throw(JLINC.InvalidDataCustodianError, 'dataCustodian must be of type object');
 
     expect(() => {
       JLINC.validateDataCustodian({
         dataCustodian: {},
       });
-    }).to.throw('dataCustodian must have key "publicKey"');
+    }).to.throw(JLINC.InvalidDataCustodianError, 'dataCustodian must have key "publicKey"');
 
     expect(() => {
       JLINC.validateDataCustodian({
@@ -23,7 +23,7 @@ describe('JLINC.validateDataCustodian', function() {
           publicKey: 42,
         },
       });
-    }).to.throw('dataCustodian.publicKey must be of type string');
+    }).to.throw(JLINC.InvalidDataCustodianError, 'dataCustodian.publicKey must be of type string');
 
     expect(() => {
       JLINC.validateDataCustodian({
@@ -31,7 +31,7 @@ describe('JLINC.validateDataCustodian', function() {
           publicKey: 'same shit id',
         },
       });
-    }).to.throw('dataCustodian.publicKey must be of length 43');
+    }).to.throw(JLINC.InvalidDataCustodianError, 'dataCustodian.publicKey must be of length 43');
 
     expect(() => {
       JLINC.validateDataCustodian({
@@ -39,7 +39,7 @@ describe('JLINC.validateDataCustodian', function() {
           publicKey: validDataCustodian.publicKey,
         },
       });
-    }).to.throw('dataCustodian must have key "privateKey"');
+    }).to.throw(JLINC.InvalidDataCustodianError, 'dataCustodian must have key "privateKey"');
 
     expect(() => {
       JLINC.validateDataCustodian({
@@ -48,7 +48,7 @@ describe('JLINC.validateDataCustodian', function() {
           privateKey: undefined,
         },
       });
-    }).to.throw('dataCustodian.privateKey must be of type string');
+    }).to.throw(JLINC.InvalidDataCustodianError, 'dataCustodian.privateKey must be of type string');
 
     expect(() => {
       JLINC.validateDataCustodian({
@@ -57,7 +57,7 @@ describe('JLINC.validateDataCustodian', function() {
           privateKey: 'same shit privateKey',
         },
       });
-    }).to.throw('dataCustodian.privateKey must be of length 86');
+    }).to.throw(JLINC.InvalidDataCustodianError, 'dataCustodian.privateKey must be of length 86');
 
     expect(() => {
       JLINC.validateDataCustodian({
@@ -66,7 +66,7 @@ describe('JLINC.validateDataCustodian', function() {
           privateKey: validDataCustodian.privateKey,
         },
       });
-    }).to.throw('dataCustodian must have key "secret"');
+    }).to.throw(JLINC.InvalidDataCustodianError, 'dataCustodian must have key "secret"');
 
     expect(() => {
       JLINC.validateDataCustodian({
@@ -76,7 +76,7 @@ describe('JLINC.validateDataCustodian', function() {
           secret: 99999,
         },
       });
-    }).to.throw('dataCustodian.secret must be of type string');
+    }).to.throw(JLINC.InvalidDataCustodianError, 'dataCustodian.secret must be of type string');
 
     expect(() => {
       JLINC.validateDataCustodian({
@@ -86,7 +86,7 @@ describe('JLINC.validateDataCustodian', function() {
           secret: 'some bunk secret',
         },
       });
-    }).to.throw('dataCustodian.secret must be of length 32');
+    }).to.throw(JLINC.InvalidDataCustodianError, 'dataCustodian.secret must be of length 32');
 
     expect(
       JLINC.validateDataCustodian({

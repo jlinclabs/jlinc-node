@@ -9,13 +9,13 @@ describe('JLINC.validateRightsHolder', function() {
 
     expect(() => {
       JLINC.validateRightsHolder({});
-    }).to.throw('rightsHolder must be of type object');
+    }).to.throw(JLINC.InvalidRightsHolderError, 'rightsHolder must be of type object');
 
     expect(() => {
       JLINC.validateRightsHolder({
         rightsHolder: {},
       });
-    }).to.throw('rightsHolder must have key "publicKey"');
+    }).to.throw(JLINC.InvalidRightsHolderError, 'rightsHolder must have key "publicKey"');
 
     expect(() => {
       JLINC.validateRightsHolder({
@@ -23,7 +23,7 @@ describe('JLINC.validateRightsHolder', function() {
           publicKey: 42,
         },
       });
-    }).to.throw('rightsHolder.publicKey must be of type string');
+    }).to.throw(JLINC.InvalidRightsHolderError, 'rightsHolder.publicKey must be of type string');
 
     expect(() => {
       JLINC.validateRightsHolder({
@@ -31,7 +31,7 @@ describe('JLINC.validateRightsHolder', function() {
           publicKey: 'same shit id',
         },
       });
-    }).to.throw('rightsHolder.publicKey must be of length 43');
+    }).to.throw(JLINC.InvalidRightsHolderError, 'rightsHolder.publicKey must be of length 43');
 
     expect(() => {
       JLINC.validateRightsHolder({
@@ -39,7 +39,7 @@ describe('JLINC.validateRightsHolder', function() {
           publicKey: validRightsHolder.publicKey,
         },
       });
-    }).to.throw('rightsHolder must have key "privateKey"');
+    }).to.throw(JLINC.InvalidRightsHolderError, 'rightsHolder must have key "privateKey"');
 
     expect(() => {
       JLINC.validateRightsHolder({
@@ -48,7 +48,7 @@ describe('JLINC.validateRightsHolder', function() {
           privateKey: undefined,
         },
       });
-    }).to.throw('rightsHolder.privateKey must be of type string');
+    }).to.throw(JLINC.InvalidRightsHolderError, 'rightsHolder.privateKey must be of type string');
 
     expect(() => {
       JLINC.validateRightsHolder({
@@ -57,7 +57,7 @@ describe('JLINC.validateRightsHolder', function() {
           privateKey:'same shit privateKey',
         },
       });
-    }).to.throw('rightsHolder.privateKey must be of length 86');
+    }).to.throw(JLINC.InvalidRightsHolderError, 'rightsHolder.privateKey must be of length 86');
 
     expect(() => {
       JLINC.validateRightsHolder({
@@ -66,7 +66,7 @@ describe('JLINC.validateRightsHolder', function() {
           privateKey: validRightsHolder.privateKey,
         },
       });
-    }).to.throw('rightsHolder must have key "secret"');
+    }).to.throw(JLINC.InvalidRightsHolderError, 'rightsHolder must have key "secret"');
 
     expect(() => {
       JLINC.validateRightsHolder({
@@ -76,7 +76,7 @@ describe('JLINC.validateRightsHolder', function() {
           secret: 99999,
         },
       });
-    }).to.throw('rightsHolder.secret must be of type string');
+    }).to.throw(JLINC.InvalidRightsHolderError, 'rightsHolder.secret must be of type string');
 
     expect(() => {
       JLINC.validateRightsHolder({
@@ -86,7 +86,7 @@ describe('JLINC.validateRightsHolder', function() {
           secret: 'some bunk secret',
         },
       });
-    }).to.throw('rightsHolder.secret must be of length 32');
+    }).to.throw(JLINC.InvalidRightsHolderError, 'rightsHolder.secret must be of length 32');
 
     expect(
       JLINC.validateRightsHolder({

@@ -16,13 +16,13 @@ describe('JLINC.validateSisa', function() {
 
     expect(() => {
       JLINC.validateSisa({});
-    }).to.throw('sisa must be of type object');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa must be of type object');
 
     expect(() => {
       JLINC.validateSisa({
         sisa: {},
       });
-    }).to.throw('sisa must have key "@context"');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa must have key "@context"');
 
     expect(() => {
       JLINC.validateSisa({
@@ -30,7 +30,7 @@ describe('JLINC.validateSisa', function() {
           '@context': JLINC.contextUrl,
         },
       });
-    }).to.throw('sisa must have key "acceptedSisaJwt"');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa must have key "acceptedSisaJwt"');
 
     expect(() => {
       JLINC.validateSisa({
@@ -39,7 +39,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisaJwt: 89,
         },
       });
-    }).to.throw('sisa.acceptedSisaJwt must be of type string');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisaJwt must be of type string');
 
     expect(() => {
       JLINC.validateSisa({
@@ -48,7 +48,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisaJwt: 'foobarskeyz',
         },
       });
-    }).to.throw('sisa.acceptedSisaJwt is invalid');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisaJwt is invalid');
 
     expect(() => {
       JLINC.validateSisa({
@@ -57,7 +57,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisaJwt: this.our.sisa.acceptedSisaJwt,
         },
       });
-    }).to.throw('sisa must have key "sisaId"');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa must have key "sisaId"');
 
     expect(() => {
       JLINC.validateSisa({
@@ -67,7 +67,7 @@ describe('JLINC.validateSisa', function() {
           sisaId: 45,
         },
       });
-    }).to.throw('sisa.sisaId must be of type string');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.sisaId must be of type string');
 
     expect(() => {
       JLINC.validateSisa({
@@ -77,7 +77,7 @@ describe('JLINC.validateSisa', function() {
           sisaId: 'love',
         },
       });
-    }).to.throw('sisa.sisaId is not a hash of sisa.acceptedSisaJwt');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.sisaId is not a hash of sisa.acceptedSisaJwt');
 
     expect(() => {
       JLINC.validateSisa({
@@ -107,7 +107,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisa: {},
         })
       });
-    }).to.throw('sisa.acceptedSisa must have key "@context"');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa must have key "@context"');
 
     expect(() => {
       JLINC.validateSisa({
@@ -117,7 +117,7 @@ describe('JLINC.validateSisa', function() {
           },
         })
       });
-    }).to.throw('sisa.acceptedSisa["@context"] is invalid');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa["@context"] is invalid');
 
     expect(() => {
       JLINC.validateSisa({
@@ -127,7 +127,7 @@ describe('JLINC.validateSisa', function() {
           },
         })
       });
-    }).to.throw('sisa.acceptedSisa must have key "offeredSisaJwt"');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa must have key "offeredSisaJwt"');
 
     expect(() => {
       JLINC.validateSisa({
@@ -138,7 +138,7 @@ describe('JLINC.validateSisa', function() {
           },
         })
       });
-    }).to.throw('sisa.acceptedSisa.offeredSisaJwt must be of type string');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.offeredSisaJwt must be of type string');
 
     expect(() => {
       JLINC.validateSisa({
@@ -149,7 +149,7 @@ describe('JLINC.validateSisa', function() {
           },
         })
       });
-    }).to.throw('sisa.acceptedSisa.offeredSisaJwt is invalid');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.offeredSisaJwt is invalid');
 
     expect(() => {
       JLINC.validateSisa({
@@ -160,7 +160,7 @@ describe('JLINC.validateSisa', function() {
           },
         })
       });
-    }).to.throw('sisa.acceptedSisa.offeredSisaJwt is invalid');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.offeredSisaJwt is invalid');
 
     expect(() => {
       JLINC.validateSisa({
@@ -171,7 +171,7 @@ describe('JLINC.validateSisa', function() {
           },
         })
       });
-    }).to.throw('sisa.acceptedSisa.offeredSisaJwt is invalid');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.offeredSisaJwt is invalid');
 
     expect(() => {
       JLINC.validateSisa({
@@ -182,7 +182,7 @@ describe('JLINC.validateSisa', function() {
           },
         })
       });
-    }).to.throw('sisa.acceptedSisa must have key "rightsHolderSigType"');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa must have key "rightsHolderSigType"');
 
     expect(() => {
       JLINC.validateSisa({
@@ -194,7 +194,7 @@ describe('JLINC.validateSisa', function() {
           }
         }),
       });
-    }).to.throw('sisa.acceptedSisa.rightsHolderSigType must be of type string');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.rightsHolderSigType must be of type string');
 
     expect(() => {
       JLINC.validateSisa({
@@ -206,7 +206,7 @@ describe('JLINC.validateSisa', function() {
           },
         }),
       });
-    }).to.throw('sisa.acceptedSisa.rightsHolderSigType is invalid');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.rightsHolderSigType is invalid');
 
     expect(() => {
       JLINC.validateSisa({
@@ -218,7 +218,7 @@ describe('JLINC.validateSisa', function() {
           },
         }),
       });
-    }).to.throw('sisa.acceptedSisa must have key "rightsHolderId"');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa must have key "rightsHolderId"');
 
     expect(() => {
       JLINC.validateSisa({
@@ -231,7 +231,7 @@ describe('JLINC.validateSisa', function() {
           },
         }),
       });
-    }).to.throw('sisa.acceptedSisa.rightsHolderId must be of type string');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.rightsHolderId must be of type string');
 
     expect(() => {
       JLINC.validateSisa({
@@ -244,7 +244,7 @@ describe('JLINC.validateSisa', function() {
           },
         }),
       });
-    }).to.throw('sisa.acceptedSisa.rightsHolderId must be of length 43');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.rightsHolderId must be of length 43');
 
     expect(() => {
       JLINC.validateSisa({
@@ -257,7 +257,7 @@ describe('JLINC.validateSisa', function() {
           },
         }),
       });
-    }).to.throw('sisa.acceptedSisa must have key "rightsHolderSig"');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa must have key "rightsHolderSig"');
 
     expect(() => {
       JLINC.validateSisa({
@@ -271,7 +271,7 @@ describe('JLINC.validateSisa', function() {
           },
         }),
       });
-    }).to.throw('sisa.acceptedSisa.rightsHolderSig must be of type string');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.rightsHolderSig must be of type string');
 
     expect(() => {
       JLINC.validateSisa({
@@ -285,7 +285,7 @@ describe('JLINC.validateSisa', function() {
           },
         }),
       });
-    }).to.throw('sisa.acceptedSisa.rightsHolderSig is invalid');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.rightsHolderSig is invalid');
 
     // we cannot do this expecation where iat is missing because
     // jsonwebtoken.sign adds it
@@ -301,7 +301,7 @@ describe('JLINC.validateSisa', function() {
     //          },
     //        }),
     //      });
-    //    }).to.throw('sisa.acceptedSisa must have key "iat"');
+    //    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa must have key "iat"');
     //
     //    expect(() => {
     //      JLINC.validateSisa({
@@ -316,7 +316,7 @@ describe('JLINC.validateSisa', function() {
     //          },
     //        }),
     //      });
-    //    }).to.throw('sisa.acceptedSisa.iat must be of type number');
+    //    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.iat must be of type number');
     //
     //    expect(() => {
     //      JLINC.validateSisa({
@@ -329,7 +329,7 @@ describe('JLINC.validateSisa', function() {
     //          iat: 12,
     //        },
     //      });
-    //    }).to.throw('sisa.acceptedSisa.iat is too old');
+    //    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.iat is too old');
     //
     //    expect(() => {
     //      JLINC.validateSisa({
@@ -342,7 +342,7 @@ describe('JLINC.validateSisa', function() {
     //          iat: 23487328473289473892,
     //        },
     //      });
-    //    }).to.throw('sisa.acceptedSisa.iat cannot be in the future');
+    //    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.iat cannot be in the future');
 
     expect(
       JLINC.validateSisa({
@@ -376,7 +376,7 @@ describe('JLINC.validateSisa', function() {
           },
         }),
       });
-    }).to.throw('sisa.acceptedSisa.rightsHolderSig is invalid');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.rightsHolderSig is invalid');
 
     expect(() => {
       JLINC.validateSisa({
@@ -391,7 +391,7 @@ describe('JLINC.validateSisa', function() {
           },
         }),
       });
-    }).to.throw('sisa.acceptedSisa.rightsHolderSig is invalid');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.rightsHolderSig is invalid');
 
     expect(() => {
       JLINC.validateSisa({
@@ -406,7 +406,7 @@ describe('JLINC.validateSisa', function() {
           },
         }),
       });
-    }).to.throw('sisa.acceptedSisa.rightsHolderSig is invalid');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.rightsHolderSig is invalid');
 
     expect(() => {
       JLINC.validateSisa({
@@ -421,7 +421,7 @@ describe('JLINC.validateSisa', function() {
           },
         }),
       });
-    }).to.throw('sisa.acceptedSisa.offeredSisa must have key "@context"');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.offeredSisa must have key "@context"');
 
     expect(
       JLINC.validateSisa({ sisa: this.our.sisa })
@@ -442,7 +442,7 @@ describe('JLINC.validateSisa', function() {
         sisa: this.other.sisa,
         dataCustodian: this.our.dataCustodian,
       });
-    }).to.throw('sisa.acceptedSisa.offeredSisa.agreementJwt was not signed by the given dataCustodian');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.offeredSisa.agreementJwt was not signed by the given dataCustodian');
 
     // when alice is checking that the acceptedSisa is from her, and it is
     expect(() => {
@@ -458,6 +458,6 @@ describe('JLINC.validateSisa', function() {
         sisa: this.other.sisa,
         rightsHolder: this.our.rightsHolder,
       });
-    }).to.throw('sisa.acceptedSisa.rightsHolderId does not match given rightsHolder');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.rightsHolderId does not match given rightsHolder');
   });
 });

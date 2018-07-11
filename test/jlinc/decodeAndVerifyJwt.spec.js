@@ -17,7 +17,7 @@ describe('JLINC.decodeAndVerifyJwt', function() {
 
     expect(() => {
       JLINC.decodeAndVerifyJwt({ jwt, secret: '9875' });
-    }).to.throw('unable to verify jsonwebtoken');
+    }).to.throw(JLINC.JWTVerificationError, 'unable to verify jsonwebtoken');
   });
 
 });

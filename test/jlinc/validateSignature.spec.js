@@ -25,29 +25,29 @@ describe('JLINC.validateSignature', function() {
       })
     ).to.be.true;
 
-    expect(
+    expect(() => {
       JLINC.validateSignature({
         signature: 'some fake signature i made up',
         publicKey: entity.publicKey,
         itemSigned: itemToSign,
-      })
-    ).to.be.false;
+      });
+    }).to.throw(JLINC.InvalidSignatureError, 'invalid signature');
 
-    expect(
+    expect(()=>{
       JLINC.validateSignature({
         signature,
         publicKey: JLINC.createEntity().publicKey, // using the wrong public key
         itemSigned: itemToSign,
-      })
-    ).to.be.false;
+      });
+    }).to.throw(JLINC.InvalidSignatureError, 'invalid signature');
 
-    expect(
+    expect(()=>{
       JLINC.validateSignature({
         signature,
         publicKey: entity.publicKey,
         itemSigned: 'this is not the item that was signed',
-      })
-    ).to.be.false;
+      });
+    }).to.throw(JLINC.InvalidSignatureError, 'invalid signature');
   });
 
 });
