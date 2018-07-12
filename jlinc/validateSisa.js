@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function validateSisa({ sisa, dataCustodian, rightsHolder }){
+module.exports = function validateSisa({ sisa }){
   const { InvalidSisaError, InvalidOfferedSisaError, InvalidSignatureError } = this;
 
   if (typeof sisa !== 'object')
@@ -65,7 +65,7 @@ module.exports = function validateSisa({ sisa, dataCustodian, rightsHolder }){
     throw new InvalidSisaError('sisa.acceptedSisa.offeredSisaJwt is invalid');
 
   try{
-    this.validateOfferedSisa({ offeredSisa, dataCustodian });
+    this.validateOfferedSisa({ offeredSisa });
   }catch(error){
     if (error instanceof InvalidOfferedSisaError){
       throw new InvalidSisaError(error.message.replace('offeredSisa', 'sisa.acceptedSisa.offeredSisa'));
@@ -92,11 +92,6 @@ module.exports = function validateSisa({ sisa, dataCustodian, rightsHolder }){
 
   if (acceptedSisa.rightsHolderId.length !== 43)
     throw new InvalidSisaError('sisa.acceptedSisa.rightsHolderId must be of length 43');
-
-  if (rightsHolder && rightsHolder.publicKey){
-    if (acceptedSisa.rightsHolderId !== rightsHolder.publicKey)
-      throw new InvalidSisaError('sisa.acceptedSisa.rightsHolderId does not match given rightsHolder');
-  }
 
   // validating acceptedSisa.rightsHolderSig
   if (!('rightsHolderSig' in acceptedSisa))

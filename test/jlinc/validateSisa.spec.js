@@ -427,37 +427,5 @@ describe('JLINC.validateSisa', function() {
       JLINC.validateSisa({ sisa: this.our.sisa })
     ).to.be.true;
 
-
-    // when bob is checking that the acceptedSisa is from him, and it is
-    expect(() => {
-      JLINC.validateSisa({
-        sisa: this.our.sisa,
-        dataCustodian: this.our.dataCustodian,
-      });
-    }).to.not.throw();
-
-    // when bob is checking that the acceptedSisa is from him, and it is not
-    expect(() => {
-      JLINC.validateSisa({
-        sisa: this.other.sisa,
-        dataCustodian: this.our.dataCustodian,
-      });
-    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.offeredSisa.agreementJwt was not signed by the given dataCustodian');
-
-    // when alice is checking that the acceptedSisa is from her, and it is
-    expect(() => {
-      JLINC.validateSisa({
-        sisa: this.our.sisa,
-        rightsHolder: this.our.rightsHolder,
-      });
-    }).to.not.throw();
-
-    // when alice is checking that the acceptedSisa is from her, and it is not
-    expect(() => {
-      JLINC.validateSisa({
-        sisa: this.other.sisa,
-        rightsHolder: this.our.rightsHolder,
-      });
-    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.rightsHolderId does not match given rightsHolder');
   });
 });
