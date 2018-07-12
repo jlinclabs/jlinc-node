@@ -30,6 +30,7 @@ module.exports =  {
   InvalidAcknowledgedSisaEventError: class InvalidAcknowledgedSisaEventError extends CustomError {},
 
   SisaOfferingVerificationError: class SisaOfferingVerificationError extends CustomError {},
+  SisaVerificationError: class SisaVerificationError extends CustomError {},
 
   now: require('./now'),
   createNonce: require('./createNonce'),
@@ -56,6 +57,8 @@ module.exports =  {
 
   acceptSisa: require('./acceptSisa'),
   validateSisa: require('./validateSisa'),
+
+  verifySisaWasOfferedByDataCustodian: require('./verifySisaWasOfferedByDataCustodian'),
 
   expandSisa: require('./expandSisa'),
 };
