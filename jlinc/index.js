@@ -24,9 +24,12 @@ module.exports =  {
   InvalidSignatureError: class InvalidSignatureError extends CustomError {},
   InvalidSisaAgreementError: class InvalidSisaAgreementError extends CustomError {},
   InvalidOfferedSisaError: class InvalidOfferedSisaError extends CustomError {},
+  InvalidSisaOfferingError: class InvalidSisaOfferingError extends CustomError {},
   InvalidSisaError: class InvalidSisaError extends CustomError {},
   InvalidSisaEventError: class InvalidSisaEventError extends CustomError {},
   InvalidAcknowledgedSisaEventError: class InvalidAcknowledgedSisaEventError extends CustomError {},
+
+  SisaOfferingVerificationError: class SisaOfferingVerificationError extends CustomError {},
 
   now: require('./now'),
   createNonce: require('./createNonce'),
@@ -44,8 +47,12 @@ module.exports =  {
   createDataCustodian: require('./createDataCustodian'),
   createRightsHolder: require('./createRightsHolder'),
 
+  // creating and signing a sisa
   createSisaOffering: require('./createSisaOffering'),
+  validateSisaOffering: require('./validateSisaOffering'),
   validateOfferedSisa: require('./validateOfferedSisa'),
+  validateSisaAgreement: require('./validateSisaAgreement'),
+  verifySisaOfferingIsFromDataCustodian: require('./verifySisaOfferingIsFromDataCustodian'),
 
   acceptSisa: require('./acceptSisa'),
   validateSisa: require('./validateSisa'),
