@@ -4,32 +4,25 @@ require('../setup');
 const JLINC = require('../../jlinc');
 
 describe('JLINC.createSisaOffering', function() {
-  it('should require and validate a given sisaAgreement', function() {
-    const sisaAgreement = JLINC.createSisaAgreement();
 
-    expect(() => {
-      JLINC.createSisaOffering({
+  context('when missing required arguments', function() {
+    it('should throw an error', function(){
+      expect(() => {
+        JLINC.createSisaOffering({
 
-      });
-    }).to.throw('sisaAgreement must be of type object');
-
-    expect(() => {
-      JLINC.createSisaOffering({
-        sisaAgreement,
-      });
-    }).to.throw('dataCustodian must be of type object');
+        });
+      }).to.throw('dataCustodian is required');
+    });
   });
 
-  it('should generate a valid sisaAgreement', function() {
+  it('should create a valid sisa offering', function() {
     const dataCustodian = JLINC.createEntity();
-    const sisaAgreement = JLINC.createSisaAgreement();
 
-    const sisaOffering = JLINC.createSisaOffering({
-      sisaAgreement,
-      dataCustodian,
-    });
+    const sisaOffering = JLINC.createSisaOffering({ dataCustodian });
 
     expect(sisaOffering).to.be.an('object');
+    expect(sisaOffering).to.be.serializable();
+
     expect(sisaOffering).to.have.all.keys('@context', 'offeredSisa');
     expect(sisaOffering['@context']).to.equal(JLINC.contextUrl);
     expect(sisaOffering.offeredSisa).to.have.all.keys(
@@ -42,11 +35,21 @@ describe('JLINC.createSisaOffering', function() {
     );
     expect(sisaOffering.offeredSisa['@context']).to.equal(JLINC.contextUrl);
     expect(sisaOffering.offeredSisa.agreementJwt).to.be.aJWTSignedWith(dataCustodian.secret);
-    expect(sisaOffering.offeredSisa.agreementJwt).to.be.aJWTEncodingOf(sisaAgreement);
+    // expect(sisaOffering.offeredSisa.agreementJwt).to.be.aJWTEncodingOf(sisaAgreement);
     expect(sisaOffering.offeredSisa.dataCustodianSigType).to.be.a('string');
     expect(sisaOffering.offeredSisa.dataCustodianId).to.equal(dataCustodian.publicKey);
     expect(sisaOffering.offeredSisa.dataCustodianSig).to.be.a('string');
     expect(sisaOffering.offeredSisa.iat).to.be.aRecentSecondsFromEpochInteger();
+
+    const agreement = JLINC.decodeAndVerifyJwt({
+      jwt: sisaOffering.offeredSisa.agreementJwt,
+      secret: dataCustodian.secret,
+    });
+
+    expect(agreement['@context']).to.equal(JLINC.contextUrl);
+    expect(agreement.jlincId).to.be.aNonce();
+    expect(agreement.agreementURI).to.equal(JLINC.defaultAgreementURI);
+    expect(agreement.iat).to.be.aRecentSecondsFromEpochInteger();
 
     expect(
       JLINC.validateSignature({

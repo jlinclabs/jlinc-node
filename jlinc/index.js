@@ -41,8 +41,6 @@ module.exports =  {
 
   createEntity: require('./createEntity'),
 
-  createSisaAgreement: require('./createSisaAgreement'),
-  validateSisaAgreement: require('./validateSisaAgreement'),
   createDataCustodian: require('./createDataCustodian'),
   createRightsHolder: require('./createRightsHolder'),
 

@@ -1,8 +1,15 @@
 'use strict';
 
-module.exports = function createSisaOffering({ sisaAgreement, dataCustodian }) {
-  this.validateSisaAgreement({ sisaAgreement });
-  this.validateDataCustodian({ dataCustodian });
+module.exports = function createSisaOffering({ agreementURI, dataCustodian }) {
+
+  if (!dataCustodian) throw new Error('dataCustodian is required');
+
+  const sisaAgreement = {
+    "@context": this.contextUrl,
+    jlincId: this.createNonce(),
+    agreementURI: agreementURI || this.defaultAgreementURI,
+    iat: this.now(),
+  };
 
   const agreementJwt = this.createSignedJwt({
     itemToSign: sisaAgreement,
