@@ -1,7 +1,9 @@
 'use strict';
 
-module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
+module.exports = function validateOfferedSisa({ offeredSisa }) {
   const { InvalidOfferedSisaError, InvalidSignatureError, InvalidSisaAgreementError } = this;
+
+  if (!offeredSisa) throw new Error('offeredSisa is required');
 
   if (typeof offeredSisa !== 'object')
     throw new InvalidOfferedSisaError('offeredSisa must be of type object');
@@ -26,17 +28,6 @@ module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
   const sisaAgreement = this.decodeJwt({ jwt: offeredSisa.agreementJwt });
   if (sisaAgreement === null)
     throw new InvalidOfferedSisaError('offeredSisa.agreementJwt is invalid');
-
-  if (dataCustodian && dataCustodian.secret){
-    try{
-      this.decodeAndVerifyJwt({ jwt: offeredSisa.agreementJwt, secret: dataCustodian.secret });
-    }catch(error){
-      if (error.message === 'unable to verify jsonwebtoken'){
-        throw new InvalidOfferedSisaError('offeredSisa.agreementJwt was not signed by the given dataCustodian');
-      }
-      throw error;
-    }
-  }
 
   try{
     this.validateSisaAgreement({ sisaAgreement });
@@ -66,11 +57,6 @@ module.exports = function validateOfferedSisa({ offeredSisa, dataCustodian }) {
 
   if (offeredSisa.dataCustodianId.length !== 43)
     throw new InvalidOfferedSisaError('offeredSisa.dataCustodianId must be of length 43');
-
-  if (dataCustodian && dataCustodian.publicKey){
-    if (offeredSisa.dataCustodianId !== dataCustodian.publicKey)
-      throw new InvalidOfferedSisaError('offeredSisa.dataCustodianId does not match given dataCustodian');
-  }
 
   // validating offeredSisa.dataCustodianSig
   if (!('dataCustodianSig' in offeredSisa))
