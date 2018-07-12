@@ -21,9 +21,6 @@ module.exports =  {
 
   // Custom Errors
   JWTVerificationError: class JWTVerificationError extends CustomError {},
-  InvalidEntityError: class InvalidEntityError extends CustomError {},
-  InvalidDataCustodianError: class InvalidDataCustodianError extends CustomError {},
-  InvalidRightsHolderError: class InvalidRightsHolderError extends CustomError {},
   InvalidSignatureError: class InvalidSignatureError extends CustomError {},
   InvalidSisaAgreementError: class InvalidSisaAgreementError extends CustomError {},
   InvalidOfferedSisaError: class InvalidOfferedSisaError extends CustomError {},
@@ -43,9 +40,6 @@ module.exports =  {
   validateSignature: require('./validateSignature'),
 
   createEntity: require('./createEntity'),
-  validateEntity: require('./validateEntity'),
-  validateDataCustodian: require('./validateDataCustodian'),
-  validateRightsHolder: require('./validateRightsHolder'),
 
   createSisaAgreement: require('./createSisaAgreement'),
   validateSisaAgreement: require('./validateSisaAgreement'),
