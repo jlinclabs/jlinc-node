@@ -6,50 +6,29 @@ const JLINC = require('../../jlinc');
 describe('JLINC.acceptSisa', function() {
 
   beforeEach(function() {
-    const { offeredSisa, rightsHolder } = this.generateSisa();
-    this.offeredSisa = offeredSisa;
-    this.rightsHolder = rightsHolder;
+    const { sisaOffering, rightsHolder } = this.generateSisa();
+    Object.assign(this, { sisaOffering, rightsHolder });
   });
 
   it('should validate the given offeredSisa and rightsHolder', function() {
     expect(() => {
       JLINC.acceptSisa({});
-    }).to.throw('offeredSisa must be of type object');
+    }).to.throw('sisaOffering is reqiured');
 
     expect(() => {
       JLINC.acceptSisa({
-        offeredSisa: {},
+        sisaOffering: {},
       });
-    }).to.throw('offeredSisa must have key "@context"');
-
-    expect(() => {
-      JLINC.acceptSisa({
-        offeredSisa: this.offeredSisa,
-      });
-    }).to.throw('rightsHolder must be of type object');
-
-    expect(() => {
-      JLINC.acceptSisa({
-        offeredSisa: this.offeredSisa,
-        rightsHolder: {},
-      });
-    }).to.throw('rightsHolder must have key "publicKey"');
-
-    expect(() => {
-      JLINC.acceptSisa({
-        offeredSisa: this.offeredSisa,
-        rightsHolder: this.rightsHolder,
-      });
-    }).to.not.throw();
+    }).to.throw('rightsHolder is reqiured');
   });
 
   it('should sign the offeredSisa', function() {
-    const sisa = JLINC.acceptSisa({
-      offeredSisa: this.offeredSisa,
-      rightsHolder: this.rightsHolder,
-    });
+    const { sisaOffering, rightsHolder } = this;
+    const sisa = JLINC.acceptSisa({ sisaOffering, rightsHolder });
 
     expect(sisa).to.be.an('object');
+    expect(sisa).to.be.serializable();
+
     expect(sisa['@context']).to.equal(JLINC.contextUrl);
     expect(sisa.acceptedSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.secret);
     expect(sisa.sisaId).to.be.a('string');
@@ -60,7 +39,7 @@ describe('JLINC.acceptSisa', function() {
     });
     expect(acceptedSisa['@context']).to.equal(JLINC.contextUrl);
     expect(acceptedSisa.offeredSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.secret);
-    expect(acceptedSisa.offeredSisaJwt).to.be.aJWTEncodingOf(this.offeredSisa);
+    expect(acceptedSisa.offeredSisaJwt).to.be.aJWTEncodingOf(sisaOffering.offeredSisa);
     expect(acceptedSisa.rightsHolderSigType).to.equal('sha256:ed25519');
     expect(acceptedSisa.rightsHolderId).to.equal(this.rightsHolder.publicKey);
     expect(acceptedSisa.rightsHolderSig).to.be.a('string');

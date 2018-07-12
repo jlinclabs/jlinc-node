@@ -1,11 +1,13 @@
 'use strict';
 
-module.exports = function acceptSisa({ offeredSisa, rightsHolder }){
-  this.validateOfferedSisa({ offeredSisa });
-  this.validateRightsHolder({ rightsHolder });
+module.exports = function acceptSisa({ sisaOffering, rightsHolder }){
+  if (!sisaOffering) throw new Error('sisaOffering is reqiured');
+  if (!rightsHolder) throw new Error('rightsHolder is reqiured');
+
+  this.validateSisaOffering({ sisaOffering });
 
   const offeredSisaJwt = this.createSignedJwt({
-    itemToSign: offeredSisa,
+    itemToSign: sisaOffering.offeredSisa,
     secret: rightsHolder.secret,
   });
 
