@@ -9,7 +9,7 @@ Spec: https://protocol.jlinc.org/#5-sisa-events
 
 
 
-## Usage
+## Expected Usage
 
 
 ```js
@@ -17,31 +17,38 @@ Spec: https://protocol.jlinc.org/#5-sisa-events
 
 const JLINC = require('jlinc');
 
+// On the B Server
+const dataCustodian = JLINC.createDataCustodian();
 
-// done by bob on the B API
+const dataCustodianId = dataCustodian.publicKey;
 
-const dataCustodian = JLINC.createEntity();
-JLINC.validateDataCustodian({ dataCustodian });
+const sisaOffering = JLINC.createSisaOffering({ dataCustodian });
 
-const sisaAgreement = JLINC.createSisaAgreement();
-JLINC.validateSisaAgreement({ sisaAgreement });
+// simulate sending sisa across an HTTP request
+const copyOfSisaOffering = JSON.parse(JSON.stringify(sisaOffering));
 
-const sisaOffering = JLINC.createSisaOffering({ sisaAgreement, dataCustodian });
+// On the A Server
+const rightsHolder = JLINC.createRightsHolder();
 
-// done by alice on the A API
+JLINC.validateSisaOffering({
+  sisaOffering: copyOfSisaOffering
+});
 
-const { offeredSisa } = sisaOffering;
-JLINC.validateOfferedSisa({ offeredSisa, dataCustodian: { id: dataCustodianId } });
+JLINC.verifySisaOfferingIsFromDataCustodian({
+  sisaOffering: copyOfSisaOffering,
+  dataCustodianId,
+});
 
-const rightsHolder = JLINC.createEntity();
-JLINC.validateRightsHolder({ rightsHolder });
+const sisa = JLINC.acceptSisa({
+  sisaOffering: copyOfSisaOffering,
+  rightsHolder,
+});
 
-const acceptedSisa = JLINC.acceptSisa({ offeredSisa, rightsHolder });
+// simulate sending sisa across an HTTP request
+const copyOfSisa = JSON.parse(JSON.stringify(sisa));
 
+// On the B Server
+JLINC.validateSisa({ sisa: copyOfSisa });
 
-// done by bob on the B API
-JLINC.validateAcceptedSisa({ acceptedSisa, dataCustodian });
-
-const expandedAcceptedSisa = JLINC.expandAcceptedSisa({ acceptedSisa });
-
+JLINC.verifySisaWasOfferedByDataCustodian({ sisa: copyOfSisa, dataCustodian });
 ```
