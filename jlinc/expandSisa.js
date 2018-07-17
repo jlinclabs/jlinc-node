@@ -1,6 +1,8 @@
 'use strict';
 
 module.exports = function expandSisa({ sisa }){
+  if (!sisa) throw new Error('sisa is required');
+
   const expandedSisa = { ...sisa };
 
   expandedSisa.acceptedSisa = this.decodeJwt({ jwt: expandedSisa.acceptedSisaJwt });
