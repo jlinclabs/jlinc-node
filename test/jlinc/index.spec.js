@@ -11,7 +11,7 @@ describe('JLINC.version', function() {
 
 describe('JLINC.contextUrl', function() {
   it('should be "https://context.jlinc.org/v05/jlinc.jsonld"', function(){
-    expect(JLINC.contextUrl).to.equal('https://context.jlinc.org/v05/jlinc.jsonld');
+    expect(JLINC.contextUrl).to.equal('https://protocol.jlinc.org/context/jlinc-v5.jsonld');
   });
 });
 

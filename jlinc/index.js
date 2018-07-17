@@ -10,7 +10,7 @@ class CustomError extends Error {
 
 module.exports =  {
   version: require('../package.json').version,
-  contextUrl: 'https://context.jlinc.org/v05/jlinc.jsonld',
+  contextUrl: 'https://protocol.jlinc.org/context/jlinc-v5.jsonld',
   defaultAgreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
 
   sisaEventTypes: Object.freeze([
