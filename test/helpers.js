@@ -13,6 +13,8 @@ module.exports = {
 
     const acceptedSisa = JLINC.decodeJwt({ jwt: sisa.acceptedSisaJwt });
     const { offeredSisaJwt } = acceptedSisa;
+    const rightsHolderId = rightsHolder.publicKey;
+    const dataCustodianId = dataCustodian.publicKey;
     return {
       dataCustodian,
       sisaOffering,
@@ -20,6 +22,8 @@ module.exports = {
       acceptedSisa,
       rightsHolder,
       sisa,
+      rightsHolderId,
+      dataCustodianId,
     };
   },
 
@@ -31,6 +35,8 @@ module.exports = {
       acceptedSisa,
       rightsHolder,
       sisa,
+      rightsHolderId,
+      dataCustodianId,
     } = this.generateSisa();
 
     const event = {
@@ -55,6 +61,8 @@ module.exports = {
       acceptedSisa,
       rightsHolder,
       sisa,
+      rightsHolderId,
+      dataCustodianId,
       sisaEvent,
     };
   },
