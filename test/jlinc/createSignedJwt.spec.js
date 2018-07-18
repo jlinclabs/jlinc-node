@@ -10,9 +10,9 @@ describe('JLINC.createSignedJwt', function() {
       itemToSign: { size: 'uuge', iat: 55 },
       secret: '12345',
     });
-    expect(jwt).to.be.aJWT();
-    expect(jwt).to.be.aJWTSignedWith('12345');
-    expect(jwt).to.be.aJWTEncodingOf({ size: 'uuge', iat: 55 });
+    expect(jwt).to.be.aJwt();
+    expect(jwt).to.be.aJwtSignedWith('12345');
+    expect(jwt).to.be.aJwtEncodingOf({ size: 'uuge', iat: 55 });
   });
 
 });

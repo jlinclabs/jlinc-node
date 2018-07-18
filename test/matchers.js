@@ -7,17 +7,17 @@ const b64 = require('urlsafe-base64');
 
 require('./setup');
 
-chai.Assertion.addMethod('aJWT', function(){
+chai.Assertion.addMethod('aJwt', function(){
   expect(this._obj).to.match(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/);
 });
 
-chai.Assertion.addMethod('aJWTSignedWith', function(secretOrPrivateKey){
-  expect(this._obj).to.be.aJWT();
+chai.Assertion.addMethod('aJwtSignedWith', function(secretOrPrivateKey){
+  expect(this._obj).to.be.aJwt();
   jsonwebtoken.verify(this._obj, secretOrPrivateKey);
 });
 
-chai.Assertion.addMethod('aJWTEncodingOf', function(expectedObject){
-  expect(this._obj).to.be.aJWT();
+chai.Assertion.addMethod('aJwtEncodingOf', function(expectedObject){
+  expect(this._obj).to.be.aJwt();
   const decoded = jsonwebtoken.decode(this._obj);
   if (!('iat' in expectedObject)) delete decoded.iat;
   expect( decoded ).to.deep.equal(expectedObject);

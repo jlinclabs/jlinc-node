@@ -63,8 +63,8 @@ describe('JLINC.createSisaEvent', function() {
 
       expect(sisaEvent).to.be.an('object');
       expect(sisaEvent['@context']).to.equal(JLINC.contextUrl);
-      expect(sisaEvent.eventJwt).to.be.aJWTSignedWith(rightsHolder.secret);
-      expect(sisaEvent.eventJwt).to.be.aJWTEncodingOf(event);
+      expect(sisaEvent.eventJwt).to.be.aJwtSignedWith(rightsHolder.secret);
+      expect(sisaEvent.eventJwt).to.be.aJwtEncodingOf(event);
       expect(sisaEvent.audit).to.be.an('object');
       expect(sisaEvent.audit.eventType).to.equal('dataEvent');
       expect(sisaEvent.audit.sisaId).to.equal(sisa.sisaId);

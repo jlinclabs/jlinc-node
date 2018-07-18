@@ -30,7 +30,7 @@ describe('JLINC.acceptSisa', function() {
     expect(sisa).to.be.serializable();
 
     expect(sisa['@context']).to.equal(JLINC.contextUrl);
-    expect(sisa.acceptedSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.secret);
+    expect(sisa.acceptedSisaJwt).to.be.aJwtSignedWith(this.rightsHolder.secret);
     expect(sisa.sisaId).to.be.a('string');
 
     const acceptedSisa = JLINC.decodeAndVerifyJwt({
@@ -38,8 +38,8 @@ describe('JLINC.acceptSisa', function() {
       secret: this.rightsHolder.secret,
     });
     expect(acceptedSisa['@context']).to.equal(JLINC.contextUrl);
-    expect(acceptedSisa.offeredSisaJwt).to.be.aJWTSignedWith(this.rightsHolder.secret);
-    expect(acceptedSisa.offeredSisaJwt).to.be.aJWTEncodingOf(sisaOffering.offeredSisa);
+    expect(acceptedSisa.offeredSisaJwt).to.be.aJwtSignedWith(this.rightsHolder.secret);
+    expect(acceptedSisa.offeredSisaJwt).to.be.aJwtEncodingOf(sisaOffering.offeredSisa);
     expect(acceptedSisa.rightsHolderSigType).to.equal('sha256:ed25519');
     expect(acceptedSisa.rightsHolderId).to.equal(this.rightsHolder.publicKey);
     expect(acceptedSisa.rightsHolderSig).to.be.a('string');
