@@ -1,13 +1,13 @@
 'use strict';
 
-require('../setup');
 const JLINC = require('../../jlinc');
+const { generateSisa } = require('../helpers');
 
 describe('JLINC.validateSisa', function() {
 
   beforeEach(function() {
-    this.our = this.generateSisa();
-    this.other = this.generateSisa();
+    this.our = generateSisa();
+    this.other = generateSisa();
   });
 
   it('should validate the given acceptedSisa', function() {

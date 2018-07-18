@@ -1,7 +1,7 @@
 'use strict';
 
-require('../setup');
 const JLINC = require('../../jlinc');
+const { generateSisa } = require('../helpers');
 
 describe('JLINC.verifySisaWasOfferedByDataCustodian', function() {
 
@@ -22,7 +22,7 @@ describe('JLINC.verifySisaWasOfferedByDataCustodian', function() {
 
   context('when given a sisa and dataCustodian that match', function() {
     before(function() {
-      const { sisa, dataCustodian } = this.generateSisa();
+      const { sisa, dataCustodian } = generateSisa();
       Object.assign(this, { sisa, dataCustodian });
     });
     it('should return true', function(){
@@ -38,7 +38,7 @@ describe('JLINC.verifySisaWasOfferedByDataCustodian', function() {
 
   context('when given a sisa and dataCustodian that do not match', function() {
     before(function() {
-      const { sisa, dataCustodian } = this.generateSisa();
+      const { sisa, dataCustodian } = generateSisa();
       const otherDataCustodian = JLINC.createDataCustodian();
       Object.assign(this, { sisa, dataCustodian, otherDataCustodian });
     });

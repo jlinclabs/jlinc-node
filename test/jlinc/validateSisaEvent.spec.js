@@ -1,12 +1,12 @@
 'use strict';
 
-require('../setup');
 const JLINC = require('../../jlinc');
+const { generateSisaEvent } = require('../helpers');
 
 describe('JLINC.validateSisaEvent', function() {
 
   before(function() {
-    const { sisaEvent } = this.generateSisaEvent();
+    const { sisaEvent } = generateSisaEvent();
     this.sisaEvent = sisaEvent;
   });
 

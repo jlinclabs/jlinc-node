@@ -1,12 +1,12 @@
 'use strict';
 
-require('../setup');
 const JLINC = require('../../jlinc');
+const { generateSisa } = require('../helpers');
 
 describe('JLINC.verifySisaWasSignedByRightsHolder', function() {
 
   before(function() {
-    const { dataCustodian, rightsHolder, sisa } = this.generateSisa();
+    const { dataCustodian, rightsHolder, sisa } = generateSisa();
     Object.assign(this, { dataCustodian, rightsHolder, sisa });
   });
 

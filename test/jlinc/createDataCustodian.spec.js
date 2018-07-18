@@ -1,6 +1,5 @@
 'use strict';
 
-require('../setup');
 const JLINC = require('../../jlinc');
 
 describe('JLINC.createDataCustodian', function() {

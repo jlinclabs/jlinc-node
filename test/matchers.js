@@ -5,8 +5,6 @@ const jsonwebtoken = require('jsonwebtoken');
 const sodium = require('sodium').api;
 const b64 = require('urlsafe-base64');
 
-require('./setup');
-
 chai.Assertion.addMethod('aJwt', function(){
   expect(this._obj).to.match(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/);
 });

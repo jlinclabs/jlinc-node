@@ -1,7 +1,7 @@
 'use strict';
 
-require('../setup');
 const JLINC = require('../../jlinc');
+const { generateSisa } = require('../helpers');
 
 it('changing personal data', function() {
   const {
@@ -14,7 +14,7 @@ it('changing personal data', function() {
     rightsHolderId,
     dataCustodianId,
     sisaEvent,
-  } = this.generateSisa();
+  } = generateSisa();
 
   // On the A server
 

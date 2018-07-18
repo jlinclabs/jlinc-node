@@ -1,12 +1,12 @@
 'use strict';
 
-require('../setup');
 const JLINC = require('../../jlinc');
+const { generateSisa } = require('../helpers');
 
 describe('JLINC.acceptSisa', function() {
 
   beforeEach(function() {
-    const { sisaOffering, rightsHolder } = this.generateSisa();
+    const { sisaOffering, rightsHolder } = generateSisa();
     Object.assign(this, { sisaOffering, rightsHolder });
   });
 

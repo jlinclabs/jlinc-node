@@ -3,3 +3,4 @@
 --reporter spec
 --colors
 --recursive
+--require ./test/setup.js

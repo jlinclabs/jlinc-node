@@ -3,7 +3,6 @@
 const sodium = require('sodium').api;
 const b64 = require('urlsafe-base64');
 
-require('../setup');
 const JLINC = require('../../jlinc');
 
 describe('JLINC.verifySignature', function() {

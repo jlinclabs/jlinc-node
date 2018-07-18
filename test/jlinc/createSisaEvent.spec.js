@@ -1,12 +1,12 @@
 'use strict';
 
-require('../setup');
 const JLINC = require('../../jlinc');
+const { generateSisa } = require('../helpers');
 
 describe('JLINC.createSisaEvent', function() {
 
   before(function() {
-    const { sisa, rightsHolder } = this.generateSisa();
+    const { sisa, rightsHolder } = generateSisa();
     const eventType = 'dataEvent';
     const event = {
       personal_data: {
