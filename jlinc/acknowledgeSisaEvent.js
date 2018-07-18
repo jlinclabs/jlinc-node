@@ -13,7 +13,7 @@ module.exports = function acknowledgeSisaEvent({ sisa, dataCustodian, sisaEvent 
   const acknowledgedSisaEvent = { ...sisaEvent };
   acknowledgedSisaEvent.audit = {
     ...sisaEvent.audit,
-    dataCustodianSigType: 'sha256:ed25519',
+    dataCustodianSigType: this.signatureType,
     dataCustodianId: dataCustodian.publicKey,
     dataCustodianSig: this.signItem({
       itemToSign: sisaEvent.eventJwt,

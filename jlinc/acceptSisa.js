@@ -19,7 +19,7 @@ module.exports = function acceptSisa({ sisaOffering, rightsHolder }){
   const acceptedSisa = {
     '@context': this.contextUrl,
     offeredSisaJwt,
-    rightsHolderSigType: 'sha256:ed25519',
+    rightsHolderSigType: this.signatureType,
     rightsHolderId: rightsHolder.publicKey,
     rightsHolderSig,
     iat: this.now(),

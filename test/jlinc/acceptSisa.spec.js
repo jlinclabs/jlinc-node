@@ -40,7 +40,7 @@ describe('JLINC.acceptSisa', function() {
     expect(acceptedSisa['@context']).to.equal(JLINC.contextUrl);
     expect(acceptedSisa.offeredSisaJwt).to.be.aJwtSignedWith(this.rightsHolder.secret);
     expect(acceptedSisa.offeredSisaJwt).to.be.aJwtEncodingOf(sisaOffering.offeredSisa);
-    expect(acceptedSisa.rightsHolderSigType).to.equal('sha256:ed25519');
+    expect(acceptedSisa.rightsHolderSigType).to.equal(JLINC.signatureType);
     expect(acceptedSisa.rightsHolderId).to.equal(this.rightsHolder.publicKey);
     expect(acceptedSisa.rightsHolderSig).to.be.a('string');
     expect(acceptedSisa.iat).to.be.aRecentSecondsFromEpochInteger();

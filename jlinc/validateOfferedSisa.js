@@ -45,7 +45,7 @@ module.exports = function validateOfferedSisa({ offeredSisa }) {
   if (typeof offeredSisa.dataCustodianSigType !== 'string')
     throw new InvalidOfferedSisaError('offeredSisa.dataCustodianSigType must be of type string');
 
-  if (offeredSisa.dataCustodianSigType !== 'sha256:ed25519')
+  if (offeredSisa.dataCustodianSigType !== this.signatureType)
     throw new InvalidOfferedSisaError('offeredSisa.dataCustodianSigType is invalid');
 
   // validating offeredSisa.dataCustodianId

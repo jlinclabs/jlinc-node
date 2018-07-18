@@ -214,7 +214,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisa: {
             '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
-            rightsHolderSigType: 'sha256:ed25519',
+            rightsHolderSigType: JLINC.signatureType,
           },
         }),
       });
@@ -226,7 +226,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisa: {
             '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
-            rightsHolderSigType: 'sha256:ed25519',
+            rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: 89.
           },
         }),
@@ -239,7 +239,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisa: {
             '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
-            rightsHolderSigType: 'sha256:ed25519',
+            rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: 'fourtytwo',
           },
         }),
@@ -252,7 +252,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisa: {
             '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
-            rightsHolderSigType: 'sha256:ed25519',
+            rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
           },
         }),
@@ -265,7 +265,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisa: {
             '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
-            rightsHolderSigType: 'sha256:ed25519',
+            rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: 0,
           },
@@ -279,7 +279,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisa: {
             '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
-            rightsHolderSigType: 'sha256:ed25519',
+            rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: 'signatureatron',
           },
@@ -295,7 +295,7 @@ describe('JLINC.validateSisa', function() {
     //          acceptedSisa: {
     //            '@context': JLINC.contextUrl,
     //            offeredSisaJwt: this.our.offeredSisaJwt,
-    //            rightsHolderSigType: 'sha256:ed25519',
+    //            rightsHolderSigType: JLINC.signatureType,
     //            rightsHolderId: this.our.rightsHolder.publicKey,
     //            rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
     //          },
@@ -309,7 +309,7 @@ describe('JLINC.validateSisa', function() {
     //          acceptedSisa: {
     //            '@context': JLINC.contextUrl,
     //            offeredSisaJwt: this.our.offeredSisaJwt,
-    //            rightsHolderSigType: 'sha256:ed25519',
+    //            rightsHolderSigType: JLINC.signatureType,
     //            rightsHolderId: this.our.rightsHolder.publicKey,
     //            rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
     //            iat: 'now',
@@ -323,7 +323,7 @@ describe('JLINC.validateSisa', function() {
     //        acceptedSisa: {
     //          '@context': JLINC.contextUrl,
     //          offeredSisaJwt: this.our.offeredSisaJwt,
-    //          rightsHolderSigType: 'sha256:ed25519',
+    //          rightsHolderSigType: JLINC.signatureType,
     //          rightsHolderId: this.our.rightsHolder.publicKey,
     //          rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
     //          iat: 12,
@@ -336,7 +336,7 @@ describe('JLINC.validateSisa', function() {
     //        acceptedSisa: {
     //          '@context': JLINC.contextUrl,
     //          offeredSisaJwt: this.our.offeredSisaJwt,
-    //          rightsHolderSigType: 'sha256:ed25519',
+    //          rightsHolderSigType: JLINC.signatureType,
     //          rightsHolderId: this.our.rightsHolder.publicKey,
     //          rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
     //          iat: 23487328473289473892,
@@ -350,7 +350,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisa: {
             '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
-            rightsHolderSigType: 'sha256:ed25519',
+            rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
           },
@@ -369,7 +369,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisa: {
             '@context': JLINC.contextUrl,
             offeredSisaJwt: this.other.acceptedSisa.offeredSisaJwt,
-            rightsHolderSigType: 'sha256:ed25519',
+            rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
             iat: Date.now(),
@@ -384,7 +384,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisa: {
             '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
-            rightsHolderSigType: 'sha256:ed25519',
+            rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.other.acceptedSisa.rightsHolderId,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
             iat: Date.now(),
@@ -399,7 +399,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisa: {
             '@context': JLINC.contextUrl,
             offeredSisaJwt: this.our.offeredSisaJwt,
-            rightsHolderSigType: 'sha256:ed25519',
+            rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.other.acceptedSisa.rightsHolderSig,
             iat: Date.now(),
@@ -414,7 +414,7 @@ describe('JLINC.validateSisa', function() {
           acceptedSisa: {
             '@context': JLINC.contextUrl,
             offeredSisaJwt: JLINC.createSignedJwt({ itemToSign: {}, secret: 'trees' }),
-            rightsHolderSigType: 'sha256:ed25519',
+            rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.other.acceptedSisa.rightsHolderSig,
             iat: Date.now(),

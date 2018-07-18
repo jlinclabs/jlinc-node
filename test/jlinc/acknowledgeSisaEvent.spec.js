@@ -87,7 +87,7 @@ describe('JLINC.acknowledgeSisaEvent', function() {
       expect(acknowledgedSisaEvent.audit.rightsHolderSig    ).to.equal(sisaEvent.audit.rightsHolderSig);
 
       // new keys
-      expect(acknowledgedSisaEvent.audit.dataCustodianSigType).to.equal('sha256:ed25519');
+      expect(acknowledgedSisaEvent.audit.dataCustodianSigType).to.equal(JLINC.signatureType);
       expect(acknowledgedSisaEvent.audit.dataCustodianId).to.equal(dataCustodian.publicKey);
       expect(acknowledgedSisaEvent.audit.dataCustodianSig).to.be.a('string');
 

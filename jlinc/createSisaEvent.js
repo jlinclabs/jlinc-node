@@ -38,7 +38,7 @@ module.exports = function createSisaEvent({ eventType, event, sisa, latestSisaEv
       eventId,
       timestamp: this.now(),
       previousId: latestSisaEvent ? latestSisaEvent.audit.eventId : null,
-      rightsHolderSigType: 'sha256:ed25519',
+      rightsHolderSigType: this.signatureType,
       rightsHolderId: rightsHolder.publicKey,
       rightsHolderSig,
     },

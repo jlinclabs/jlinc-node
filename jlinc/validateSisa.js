@@ -80,7 +80,7 @@ module.exports = function validateSisa({ sisa }){
   if (typeof acceptedSisa.rightsHolderSigType !== 'string')
     throw new InvalidSisaError('sisa.acceptedSisa.rightsHolderSigType must be of type string');
 
-  if (acceptedSisa.rightsHolderSigType !== 'sha256:ed25519')
+  if (acceptedSisa.rightsHolderSigType !== this.signatureType)
     throw new InvalidSisaError('sisa.acceptedSisa.rightsHolderSigType is invalid');
 
   // validating acceptedSisa.rightsHolderId

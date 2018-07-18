@@ -73,7 +73,7 @@ module.exports = function validateSisaEvent({ sisaEvent }) {
   if (!('rightsHolderSigType' in sisaEvent.audit))
     throw new InvalidSisaEventError('sisaEvent.audit must have key "rightsHolderSigType"');
 
-  if (sisaEvent.audit.rightsHolderSigType !== 'sha256:ed25519')
+  if (sisaEvent.audit.rightsHolderSigType !== this.signatureType)
     throw new InvalidSisaEventError('sisaEvent.audit.rightsHolderSigType is invalid');
 
   // sisaEvent.audit.rightsHolderId

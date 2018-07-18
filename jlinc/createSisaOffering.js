@@ -26,7 +26,7 @@ module.exports = function createSisaOffering({ agreementURI, dataCustodian }) {
     offeredSisa: {
       '@context': this.contextUrl,
       agreementJwt,
-      dataCustodianSigType: 'sha256:ed25519',
+      dataCustodianSigType: this.signatureType,
       dataCustodianId: dataCustodian.publicKey,
       dataCustodianSig,
       iat: this.now(),

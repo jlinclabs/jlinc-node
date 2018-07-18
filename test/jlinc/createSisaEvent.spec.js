@@ -69,7 +69,7 @@ describe('JLINC.createSisaEvent', function() {
       expect(sisaEvent.audit.eventType).to.equal('dataEvent');
       expect(sisaEvent.audit.sisaId).to.equal(sisa.sisaId);
       expect(sisaEvent.audit.previousId).to.be.null;
-      expect(sisaEvent.audit.rightsHolderSigType).to.equal('sha256:ed25519');
+      expect(sisaEvent.audit.rightsHolderSigType).to.equal(JLINC.signatureType);
       expect(sisaEvent.audit.rightsHolderId).to.equal(rightsHolder.publicKey);
       expect(sisaEvent.audit.rightsHolderSig).to.be.a('string');
 
