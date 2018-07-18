@@ -45,7 +45,7 @@ module.exports = function validateAcknowledgedSisaEvent({ sisaEvent, acknowledge
     throw new InvalidAcknowledgedSisaEventError('acknowledgedSisaEvent.audit.dataCustodianSig is missing');
 
   try{
-    this.validateSignature({
+    this.verifySignature({
       itemSigned: acknowledgedSisaEvent.eventJwt,
       signature: acknowledgedSisaEvent.audit.dataCustodianSig,
       publicKey: acknowledgedSisaEvent.audit.dataCustodianId,

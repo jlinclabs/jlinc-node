@@ -92,7 +92,7 @@ describe('JLINC.acknowledgeSisaEvent', function() {
       expect(acknowledgedSisaEvent.audit.dataCustodianSig).to.be.a('string');
 
       expect(
-        JLINC.validateSignature({
+        JLINC.verifySignature({
           itemSigned: acknowledgedSisaEvent.eventJwt,
           signature: acknowledgedSisaEvent.audit.dataCustodianSig,
           publicKey: dataCustodian.publicKey,

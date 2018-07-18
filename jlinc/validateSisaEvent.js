@@ -88,7 +88,7 @@ module.exports = function validateSisaEvent({ sisaEvent }) {
     throw new InvalidSisaEventError('sisaEvent.audit must have key "rightsHolderSig"');
 
   try{
-    this.validateSignature({
+    this.verifySignature({
       itemSigned: sisaEvent.eventJwt,
       signature: sisaEvent.audit.rightsHolderSig,
       publicKey: sisaEvent.audit.rightsHolderId,

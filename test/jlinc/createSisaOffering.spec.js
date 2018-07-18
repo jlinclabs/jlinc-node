@@ -52,7 +52,7 @@ describe('JLINC.createSisaOffering', function() {
     expect(agreement.iat).to.be.aRecentSecondsFromEpochInteger();
 
     expect(
-      JLINC.validateSignature({
+      JLINC.verifySignature({
         itemSigned: sisaOffering.offeredSisa.agreementJwt,
         signature: sisaOffering.offeredSisa.dataCustodianSig,
         publicKey: dataCustodian.publicKey,

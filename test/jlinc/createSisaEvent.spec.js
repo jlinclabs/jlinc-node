@@ -74,7 +74,7 @@ describe('JLINC.createSisaEvent', function() {
       expect(sisaEvent.audit.rightsHolderSig).to.be.a('string');
 
       expect(
-        JLINC.validateSignature({
+        JLINC.verifySignature({
           itemSigned: sisaEvent.eventJwt,
           signature: sisaEvent.audit.rightsHolderSig,
           publicKey: rightsHolder.publicKey,

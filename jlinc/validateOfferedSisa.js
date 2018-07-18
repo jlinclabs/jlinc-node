@@ -66,7 +66,7 @@ module.exports = function validateOfferedSisa({ offeredSisa }) {
     throw new InvalidOfferedSisaError('offeredSisa.dataCustodianSig must be of type string');
 
   try{
-    this.validateSignature({
+    this.verifySignature({
       itemSigned: offeredSisa.agreementJwt,
       signature: offeredSisa.dataCustodianSig,
       publicKey: offeredSisa.dataCustodianId,

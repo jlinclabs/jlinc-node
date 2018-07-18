@@ -7,7 +7,7 @@ module.exports = function verifySisaEventWasSignedByRightsHolder({ sisaEvent, ri
   if (!rightsHolderId) throw new Error('rightsHolderId is required');
 
   try{
-    this.validateSignature({
+    this.verifySignature({
       itemSigned: sisaEvent.eventJwt,
       signature: sisaEvent.audit.rightsHolderSig,
       publicKey: rightsHolderId,

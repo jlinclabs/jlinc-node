@@ -101,7 +101,7 @@ module.exports = function validateSisa({ sisa }){
     throw new InvalidSisaError('sisa.acceptedSisa.rightsHolderSig must be of type string');
 
   try{
-    this.validateSignature({
+    this.verifySignature({
       itemSigned: acceptedSisa.offeredSisaJwt,
       signature: acceptedSisa.rightsHolderSig,
       publicKey: acceptedSisa.rightsHolderId,

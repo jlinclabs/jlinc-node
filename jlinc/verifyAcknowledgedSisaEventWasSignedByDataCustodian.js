@@ -7,7 +7,7 @@ module.exports = function verifyAcknowledgedSisaEventWasSignedByDataCustodian({ 
   if (!dataCustodianId) throw new Error('dataCustodianId is required');
 
   try{
-    this.validateSignature({
+    this.verifySignature({
       itemSigned: acknowledgedSisaEvent.eventJwt,
       signature: acknowledgedSisaEvent.audit.dataCustodianSig,
       publicKey: dataCustodianId,

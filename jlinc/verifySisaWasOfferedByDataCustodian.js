@@ -22,7 +22,7 @@ module.exports = function verifySisaWasOfferedByDataCustodian({ sisa, dataCustod
   }
 
   try{
-    this.validateSignature({
+    this.verifySignature({
       itemSigned: agreementJwt,
       signature: dataCustodianSig,
       publicKey: dataCustodian.publicKey,

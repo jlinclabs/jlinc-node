@@ -44,7 +44,7 @@ module.exports =  {
   decodeAndVerifyJwt: require('./decodeAndVerifyJwt'),
 
   signItem: require('./signItem'),
-  validateSignature: require('./validateSignature'),
+  verifySignature: require('./verifySignature'),
 
   createEntity: require('./createEntity'),
 

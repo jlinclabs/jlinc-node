@@ -9,7 +9,7 @@ module.exports = function verifySisaOfferingIsFromDataCustodian({ sisaOffering, 
   const { agreementJwt, dataCustodianSig } = sisaOffering.offeredSisa;
 
   try{
-    this.validateSignature({
+    this.verifySignature({
       itemSigned: agreementJwt,
       signature: dataCustodianSig,
       publicKey: dataCustodianId,

@@ -46,7 +46,7 @@ describe('JLINC.acceptSisa', function() {
     expect(acceptedSisa.iat).to.be.aRecentSecondsFromEpochInteger();
 
     expect(
-      JLINC.validateSignature({
+      JLINC.verifySignature({
         itemSigned: acceptedSisa.offeredSisaJwt,
         signature: acceptedSisa.rightsHolderSig,
         publicKey: this.rightsHolder.publicKey,
