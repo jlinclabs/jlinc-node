@@ -1,0 +1,25 @@
+'use strict';
+
+module.exports = function acknowledgeSisaEvent({ sisa, dataCustodian, sisaEvent }){
+
+  if (!sisa) throw new Error('sisa is required');
+  if (!dataCustodian) throw new Error('dataCustodian is required');
+  if (!sisaEvent) throw new Error('sisaEvent is required');
+
+  this.validateSisa({ sisa });
+  this.validateSisaEvent({ sisaEvent });
+  this.verifySisaWasOfferedByDataCustodian({ sisa, dataCustodian });
+
+  const acknowledgedSisaEvent = { ...sisaEvent };
+  acknowledgedSisaEvent.audit = {
+    ...sisaEvent.audit,
+    dataCustodianSigType: 'sha256:ed25519',
+    dataCustodianId: dataCustodian.publicKey,
+    dataCustodianSig: this.signItem({
+      itemToSign: sisaEvent.eventJwt,
+      privateKey: dataCustodian.privateKey,
+    }),
+  };
+
+  return acknowledgedSisaEvent;
+};

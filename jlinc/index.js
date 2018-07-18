@@ -31,7 +31,10 @@ module.exports =  {
 
   SisaOfferingVerificationError: class SisaOfferingVerificationError extends CustomError {},
   SisaVerificationError: class SisaVerificationError extends CustomError {},
+  SisaEventVerificationError: class SisaEventVerificationError extends CustomError {},
+  AcknowledgedSisaEventVerificationError: class AcknowledgedSisaEventVerificationError extends CustomError {},
 
+  // utilities
   now: require('./now'),
   createNonce: require('./createNonce'),
   createHash: require('./createHash'),
@@ -57,8 +60,18 @@ module.exports =  {
 
   acceptSisa: require('./acceptSisa'),
   validateSisa: require('./validateSisa'),
-
   verifySisaWasOfferedByDataCustodian: require('./verifySisaWasOfferedByDataCustodian'),
+  verifySisaWasSignedByRightsHolder: require('./verifySisaWasSignedByRightsHolder'),
 
   expandSisa: require('./expandSisa'),
+
+  // Sisa Events
+  createSisaEvent: require('./createSisaEvent'),
+  validateSisaEvent: require('./validateSisaEvent'),
+  expandSisaEvent: require('./expandSisaEvent'),
+  verifySisaEventWasSignedByRightsHolder: require('./verifySisaEventWasSignedByRightsHolder'),
+
+  acknowledgeSisaEvent: require('./acknowledgeSisaEvent'),
+  validateAcknowledgedSisaEvent: require('./validateAcknowledgedSisaEvent'),
+  verifyAcknowledgedSisaEventWasSignedByDataCustodian: require('./verifyAcknowledgedSisaEventWasSignedByDataCustodian'),
 };

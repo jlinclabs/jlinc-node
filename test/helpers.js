@@ -21,5 +21,41 @@ module.exports = {
       rightsHolder,
       sisa,
     };
-  }
+  },
+
+  generateSisaEvent() {
+    const {
+      dataCustodian,
+      sisaOffering,
+      offeredSisaJwt,
+      acceptedSisa,
+      rightsHolder,
+      sisa,
+    } = this.generateSisa();
+
+    const event = {
+      personal_data: {
+        firstname: 'Larry',
+        lastname: 'David',
+      },
+    };
+
+    const sisaEvent = JLINC.createSisaEvent({
+      eventType: 'dataEvent',
+      event,
+      sisa: sisa,
+      latestSisaEvent: null,
+      rightsHolder,
+    });
+
+    return {
+      dataCustodian,
+      sisaOffering,
+      offeredSisaJwt,
+      acceptedSisa,
+      rightsHolder,
+      sisa,
+      sisaEvent,
+    };
+  },
 };

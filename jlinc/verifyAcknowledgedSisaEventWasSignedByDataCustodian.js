@@ -1,0 +1,21 @@
+'use strict';
+
+module.exports = function verifyAcknowledgedSisaEventWasSignedByDataCustodian({ acknowledgedSisaEvent, dataCustodianId }) {
+  const { InvalidSignatureError, AcknowledgedSisaEventVerificationError } = this;
+
+  if (!acknowledgedSisaEvent) throw new Error('acknowledgedSisaEvent is required');
+  if (!dataCustodianId) throw new Error('dataCustodianId is required');
+
+  try{
+    this.validateSignature({
+      itemSigned: acknowledgedSisaEvent.eventJwt,
+      signature: acknowledgedSisaEvent.audit.dataCustodianSig,
+      publicKey: dataCustodianId,
+    });
+  }catch(error){
+    if (error instanceof InvalidSignatureError)
+      throw new AcknowledgedSisaEventVerificationError('sisaOffering is not from the given dataCustodian');
+    throw error;
+  }
+
+};
