@@ -71,15 +71,15 @@ chai.Assertion.addMethod('aCryptoSignKeypair', function(){
   ).to.equal(itemToSign);
 });
 
-chai.Assertion.addMethod('aJlincEntity', function(){
-  const entity = this._obj;
-  expect(entity).to.be.an('object');
-  expect(entity).to.have.all.keys('publicKey', 'privateKey', 'secret');
-  expect(entity.publicKey).to.be.aPublicKey();
-  expect(entity.privateKey).to.be.aPrivateKey();
-  expect(entity.secret).to.be.aSecret();
+chai.Assertion.addMethod('aJlincParty', function(){
+  const party = this._obj;
+  expect(party).to.be.an('object');
+  expect(party).to.have.all.keys('publicKey', 'privateKey', 'secret');
+  expect(party.publicKey).to.be.aPublicKey();
+  expect(party.privateKey).to.be.aPrivateKey();
+  expect(party.secret).to.be.aSecret();
   expect({
-    publicKey: entity.publicKey,
-    privateKey: entity.privateKey,
+    publicKey: party.publicKey,
+    privateKey: party.privateKey,
   }).to.be.aCryptoSignKeypair();
 });

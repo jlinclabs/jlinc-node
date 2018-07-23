@@ -15,7 +15,7 @@ describe('JLINC.createSisaOffering', function() {
   });
 
   it('should create a valid sisa offering', function() {
-    const dataCustodian = JLINC.createEntity();
+    const dataCustodian = JLINC.createDataCustodian();
 
     const sisaOffering = JLINC.createSisaOffering({ dataCustodian });
 

@@ -5,7 +5,7 @@ const JLINC = require('../../jlinc');
 describe('JLINC.validateOfferedSisa', function() {
 
   before(function() {
-    const dataCustodian = JLINC.createEntity();
+    const dataCustodian = JLINC.createDataCustodian();
     const sisaOffering = JLINC.createSisaOffering({ dataCustodian });
     const { offeredSisa } = sisaOffering;
     Object.assign(this, { dataCustodian, sisaOffering, offeredSisa });

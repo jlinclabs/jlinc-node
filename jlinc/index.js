@@ -47,8 +47,6 @@ module.exports =  {
   signItem: require('./signItem'),
   verifySignature: require('./verifySignature'),
 
-  createEntity: require('./createEntity'),
-
   createDataCustodian: require('./createDataCustodian'),
   createRightsHolder: require('./createRightsHolder'),
 

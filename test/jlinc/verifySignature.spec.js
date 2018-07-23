@@ -8,18 +8,18 @@ const JLINC = require('../../jlinc');
 describe('JLINC.verifySignature', function() {
 
   it('should validate that the given signature is a signature of the give itemSigned and publicKey', function(){
-    const entity = JLINC.createEntity();
+    const rightsHolder = JLINC.createRightsHolder();
     const itemToSign = 'donkeys need food too';
 
     const signature = JLINC.signItem({
       itemToSign,
-      privateKey: entity.privateKey,
+      privateKey: rightsHolder.privateKey,
     });
 
     expect(
       JLINC.verifySignature({
         signature,
-        publicKey: entity.publicKey,
+        publicKey: rightsHolder.publicKey,
         itemSigned: itemToSign,
       })
     ).to.be.true;
@@ -27,7 +27,7 @@ describe('JLINC.verifySignature', function() {
     expect(() => {
       JLINC.verifySignature({
         signature: 'some fake signature i made up',
-        publicKey: entity.publicKey,
+        publicKey: rightsHolder.publicKey,
         itemSigned: itemToSign,
       });
     }).to.throw(JLINC.InvalidSignatureError, 'invalid signature');
@@ -35,7 +35,7 @@ describe('JLINC.verifySignature', function() {
     expect(()=>{
       JLINC.verifySignature({
         signature,
-        publicKey: JLINC.createEntity().publicKey, // using the wrong public key
+        publicKey: JLINC.createRightsHolder().publicKey, // using the wrong public key
         itemSigned: itemToSign,
       });
     }).to.throw(JLINC.InvalidSignatureError, 'invalid signature');
@@ -43,7 +43,7 @@ describe('JLINC.verifySignature', function() {
     expect(()=>{
       JLINC.verifySignature({
         signature,
-        publicKey: entity.publicKey,
+        publicKey: rightsHolder.publicKey,
         itemSigned: 'this is not the item that was signed',
       });
     }).to.throw(JLINC.InvalidSignatureError, 'invalid signature');

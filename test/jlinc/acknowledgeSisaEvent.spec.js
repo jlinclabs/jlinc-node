@@ -41,7 +41,7 @@ describe('JLINC.acknowledgeSisaEvent', function() {
       const { dataCustodian, sisa, sisaEvent } = this;
       expect(()=>{
         JLINC.acknowledgeSisaEvent({
-          dataCustodian: JLINC.createEntity(),
+          dataCustodian: JLINC.createDataCustodian(),
           sisa,
           sisaEvent,
         });

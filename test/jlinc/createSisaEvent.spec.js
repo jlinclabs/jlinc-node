@@ -185,7 +185,7 @@ describe('JLINC.createSisaEvent', function() {
           event,
           sisa,
           latestSisaEvent,
-          rightsHolder: JLINC.createEntity(),
+          rightsHolder: JLINC.createRightsHolder(),
         });
       }).to.throw(JLINC.SisaVerificationError, 'sisa.acceptedSisaJwt is not signed by the given rightsHolder');
     });

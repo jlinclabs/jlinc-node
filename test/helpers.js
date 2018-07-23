@@ -3,9 +3,9 @@
 const JLINC = require('../jlinc');
 
 const generateSisa = function() {
-  const dataCustodian = JLINC.createEntity();
+  const dataCustodian = JLINC.createDataCustodian();
   const sisaOffering = JLINC.createSisaOffering({ dataCustodian });
-  const rightsHolder = JLINC.createEntity();
+  const rightsHolder = JLINC.createRightsHolder();
   const sisa = JLINC.acceptSisa({ sisaOffering, rightsHolder });
 
   const acceptedSisa = JLINC.decodeJwt({ jwt: sisa.acceptedSisaJwt });
