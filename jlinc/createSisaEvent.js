@@ -31,7 +31,7 @@ module.exports = function createSisaEvent({ eventType, event, sisa, latestSisaEv
   });
 
   return {
-    "@context": this.contextUrl,
+    '@context': this.contextUrl,
     audit: {
       eventType,
       sisaId: sisa.sisaId,
