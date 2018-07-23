@@ -42,7 +42,6 @@ describe('JLINC.expandSisaEvent', function() {
           timestamp: 1531872606,
         },
         event: {
-          iat: 1531872606,
           personal_data: {
             firstname: 'Alice',
             lastname: 'McEnduser',
@@ -93,7 +92,6 @@ describe('JLINC.expandSisaEvent', function() {
             firstname: 'Alice',
             lastname: 'McEnduser',
           },
-          iat: 1532367780,
         },
       });
     });

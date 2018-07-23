@@ -28,18 +28,15 @@ describe('JLINC.expandSisa', function() {
           rightsHolderSigType: JLINC.signatureType,
           rightsHolderId: 'Vy5u822DzZFSNT4ilu2aanFJweh8Tojh-aMmMjksu58',
           rightsHolderSig: 'BkhCeLloBxzTkBYx0nqa5v8qgmg8Zu7TmhYpEISOwWOX1s9ApCfmi-OcQmwXF9R64F7-d5ziEcZvGPz_0g2wAVAtDYC_yyIh4Te0eXGW4mD783ldxzsPPpsUg1yrBIyy',
-          iat: 1531871896,
           offeredSisa: {
             '@context': JLINC.contextUrl,
             dataCustodianSigType: JLINC.signatureType,
             dataCustodianId: 'qpiqPsv_Qveb7BvzYMVVL8opjPzPR2-ATuJG-M61NW4',
             dataCustodianSig: 'rimCLP6Yf6yXV3BFn4nN871JXjXSu1pJkhmd1A9WsGI0dMUfFDXTIQF18JT6Duxe3apBiNEmgks7JC6Ez71zC9V_ZII5UszJe6vIF6G4GnV-6PWGPA3as76_CU7W8T_x',
-            iat: 1531871896,
             agreement: {
               '@context': JLINC.contextUrl,
               jlincId: 'b0fafcdc26b2678de97bd3eff089504fb1ab40282de6ef4711e6d7aa4a9e9061',
               agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
-              iat: 1531871896
             },
           },
         },

@@ -6,6 +6,7 @@ module.exports = function expandSisaEvent({ sisaEvent }){
   const expandedSisaEvent = { ...sisaEvent };
 
   expandedSisaEvent.event = this.decodeJwt({ jwt: sisaEvent.eventJwt });
+  delete expandedSisaEvent.event.iat;
   delete expandedSisaEvent.eventJwt;
 
   return expandedSisaEvent;
