@@ -68,6 +68,7 @@ describe('JLINC.createSisaEvent', function() {
       expect(sisaEvent.audit).to.be.an('object');
       expect(sisaEvent.audit.eventType).to.equal('dataEvent');
       expect(sisaEvent.audit.sisaId).to.equal(sisa.sisaId);
+      expect(sisaEvent.audit.eventId).to.be.a('string');
       expect(sisaEvent.audit.previousId).to.be.null;
       expect(sisaEvent.audit.rightsHolderSigType).to.equal(JLINC.signatureType);
       expect(sisaEvent.audit.rightsHolderId).to.equal(rightsHolder.publicKey);
@@ -80,6 +81,28 @@ describe('JLINC.createSisaEvent', function() {
           publicKey: rightsHolder.publicKey,
         })
       ).to.be.true;
+
+      expect(
+        JLINC.expandSisaEvent({ sisaEvent })
+      ).to.deep.equal({
+        '@context': 'https://protocol.jlinc.org/context/jlinc-v5.jsonld',
+        audit: {
+          eventType: 'dataEvent',
+          sisaId: sisa.sisaId,
+          eventId: sisaEvent.audit.eventId,
+          createdAt: sisaEvent.audit.createdAt,
+          previousId: null,
+          rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
+          rightsHolderId: sisaEvent.audit.rightsHolderId,
+          rightsHolderSig: sisaEvent.audit.rightsHolderSig,
+        },
+        event: {
+          personal_data: {
+            firstname: 'Steven',
+            lastname: 'Pinker',
+          }
+        }
+      });
     });
   });
 

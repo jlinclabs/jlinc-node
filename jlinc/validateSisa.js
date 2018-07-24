@@ -112,18 +112,15 @@ module.exports = function validateSisa({ sisa }){
     throw error;
   }
 
-  // validating acceptedSisa.iat
-  if (!('iat' in acceptedSisa))
-    throw new InvalidSisaError('sisa.acceptedSisa must have key "iat"');
+  // validating acceptedSisa.acceptedAt
+  if (!('acceptedAt' in acceptedSisa))
+    throw new InvalidSisaError('sisa.acceptedSisa must have key "acceptedAt"');
 
-  if (typeof acceptedSisa.iat !== 'number')
-    throw new InvalidSisaError('sisa.acceptedSisa.iat must be of type number');
+  if (typeof acceptedSisa.acceptedAt !== 'number')
+    throw new InvalidSisaError('sisa.acceptedSisa.acceptedAt must be of type number');
 
-  if (acceptedSisa.iat < 1530903259)
-    throw new InvalidSisaError('sisa.acceptedSisa.iat is too old');
-
-  if (acceptedSisa.iat > this.now())
-    throw new InvalidSisaError('sisa.acceptedSisa.iat cannot be in the future');
+  if (acceptedSisa.acceptedAt > Date.now())
+    throw new InvalidSisaError('sisa.acceptedSisa.acceptedAt cannot be in the future');
 
   return true;
 };

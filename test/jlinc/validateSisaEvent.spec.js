@@ -83,7 +83,7 @@ describe('JLINC.validateSisaEvent', function() {
             },
           },
         });
-      }).to.throw(JLINC.InsisaEventError, 'sisaEvent.audit must have key "timestamp"');
+      }).to.throw(JLINC.InsisaEventError, 'sisaEvent.audit must have key "createdAt"');
 
       expect(() => {
         JLINC.validateSisaEvent({
@@ -94,7 +94,7 @@ describe('JLINC.validateSisaEvent', function() {
               eventType: sisaEvent.audit.eventType,
               sisaId: sisaEvent.audit.sisaId,
               eventId: sisaEvent.audit.eventId,
-              timestamp: sisaEvent.audit.timestamp,
+              createdAt: sisaEvent.audit.createdAt,
             },
           },
         });
@@ -109,7 +109,7 @@ describe('JLINC.validateSisaEvent', function() {
               eventType: sisaEvent.audit.eventType,
               sisaId: sisaEvent.audit.sisaId,
               eventId: sisaEvent.audit.eventId,
-              timestamp: sisaEvent.audit.timestamp,
+              createdAt: sisaEvent.audit.createdAt,
               previousId: sisaEvent.audit.previousId,
             },
           },
@@ -125,7 +125,7 @@ describe('JLINC.validateSisaEvent', function() {
               eventType: sisaEvent.audit.eventType,
               sisaId: sisaEvent.audit.sisaId,
               eventId: sisaEvent.audit.eventId,
-              timestamp: sisaEvent.audit.timestamp,
+              createdAt: sisaEvent.audit.createdAt,
               previousId: sisaEvent.audit.previousId,
               rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
             },
@@ -142,7 +142,7 @@ describe('JLINC.validateSisaEvent', function() {
               eventType: sisaEvent.audit.eventType,
               sisaId: sisaEvent.audit.sisaId,
               eventId: sisaEvent.audit.eventId,
-              timestamp: sisaEvent.audit.timestamp,
+              createdAt: sisaEvent.audit.createdAt,
               previousId: sisaEvent.audit.previousId,
               rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
               rightsHolderId: sisaEvent.audit.rightsHolderId,
@@ -160,7 +160,7 @@ describe('JLINC.validateSisaEvent', function() {
               eventType: sisaEvent.audit.eventType,
               sisaId: sisaEvent.audit.sisaId,
               eventId: sisaEvent.audit.eventId,
-              timestamp: sisaEvent.audit.timestamp,
+              createdAt: sisaEvent.audit.createdAt,
               previousId: sisaEvent.audit.previousId,
               rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
               rightsHolderId: sisaEvent.audit.rightsHolderId,
@@ -180,7 +180,7 @@ describe('JLINC.validateSisaEvent', function() {
               eventType: sisaEvent.audit.eventType,
               sisaId: sisaEvent.audit.sisaId,
               eventId: sisaEvent.audit.eventId,
-              timestamp: sisaEvent.audit.timestamp,
+              createdAt: sisaEvent.audit.createdAt,
               previousId: sisaEvent.audit.previousId,
               rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
               rightsHolderId: sisaEvent.audit.rightsHolderId,
@@ -200,7 +200,7 @@ describe('JLINC.validateSisaEvent', function() {
               eventType: sisaEvent.audit.eventType,
               sisaId: sisaEvent.audit.sisaId,
               eventId: sisaEvent.audit.eventId,
-              timestamp: sisaEvent.audit.timestamp,
+              createdAt: sisaEvent.audit.createdAt,
               previousId: sisaEvent.audit.previousId,
               rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
               rightsHolderId: sisaEvent.audit.rightsHolderId,
@@ -220,7 +220,7 @@ describe('JLINC.validateSisaEvent', function() {
               eventType: sisaEvent.audit.eventType,
               sisaId: sisaEvent.audit.sisaId,
               eventId: 'asdsakjdsakldjsakldjsaklajlk',
-              timestamp: sisaEvent.audit.timestamp,
+              createdAt: sisaEvent.audit.createdAt,
               previousId: sisaEvent.audit.previousId,
               rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
               rightsHolderId: sisaEvent.audit.rightsHolderId,

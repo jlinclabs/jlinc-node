@@ -33,18 +33,5 @@ module.exports = function validateSisaAgreement({ sisaAgreement }) {
   if (!sisaAgreement.agreementURI.match(/^https?:\/\//))
     throw new InvalidSisaAgreementError('sisaAgreement.agreementURI must be a url');
 
-  // sisaAgreement.iat
-  if (!('iat' in sisaAgreement))
-    throw new InvalidSisaAgreementError('sisaAgreement must have key "iat"');
-
-  if (typeof sisaAgreement.iat !== 'number')
-    throw new InvalidSisaAgreementError('sisaAgreement.iat must be of type number');
-
-  if (sisaAgreement.iat < 1530903259)
-    throw new InvalidSisaAgreementError('sisaAgreement.iat is too old');
-
-  if (sisaAgreement.iat > this.now())
-    throw new InvalidSisaAgreementError('sisaAgreement.iat cannot be in the future');
-
   return true;
 };

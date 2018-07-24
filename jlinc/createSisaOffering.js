@@ -8,7 +8,6 @@ module.exports = function createSisaOffering({ agreementURI, dataCustodian }) {
     "@context": this.contextUrl,
     jlincId: this.createNonce(),
     agreementURI: agreementURI || this.defaultAgreementURI,
-    iat: this.now(),
   };
 
   const agreementJwt = this.createSignedJwt({
@@ -29,7 +28,7 @@ module.exports = function createSisaOffering({ agreementURI, dataCustodian }) {
       dataCustodianSigType: this.signatureType,
       dataCustodianId: dataCustodian.publicKey,
       dataCustodianSig,
-      iat: this.now(),
+      offeredAt: Date.now(),
     }
   };
 };

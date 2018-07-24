@@ -52,18 +52,15 @@ module.exports = function validateSisaEvent({ sisaEvent }) {
   if (sisaEvent.audit.eventId !== this.createHash({ itemToHash: sisaEvent.eventJwt }))
     throw new InvalidSisaEventError('sisaEvent.audit.eventId is invalid');
 
-  // sisaEvent.audit.timestamp
-  if (!('timestamp' in sisaEvent.audit))
-    throw new InvalidSisaEventError('sisaEvent.audit must have key "timestamp"');
+  // sisaEvent.audit.createdAt
+  if (!('createdAt' in sisaEvent.audit))
+    throw new InvalidSisaEventError('sisaEvent.audit must have key "createdAt"');
 
-  if (typeof sisaEvent.audit.timestamp !== 'number')
-    throw new InvalidSisaEventError('sisaEvent.audit.timestamp must be of type number');
+  if (typeof sisaEvent.audit.createdAt !== 'number')
+    throw new InvalidSisaEventError('sisaEvent.audit.createdAt must be of type number');
 
-  if (sisaEvent.audit.timestamp < 1530903259)
-    throw new InvalidSisaEventError('sisaEvent.audit.timestamp is too old');
-
-  if (sisaEvent.audit.timestamp > Date.now())
-    throw new InvalidSisaEventError('sisaEvent.audit.timestamp cannot be in the future');
+  if (sisaEvent.audit.createdAt > Date.now())
+    throw new InvalidSisaEventError('sisaEvent.audit.createdAt cannot be in the future');
 
   // sisaEvent.audit.previousId
   if (!('previousId' in sisaEvent.audit))

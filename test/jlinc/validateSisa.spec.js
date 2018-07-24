@@ -287,62 +287,50 @@ describe('JLINC.validateSisa', function() {
       });
     }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.rightsHolderSig is invalid');
 
-    // we cannot do this expecation where iat is missing because
-    // jsonwebtoken.sign adds it
-    //    expect(() => {
-    //      JLINC.validateSisa({
-    //        sisa: constructSisa({
-    //          acceptedSisa: {
-    //            '@context': JLINC.contextUrl,
-    //            offeredSisaJwt: this.our.offeredSisaJwt,
-    //            rightsHolderSigType: JLINC.signatureType,
-    //            rightsHolderId: this.our.rightsHolder.publicKey,
-    //            rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
-    //          },
-    //        }),
-    //      });
-    //    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa must have key "iat"');
-    //
-    //    expect(() => {
-    //      JLINC.validateSisa({
-    //        sisa: constructSisa({
-    //          acceptedSisa: {
-    //            '@context': JLINC.contextUrl,
-    //            offeredSisaJwt: this.our.offeredSisaJwt,
-    //            rightsHolderSigType: JLINC.signatureType,
-    //            rightsHolderId: this.our.rightsHolder.publicKey,
-    //            rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
-    //            iat: 'now',
-    //          },
-    //        }),
-    //      });
-    //    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.iat must be of type number');
-    //
-    //    expect(() => {
-    //      JLINC.validateSisa({
-    //        acceptedSisa: {
-    //          '@context': JLINC.contextUrl,
-    //          offeredSisaJwt: this.our.offeredSisaJwt,
-    //          rightsHolderSigType: JLINC.signatureType,
-    //          rightsHolderId: this.our.rightsHolder.publicKey,
-    //          rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
-    //          iat: 12,
-    //        },
-    //      });
-    //    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.iat is too old');
-    //
-    //    expect(() => {
-    //      JLINC.validateSisa({
-    //        acceptedSisa: {
-    //          '@context': JLINC.contextUrl,
-    //          offeredSisaJwt: this.our.offeredSisaJwt,
-    //          rightsHolderSigType: JLINC.signatureType,
-    //          rightsHolderId: this.our.rightsHolder.publicKey,
-    //          rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
-    //          iat: 23487328473289473892,
-    //        },
-    //      });
-    //    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.iat cannot be in the future');
+
+    expect(() => {
+      JLINC.validateSisa({
+        sisa: constructSisa({
+          acceptedSisa: {
+            '@context': JLINC.contextUrl,
+            offeredSisaJwt: this.our.offeredSisaJwt,
+            rightsHolderSigType: JLINC.signatureType,
+            rightsHolderId: this.our.rightsHolder.publicKey,
+            rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
+          },
+        }),
+      });
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa must have key "acceptedAt"');
+
+    expect(() => {
+      JLINC.validateSisa({
+        sisa: constructSisa({
+          acceptedSisa: {
+            '@context': JLINC.contextUrl,
+            offeredSisaJwt: this.our.offeredSisaJwt,
+            rightsHolderSigType: JLINC.signatureType,
+            rightsHolderId: this.our.rightsHolder.publicKey,
+            rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
+            acceptedAt: 'now',
+          },
+        }),
+      });
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.acceptedAt must be of type number');
+
+    expect(() => {
+      JLINC.validateSisa({
+        sisa: constructSisa({
+          acceptedSisa: {
+            '@context': JLINC.contextUrl,
+            offeredSisaJwt: this.our.offeredSisaJwt,
+            rightsHolderSigType: JLINC.signatureType,
+            rightsHolderId: this.our.rightsHolder.publicKey,
+            rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
+            acceptedAt: 23487328473289473892,
+          },
+        })
+      });
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.acceptedAt cannot be in the future');
 
     expect(
       JLINC.validateSisa({
@@ -353,6 +341,7 @@ describe('JLINC.validateSisa', function() {
             rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
+            acceptedAt: Date.now(),
           },
         }),
       })
@@ -372,7 +361,7 @@ describe('JLINC.validateSisa', function() {
             rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
-            iat: Date.now(),
+            acceptedAt: Date.now(),
           },
         }),
       });
@@ -387,7 +376,7 @@ describe('JLINC.validateSisa', function() {
             rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.other.acceptedSisa.rightsHolderId,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
-            iat: Date.now(),
+            acceptedAt: Date.now(),
           },
         }),
       });
@@ -402,7 +391,7 @@ describe('JLINC.validateSisa', function() {
             rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.other.acceptedSisa.rightsHolderSig,
-            iat: Date.now(),
+            acceptedAt: Date.now(),
           },
         }),
       });
@@ -417,7 +406,7 @@ describe('JLINC.validateSisa', function() {
             rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.other.acceptedSisa.rightsHolderSig,
-            iat: Date.now(),
+            acceptedAt: Date.now(),
           },
         }),
       });

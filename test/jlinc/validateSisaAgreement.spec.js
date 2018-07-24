@@ -85,50 +85,6 @@ describe('JLINC.validateSisaAgreement', function() {
           agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
         },
       });
-    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement must have key "iat"');
-
-    expect(() => {
-      JLINC.validateSisaAgreement({
-        sisaAgreement: {
-          '@context': JLINC.contextUrl,
-          jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
-          agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
-          iat: undefined,
-        },
-      });
-    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement.iat must be of type number');
-
-    expect(() => {
-      JLINC.validateSisaAgreement({
-        sisaAgreement: {
-          '@context': JLINC.contextUrl,
-          jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
-          agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
-          iat: 12345,
-        },
-      });
-    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement.iat is too old');
-
-    expect(() => {
-      JLINC.validateSisaAgreement({
-        sisaAgreement: {
-          '@context': JLINC.contextUrl,
-          jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
-          agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
-          iat: Math.floor(Date.now() / 1000) + 10,
-        },
-      });
-    }).to.throw(JLINC.InvalidSisaAgreementError, 'sisaAgreement.iat cannot be in the future');
-
-    expect(() => {
-      JLINC.validateSisaAgreement({
-        sisaAgreement: {
-          '@context': JLINC.contextUrl,
-          jlincId: '133cd3f1fca1045bf7c8e711b6ae8ba79482866ab142f241c958f686f44468b2',
-          agreementURI: 'https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4',
-          iat: Math.floor(Date.now() / 1000),
-        },
-      });
     }).to.not.throw();
   });
 });

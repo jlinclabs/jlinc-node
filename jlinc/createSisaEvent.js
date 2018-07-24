@@ -1,7 +1,6 @@
 'use strict';
 
 const isPlainObject = require('is-plain-object');
-const jsonwebtoken = require('jsonwebtoken');
 
 module.exports = function createSisaEvent({ eventType, event, sisa, latestSisaEvent, rightsHolder }) {
 
@@ -23,7 +22,10 @@ module.exports = function createSisaEvent({ eventType, event, sisa, latestSisaEv
   if (latestSisaEvent !== null)
     this.validateSisaEvent({ sisaEvent: latestSisaEvent });
 
-  const eventJwt = jsonwebtoken.sign(event, rightsHolder.secret);
+  const eventJwt = this.createSignedJwt({
+    itemToSign: event,
+    secret: rightsHolder.secret,
+  });
   const eventId = this.createHash({ itemToHash: eventJwt });
   const rightsHolderSig = this.signItem({
     itemToSign: eventJwt,
@@ -36,7 +38,7 @@ module.exports = function createSisaEvent({ eventType, event, sisa, latestSisaEv
       eventType,
       sisaId: sisa.sisaId,
       eventId,
-      timestamp: this.now(),
+      createdAt: Date.now(),
       previousId: latestSisaEvent ? latestSisaEvent.audit.eventId : null,
       rightsHolderSigType: this.signatureType,
       rightsHolderId: rightsHolder.publicKey,

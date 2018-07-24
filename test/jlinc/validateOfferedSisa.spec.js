@@ -181,7 +181,7 @@ describe('JLINC.validateOfferedSisa', function() {
             dataCustodianSig: offeredSisa.dataCustodianSig,
           }
         });
-      }).to.throw(JLINC.InvalidOfferedSisaError, 'offeredSisa must have key "iat"');
+      }).to.throw(JLINC.InvalidOfferedSisaError, 'offeredSisa must have key "offeredAt"');
 
       expect(() => {
         JLINC.validateOfferedSisa({
@@ -191,23 +191,10 @@ describe('JLINC.validateOfferedSisa', function() {
             dataCustodianSigType: JLINC.signatureType,
             dataCustodianId: offeredSisa.dataCustodianId,
             dataCustodianSig: offeredSisa.dataCustodianSig,
-            iat: 123,
+            offeredAt: Date.now() + 1000,
           }
         });
-      }).to.throw(JLINC.InvalidOfferedSisaError, 'offeredSisa.iat is too old');
-
-      expect(() => {
-        JLINC.validateOfferedSisa({
-          offeredSisa: {
-            '@context': JLINC.contextUrl,
-            agreementJwt: offeredSisa.agreementJwt,
-            dataCustodianSigType: JLINC.signatureType,
-            dataCustodianId: offeredSisa.dataCustodianId,
-            dataCustodianSig: offeredSisa.dataCustodianSig,
-            iat: Math.floor(Date.now() / 1000) + 10,
-          }
-        });
-      }).to.throw(JLINC.InvalidOfferedSisaError, 'offeredSisa.iat cannot be in the future');
+      }).to.throw(JLINC.InvalidOfferedSisaError, 'offeredSisa.offeredAt cannot be in the future');
 
       expect(
         JLINC.validateOfferedSisa({
@@ -217,7 +204,7 @@ describe('JLINC.validateOfferedSisa', function() {
             dataCustodianSigType: JLINC.signatureType,
             dataCustodianId: offeredSisa.dataCustodianId,
             dataCustodianSig: offeredSisa.dataCustodianSig,
-            iat: Math.floor(Date.now() / 1000),
+            offeredAt: Date.now(),
           }
         })
       ).to.be.true;
@@ -231,7 +218,7 @@ describe('JLINC.validateOfferedSisa', function() {
             dataCustodianSigType: JLINC.signatureType,
             dataCustodianId: offeredSisa.dataCustodianId,
             dataCustodianSig: offeredSisa.dataCustodianSig,
-            iat: Math.floor(Date.now() / 1000),
+            offeredAt: Math.floor(Date.now() / 1000),
           }
         });
       }).to.throw(JLINC.InvalidSisaAgreementError, 'acceptedSisa.agreement must have key "@context"');

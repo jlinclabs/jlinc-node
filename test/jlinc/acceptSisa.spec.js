@@ -43,7 +43,6 @@ describe('JLINC.acceptSisa', function() {
     expect(acceptedSisa.rightsHolderSigType).to.equal(JLINC.signatureType);
     expect(acceptedSisa.rightsHolderId).to.equal(this.rightsHolder.publicKey);
     expect(acceptedSisa.rightsHolderSig).to.be.a('string');
-    expect(acceptedSisa.iat).to.be.aRecentSecondsFromEpochInteger();
 
     expect(
       JLINC.verifySignature({

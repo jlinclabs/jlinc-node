@@ -28,8 +28,8 @@ chai.Assertion.addMethod('aBase64EncodedString', function(){
 });
 
 chai.Assertion.addMethod('aRecentSecondsFromEpochInteger', function(){
-  const now = Math.floor(Date.now() / 1000);
-  expect(this._obj).to.be.within(now - 1, now);
+  const now = Date.now();
+  expect(this._obj).to.be.within(now - 1000, now);
 });
 
 chai.Assertion.addMethod('aNonce', function(){
