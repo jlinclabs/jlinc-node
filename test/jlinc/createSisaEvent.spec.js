@@ -214,4 +214,27 @@ describe('JLINC.createSisaEvent', function() {
     });
   });
 
+  it('should create a unique sisaEventId', function(){
+    const { eventType, event, sisa, latestSisaEvent, rightsHolder } = this;
+
+    const sisaEvent1 = JLINC.createSisaEvent({
+      eventType,
+      event,
+      sisa,
+      latestSisaEvent,
+      rightsHolder,
+    });
+
+    const sisaEvent2 = JLINC.createSisaEvent({
+      eventType,
+      event,
+      sisa,
+      latestSisaEvent: sisaEvent1,
+      rightsHolder,
+    });
+
+    expect(sisaEvent1.audit.eventId).to.not.equal(sisaEvent2.audit.eventId);
+
+  });
+
 });

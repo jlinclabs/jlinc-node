@@ -22,11 +22,16 @@ module.exports = function createSisaEvent({ eventType, event, sisa, latestSisaEv
   if (latestSisaEvent !== null)
     this.validateSisaEvent({ sisaEvent: latestSisaEvent });
 
+  const createdAt = Date.now();
+  const previousId = latestSisaEvent ? latestSisaEvent.audit.eventId : null;
+
   const eventJwt = this.createSignedJwt({
     itemToSign: event,
     secret: rightsHolder.secret,
   });
-  const eventId = this.createHash({ itemToHash: eventJwt });
+
+  const eventId = this.createHash({ itemToHash: `${eventJwt}.${previousId}.${createdAt}` });
+
   const rightsHolderSig = this.signItem({
     itemToSign: eventJwt,
     privateKey: rightsHolder.privateKey,
@@ -38,8 +43,8 @@ module.exports = function createSisaEvent({ eventType, event, sisa, latestSisaEv
       eventType,
       sisaId: sisa.sisaId,
       eventId,
-      createdAt: Date.now(),
-      previousId: latestSisaEvent ? latestSisaEvent.audit.eventId : null,
+      createdAt,
+      previousId,
       rightsHolderSigType: this.signatureType,
       rightsHolderId: rightsHolder.publicKey,
       rightsHolderSig,

@@ -43,15 +43,6 @@ module.exports = function validateSisaEvent({ sisaEvent }) {
   if (!('sisaId' in sisaEvent.audit))
     throw new InvalidSisaEventError('sisaEvent.audit must have key "sisaId"');
 
-
-
-  // sisaEvent.audit.eventId
-  if (!('eventId' in sisaEvent.audit))
-    throw new InvalidSisaEventError('sisaEvent.audit must have key "eventId"');
-
-  if (sisaEvent.audit.eventId !== this.createHash({ itemToHash: sisaEvent.eventJwt }))
-    throw new InvalidSisaEventError('sisaEvent.audit.eventId is invalid');
-
   // sisaEvent.audit.createdAt
   if (!('createdAt' in sisaEvent.audit))
     throw new InvalidSisaEventError('sisaEvent.audit must have key "createdAt"');
@@ -65,6 +56,13 @@ module.exports = function validateSisaEvent({ sisaEvent }) {
   // sisaEvent.audit.previousId
   if (!('previousId' in sisaEvent.audit))
     throw new InvalidSisaEventError('sisaEvent.audit must have key "previousId"');
+
+  // sisaEvent.audit.eventId
+  if (!('eventId' in sisaEvent.audit))
+    throw new InvalidSisaEventError('sisaEvent.audit must have key "eventId"');
+
+  if (sisaEvent.audit.eventId !== this.createHash({ itemToHash: `${sisaEvent.eventJwt}.${sisaEvent.audit.previousId}.${sisaEvent.audit.createdAt}` }))
+    throw new InvalidSisaEventError('sisaEvent.audit.eventId is invalid');
 
   // sisaEvent.audit.rightsHolderSigType
   if (!('rightsHolderSigType' in sisaEvent.audit))

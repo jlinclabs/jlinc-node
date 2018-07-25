@@ -69,20 +69,6 @@ describe('JLINC.validateSisaEvent', function() {
             },
           },
         });
-      }).to.throw(JLINC.InsisaEventError, 'sisaEvent.audit must have key "eventId"');
-
-      expect(() => {
-        JLINC.validateSisaEvent({
-          sisaEvent: {
-            '@context': sisaEvent['@context'],
-            eventJwt: sisaEvent.eventJwt,
-            audit: {
-              eventType: sisaEvent.audit.eventType,
-              sisaId: sisaEvent.audit.sisaId,
-              eventId: sisaEvent.audit.eventId,
-            },
-          },
-        });
       }).to.throw(JLINC.InsisaEventError, 'sisaEvent.audit must have key "createdAt"');
 
       expect(() => {
@@ -93,12 +79,26 @@ describe('JLINC.validateSisaEvent', function() {
             audit: {
               eventType: sisaEvent.audit.eventType,
               sisaId: sisaEvent.audit.sisaId,
-              eventId: sisaEvent.audit.eventId,
               createdAt: sisaEvent.audit.createdAt,
             },
           },
         });
       }).to.throw(JLINC.InsisaEventError, 'sisaEvent.audit must have key "previousId"');
+
+      expect(() => {
+        JLINC.validateSisaEvent({
+          sisaEvent: {
+            '@context': sisaEvent['@context'],
+            eventJwt: sisaEvent.eventJwt,
+            audit: {
+              eventType: sisaEvent.audit.eventType,
+              sisaId: sisaEvent.audit.sisaId,
+              createdAt: sisaEvent.audit.createdAt,
+              previousId: sisaEvent.audit.previousId,
+            },
+          },
+        });
+      }).to.throw(JLINC.InsisaEventError, 'sisaEvent.audit must have key "eventId"');
 
       expect(() => {
         JLINC.validateSisaEvent({
