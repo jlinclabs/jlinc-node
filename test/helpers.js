@@ -14,18 +14,21 @@ const generateISODateStringOfOneMinuteFromNow = function(){
 const generateSisa = function() {
   const dataCustodian = JLINC.createDataCustodian();
   const sisaOffering = JLINC.createSisaOffering({ dataCustodian });
+  const { offeredSisa } = sisaOffering;
+  const agreement = JLINC.decodeJwt({ jwt: sisaOffering.offeredSisa.agreementJwt });
   const rightsHolder = JLINC.createRightsHolder();
   const sisa = JLINC.acceptSisa({ sisaOffering, rightsHolder });
-
   const acceptedSisa = JLINC.decodeJwt({ jwt: sisa.acceptedSisaJwt });
   const { offeredSisaJwt } = acceptedSisa;
   const rightsHolderId = rightsHolder.publicKey;
   const dataCustodianId = dataCustodian.publicKey;
   return {
     dataCustodian,
+    agreement,
+    offeredSisa,
     sisaOffering,
-    offeredSisaJwt,
     acceptedSisa,
+    offeredSisaJwt,
     rightsHolder,
     sisa,
     rightsHolderId,
@@ -36,9 +39,11 @@ const generateSisa = function() {
 const generateSisaEvent = function() {
   const {
     dataCustodian,
+    agreement,
+    offeredSisa,
     sisaOffering,
-    offeredSisaJwt,
     acceptedSisa,
+    offeredSisaJwt,
     rightsHolder,
     sisa,
     rightsHolderId,
@@ -62,14 +67,56 @@ const generateSisaEvent = function() {
 
   return {
     dataCustodian,
+    agreement,
+    offeredSisa,
     sisaOffering,
-    offeredSisaJwt,
     acceptedSisa,
+    offeredSisaJwt,
     rightsHolder,
     sisa,
     rightsHolderId,
     dataCustodianId,
     sisaEvent,
+    event,
+  };
+};
+
+const generateAcknowledgedSisaEvent = function() {
+  const {
+    dataCustodian,
+    agreement,
+    offeredSisa,
+    sisaOffering,
+    acceptedSisa,
+    offeredSisaJwt,
+    rightsHolder,
+    sisa,
+    rightsHolderId,
+    dataCustodianId,
+    sisaEvent,
+    event,
+  } = generateSisaEvent();
+
+  const acknowledgedSisaEvent = JLINC.acknowledgeSisaEvent({
+    sisa,
+    dataCustodian,
+    sisaEvent,
+  });
+
+  return {
+    dataCustodian,
+    agreement,
+    offeredSisa,
+    sisaOffering,
+    acceptedSisa,
+    offeredSisaJwt,
+    rightsHolder,
+    sisa,
+    rightsHolderId,
+    dataCustodianId,
+    sisaEvent,
+    event,
+    acknowledgedSisaEvent,
   };
 };
 
@@ -77,4 +124,5 @@ module.exports = {
   generateISODateStringOfOneMinuteFromNow,
   generateSisa,
   generateSisaEvent,
+  generateAcknowledgedSisaEvent,
 };
