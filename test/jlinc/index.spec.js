@@ -15,8 +15,8 @@ describe('JLINC.contextUrl', function() {
 });
 
 describe('JLINC.defaultAgreementURI', function() {
-  it('should be "https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4"', function(){
-    expect(JLINC.defaultAgreementURI).to.equal('https://sisa.jlinc.org/v1/hMwDoQreOrSARtiOG8XqwOs7zolkZRpCLbJ1Dfbv9k4');
+  it('should be "https://sisa.jlinc.org/v1/34020c5fb59ebc6507ebca4eb38090aec1097c6aec8d2ae2250ddfed4b4aa63c"', function(){
+    expect(JLINC.defaultAgreementURI).to.equal('https://sisa.jlinc.org/v1/34020c5fb59ebc6507ebca4eb38090aec1097c6aec8d2ae2250ddfed4b4aa63c');
   });
 });
 
