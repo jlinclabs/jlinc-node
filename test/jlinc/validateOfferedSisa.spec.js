@@ -1,6 +1,7 @@
 'use strict';
 
 const JLINC = require('../../jlinc');
+const { generateISODateStringOfOneMinuteFromNow } = require('../helpers');
 
 describe('JLINC.validateOfferedSisa', function() {
 
@@ -181,7 +182,7 @@ describe('JLINC.validateOfferedSisa', function() {
             dataCustodianSig: offeredSisa.dataCustodianSig,
           }
         });
-      }).to.throw(JLINC.InvalidOfferedSisaError, 'offeredSisa must have key "offeredAt"');
+      }).to.throw(JLINC.InvalidOfferedSisaError, 'offeredSisa must have key "createdAt"');
 
       expect(() => {
         JLINC.validateOfferedSisa({
@@ -191,10 +192,10 @@ describe('JLINC.validateOfferedSisa', function() {
             dataCustodianSigType: JLINC.signatureType,
             dataCustodianId: offeredSisa.dataCustodianId,
             dataCustodianSig: offeredSisa.dataCustodianSig,
-            offeredAt: Date.now() + 1000,
+            createdAt: generateISODateStringOfOneMinuteFromNow(),
           }
         });
-      }).to.throw(JLINC.InvalidOfferedSisaError, 'offeredSisa.offeredAt cannot be in the future');
+      }).to.throw(JLINC.InvalidOfferedSisaError, 'offeredSisa.createdAt cannot be in the future');
 
       expect(
         JLINC.validateOfferedSisa({
@@ -204,7 +205,7 @@ describe('JLINC.validateOfferedSisa', function() {
             dataCustodianSigType: JLINC.signatureType,
             dataCustodianId: offeredSisa.dataCustodianId,
             dataCustodianSig: offeredSisa.dataCustodianSig,
-            offeredAt: Date.now(),
+            createdAt: JLINC.now(),
           }
         })
       ).to.be.true;
@@ -218,7 +219,7 @@ describe('JLINC.validateOfferedSisa', function() {
             dataCustodianSigType: JLINC.signatureType,
             dataCustodianId: offeredSisa.dataCustodianId,
             dataCustodianSig: offeredSisa.dataCustodianSig,
-            offeredAt: Math.floor(Date.now() / 1000),
+            createdAt: JLINC.now(),
           }
         });
       }).to.throw(JLINC.InvalidSisaAgreementError, 'acceptedSisa.agreement must have key "@context"');

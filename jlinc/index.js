@@ -36,6 +36,7 @@ module.exports =  {
   AcknowledgedSisaEventVerificationError: class AcknowledgedSisaEventVerificationError extends CustomError {},
 
   // utilities
+  now: require('./now'),
   createNonce: require('./createNonce'),
   createHash: require('./createHash'),
 

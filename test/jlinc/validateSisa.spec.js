@@ -1,7 +1,7 @@
 'use strict';
 
 const JLINC = require('../../jlinc');
-const { generateSisa } = require('../helpers');
+const { generateISODateStringOfOneMinuteFromNow, generateSisa } = require('../helpers');
 
 describe('JLINC.validateSisa', function() {
 
@@ -300,7 +300,8 @@ describe('JLINC.validateSisa', function() {
           },
         }),
       });
-    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa must have key "acceptedAt"');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa must have key "createdAt"');
+
 
     expect(() => {
       JLINC.validateSisa({
@@ -311,11 +312,11 @@ describe('JLINC.validateSisa', function() {
             rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
-            acceptedAt: 'now',
+            createdAt: Date.now()
           },
         }),
       });
-    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.acceptedAt must be of type number');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.createdAt must be of type string');
 
     expect(() => {
       JLINC.validateSisa({
@@ -326,11 +327,26 @@ describe('JLINC.validateSisa', function() {
             rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
-            acceptedAt: 23487328473289473892,
+            createdAt: 'now',
+          },
+        }),
+      });
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.createdAt must be an ISO Date String');
+
+    expect(() => {
+      JLINC.validateSisa({
+        sisa: constructSisa({
+          acceptedSisa: {
+            '@context': JLINC.contextUrl,
+            offeredSisaJwt: this.our.offeredSisaJwt,
+            rightsHolderSigType: JLINC.signatureType,
+            rightsHolderId: this.our.rightsHolder.publicKey,
+            rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
+            createdAt: generateISODateStringOfOneMinuteFromNow(),
           },
         })
       });
-    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.acceptedAt cannot be in the future');
+    }).to.throw(JLINC.InvalidSisaError, 'sisa.acceptedSisa.createdAt cannot be in the future');
 
     expect(
       JLINC.validateSisa({
@@ -341,7 +357,7 @@ describe('JLINC.validateSisa', function() {
             rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
-            acceptedAt: Date.now(),
+            createdAt: this.our.acceptedSisa.createdAt,
           },
         }),
       })
@@ -361,7 +377,7 @@ describe('JLINC.validateSisa', function() {
             rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
-            acceptedAt: Date.now(),
+            createdAt: this.our.acceptedSisa.createdAt,
           },
         }),
       });
@@ -376,7 +392,7 @@ describe('JLINC.validateSisa', function() {
             rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.other.acceptedSisa.rightsHolderId,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
-            acceptedAt: Date.now(),
+            createdAt: this.our.acceptedSisa.createdAt,
           },
         }),
       });
@@ -391,7 +407,7 @@ describe('JLINC.validateSisa', function() {
             rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.other.acceptedSisa.rightsHolderSig,
-            acceptedAt: Date.now(),
+            createdAt: this.our.acceptedSisa.createdAt,
           },
         }),
       });
@@ -406,7 +422,7 @@ describe('JLINC.validateSisa', function() {
             rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.other.acceptedSisa.rightsHolderSig,
-            acceptedAt: Date.now(),
+            createdAt: this.our.acceptedSisa.createdAt,
           },
         }),
       });

@@ -27,9 +27,11 @@ chai.Assertion.addMethod('aBase64EncodedString', function(){
   expect(this._obj).to.match(/^[A-Za-z0-9\-_]+$/);
 });
 
-chai.Assertion.addMethod('aRecentSecondsFromEpochInteger', function(){
+chai.Assertion.addMethod('aRecentDatetimeInISOFormat', function(){
+  const date = new Date(this._obj);
+  expect(this._obj).to.equal(date.toISOString());
   const now = Date.now();
-  expect(this._obj).to.be.within(now - 1000, now);
+  expect(date.getTime()).to.be.within(now - 100, now);
 });
 
 chai.Assertion.addMethod('aNonce', function(){

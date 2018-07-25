@@ -14,7 +14,7 @@ module.exports = function verifyAcknowledgedSisaEventWasSignedByDataCustodian({ 
     });
   }catch(error){
     if (error instanceof InvalidSignatureError)
-      throw new AcknowledgedSisaEventVerificationError('sisaOffering is not from the given dataCustodian');
+      throw new AcknowledgedSisaEventVerificationError('acknowledgedSisaEvent was not signed by the given dataCustodian');
     throw error;
   }
 

@@ -1,5 +1,8 @@
 'use strict';
 
+const isISODateString = require('./isISODateString');
+const isJwt = require('./isJwt');
+
 module.exports = function validateSisa({ sisa }){
   const { InvalidSisaError, InvalidOfferedSisaError, InvalidSignatureError } = this;
 
@@ -20,7 +23,7 @@ module.exports = function validateSisa({ sisa }){
   if (typeof sisa.acceptedSisaJwt !== 'string')
     throw new InvalidSisaError('sisa.acceptedSisaJwt must be of type string');
 
-  if (!sisa.acceptedSisaJwt.match(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/))
+  if (!isJwt(sisa.acceptedSisaJwt))
     throw new InvalidSisaError('sisa.acceptedSisaJwt is invalid');
 
   const acceptedSisa = this.decodeJwt({ jwt: sisa.acceptedSisaJwt });
@@ -57,7 +60,7 @@ module.exports = function validateSisa({ sisa }){
   if (typeof acceptedSisa.offeredSisaJwt !== 'string')
     throw new InvalidSisaError('sisa.acceptedSisa.offeredSisaJwt must be of type string');
 
-  if (!acceptedSisa.offeredSisaJwt.match(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/))
+  if (!isJwt(acceptedSisa.offeredSisaJwt))
     throw new InvalidSisaError('sisa.acceptedSisa.offeredSisaJwt is invalid');
 
   const offeredSisa = this.decodeJwt({ jwt: acceptedSisa.offeredSisaJwt });
@@ -112,15 +115,18 @@ module.exports = function validateSisa({ sisa }){
     throw error;
   }
 
-  // validating acceptedSisa.acceptedAt
-  if (!('acceptedAt' in acceptedSisa))
-    throw new InvalidSisaError('sisa.acceptedSisa must have key "acceptedAt"');
+  // validating acceptedSisa.createdAt
+  if (!('createdAt' in acceptedSisa))
+    throw new InvalidSisaError('sisa.acceptedSisa must have key "createdAt"');
 
-  if (typeof acceptedSisa.acceptedAt !== 'number')
-    throw new InvalidSisaError('sisa.acceptedSisa.acceptedAt must be of type number');
+  if (typeof acceptedSisa.createdAt !== 'string')
+    throw new InvalidSisaError('sisa.acceptedSisa.createdAt must be of type string');
 
-  if (acceptedSisa.acceptedAt > Date.now())
-    throw new InvalidSisaError('sisa.acceptedSisa.acceptedAt cannot be in the future');
+  if (!isISODateString(acceptedSisa.createdAt))
+    throw new InvalidSisaError('sisa.acceptedSisa.createdAt must be an ISO Date String');
+
+  if (new Date(acceptedSisa.createdAt).getTime() > Date.now())
+    throw new InvalidSisaError('sisa.acceptedSisa.createdAt cannot be in the future');
 
   return true;
 };

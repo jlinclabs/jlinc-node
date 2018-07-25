@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = function createSisaOffering({ agreementURI, dataCustodian }) {
-
   if (!dataCustodian) throw new Error('dataCustodian is required');
 
   const sisaAgreement = {
@@ -28,7 +27,7 @@ module.exports = function createSisaOffering({ agreementURI, dataCustodian }) {
       dataCustodianSigType: this.signatureType,
       dataCustodianId: dataCustodian.publicKey,
       dataCustodianSig,
-      offeredAt: Date.now(),
+      createdAt: this.now(),
     }
   };
 };

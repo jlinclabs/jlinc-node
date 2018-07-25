@@ -1,5 +1,8 @@
 'use strict';
 
+const isISODateString = require('./isISODateString');
+const isJwt = require('./isJwt');
+
 module.exports = function validateOfferedSisa({ offeredSisa }) {
   const { InvalidOfferedSisaError, InvalidSignatureError, InvalidSisaAgreementError } = this;
 
@@ -22,7 +25,7 @@ module.exports = function validateOfferedSisa({ offeredSisa }) {
   if (typeof offeredSisa.agreementJwt !== 'string')
     throw new InvalidOfferedSisaError('offeredSisa.agreementJwt must be of type string');
 
-  if (!offeredSisa.agreementJwt.match(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/))
+  if (!isJwt(offeredSisa.agreementJwt))
     throw new InvalidOfferedSisaError('offeredSisa.agreementJwt is invalid');
 
   const sisaAgreement = this.decodeJwt({ jwt: offeredSisa.agreementJwt });
@@ -77,15 +80,18 @@ module.exports = function validateOfferedSisa({ offeredSisa }) {
     throw error;
   }
 
-  // validating offeredSisa.offeredAt
-  if (!('offeredAt' in offeredSisa))
-    throw new InvalidOfferedSisaError('offeredSisa must have key "offeredAt"');
+  // validating offeredSisa.createdAt
+  if (!('createdAt' in offeredSisa))
+    throw new InvalidOfferedSisaError('offeredSisa must have key "createdAt"');
 
-  if (typeof offeredSisa.offeredAt !== 'number')
-    throw new InvalidOfferedSisaError('offeredSisa.offeredAt must be of type number');
+  if (typeof offeredSisa.createdAt !== 'string')
+    throw new InvalidOfferedSisaError('offeredSisa.createdAt must be of type string');
 
-  if (offeredSisa.offeredAt > Date.now())
-    throw new InvalidOfferedSisaError('offeredSisa.offeredAt cannot be in the future');
+  if (!isISODateString(offeredSisa.createdAt))
+    throw new InvalidSisaError('offeredSisa.createdAt must be an ISO Date String');
+
+  if (new Date(offeredSisa.createdAt).getTime() > Date.now())
+    throw new InvalidOfferedSisaError('offeredSisa.createdAt cannot be in the future');
 
   return true;
 };

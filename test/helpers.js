@@ -2,6 +2,15 @@
 
 const JLINC = require('../jlinc');
 
+const zeroPadded = n => n >= 10 ? n : `0${n}`;
+
+const generateISODateStringOfOneMinuteFromNow = function(){
+  const isoDateString = new Date().toISOString();
+  return isoDateString.replace(/:(\d\d):(\d\d)\./, (_, m, s) =>
+    `:${zeroPadded(Number(m)+1)}:${s}.`
+  );
+};
+
 const generateSisa = function() {
   const dataCustodian = JLINC.createDataCustodian();
   const sisaOffering = JLINC.createSisaOffering({ dataCustodian });
@@ -65,6 +74,7 @@ const generateSisaEvent = function() {
 };
 
 module.exports = {
+  generateISODateStringOfOneMinuteFromNow,
   generateSisa,
   generateSisaEvent,
 };

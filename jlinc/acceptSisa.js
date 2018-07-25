@@ -22,7 +22,7 @@ module.exports = function acceptSisa({ sisaOffering, rightsHolder }){
     rightsHolderSigType: this.signatureType,
     rightsHolderId: rightsHolder.publicKey,
     rightsHolderSig,
-    acceptedAt: Date.now(),
+    createdAt: this.now(),
   };
 
   const acceptedSisaJwt = this.createSignedJwt({

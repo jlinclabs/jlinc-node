@@ -1,7 +1,9 @@
 'use strict';
 
+const isISODateString = require('./isISODateString');
+
 module.exports = function validateSisaEvent({ sisaEvent }) {
-  const { InvalidSisaEventError, JWTVerificationError, InvalidSignatureError } = this;
+  const { InvalidSisaEventError, JWTVerificationError, InvalidSignatureError, SisaEventVerificationError } = this;
 
   // if (!sisa) throw new Error('sisa is required');
   if (!sisaEvent) throw new Error('sisaEvent is required');
@@ -47,10 +49,13 @@ module.exports = function validateSisaEvent({ sisaEvent }) {
   if (!('createdAt' in sisaEvent.audit))
     throw new InvalidSisaEventError('sisaEvent.audit must have key "createdAt"');
 
-  if (typeof sisaEvent.audit.createdAt !== 'number')
-    throw new InvalidSisaEventError('sisaEvent.audit.createdAt must be of type number');
+  if (typeof sisaEvent.audit.createdAt !== 'string')
+    throw new InvalidSisaEventError('sisaEvent.audit.createdAt must be of type string');
 
-  if (sisaEvent.audit.createdAt > Date.now())
+  if (!isISODateString(sisaEvent.audit.createdAt))
+    throw new InvalidSisaEventError('sisaEvent.audit.createdAt must be an ISO Date String');
+
+  if (new Date(sisaEvent.audit.createdAt).getTime() > Date.now())
     throw new InvalidSisaEventError('sisaEvent.audit.createdAt cannot be in the future');
 
   // sisaEvent.audit.previousId
@@ -61,7 +66,10 @@ module.exports = function validateSisaEvent({ sisaEvent }) {
   if (!('eventId' in sisaEvent.audit))
     throw new InvalidSisaEventError('sisaEvent.audit must have key "eventId"');
 
-  if (sisaEvent.audit.eventId !== this.createHash({ itemToHash: `${sisaEvent.eventJwt}.${sisaEvent.audit.previousId}.${sisaEvent.audit.createdAt}` }))
+  const expectedEventId = this.createHash({
+    itemToHash: `${sisaEvent.audit.sisaId}.${sisaEvent.eventJwt}.${sisaEvent.audit.previousId}.${sisaEvent.audit.createdAt}`
+  });
+  if (sisaEvent.audit.eventId !== expectedEventId)
     throw new InvalidSisaEventError('sisaEvent.audit.eventId is invalid');
 
   // sisaEvent.audit.rightsHolderSigType
@@ -83,13 +91,12 @@ module.exports = function validateSisaEvent({ sisaEvent }) {
     throw new InvalidSisaEventError('sisaEvent.audit must have key "rightsHolderSig"');
 
   try{
-    this.verifySignature({
-      itemSigned: sisaEvent.eventJwt,
-      signature: sisaEvent.audit.rightsHolderSig,
-      publicKey: sisaEvent.audit.rightsHolderId,
+    this.verifySisaEventWasSignedByRightsHolder({
+      sisaEvent,
+      rightsHolderId: sisaEvent.audit.rightsHolderId,
     });
   }catch(error){
-    if (error instanceof InvalidSignatureError)
+    if (error instanceof SisaEventVerificationError)
       throw new InvalidSisaEventError('sisaEvent.audit.rightsHolderSig is invalid');
     throw error;
   }

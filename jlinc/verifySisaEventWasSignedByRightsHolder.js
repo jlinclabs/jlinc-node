@@ -8,14 +8,15 @@ module.exports = function verifySisaEventWasSignedByRightsHolder({ sisaEvent, ri
 
   try{
     this.verifySignature({
-      itemSigned: sisaEvent.eventJwt,
+      itemSigned: sisaEvent.audit.eventId,
       signature: sisaEvent.audit.rightsHolderSig,
       publicKey: rightsHolderId,
     });
   }catch(error){
     if (error instanceof InvalidSignatureError)
-      throw new SisaEventVerificationError('sisaOffering is not from the given dataCustodian');
+      throw new SisaEventVerificationError('sisaOffering is signed by the given rightsHolder');
     throw error;
   }
 
+  return true;
 };
