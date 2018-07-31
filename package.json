@@ -1,8 +1,12 @@
 {
   "name": "jlinc",
   "version": "0.0.1",
-  "description": "A node implementation of the JLINC protocol",
   "private": true,
+  "engines": {
+    "node": "^8.11.1",
+    "npm": "^6.2.0"
+  },
+  "description": "A node implementation of the JLINC protocol",
   "main": "./jlinc/index.js",
   "scripts": {
     "test": "mocha"
