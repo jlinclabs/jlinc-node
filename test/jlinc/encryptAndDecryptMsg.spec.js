@@ -22,7 +22,7 @@ describe('JLINC.pubkeyEncrypt and JLINC.pubkeyDecrypt', function() {
 
     expect(aliceSends).to.be.an('object');
     expect(aliceSends.cipherMsg).to.match(/^[\w\-]+$/);
-    expect(aliceSends.cipherMsg).to.match(/^[\w\-]+$/);
+    expect(aliceSends.nonce).to.match(/^[\w\-]+$/);
   });
 
   it('should fail to decrypt the message given wrong key', function() {
@@ -57,7 +57,7 @@ describe('JLINC.pubkeyEncrypt and JLINC.pubkeyDecrypt', function() {
 
     expect(aliceSends).to.be.an('object');
     expect(aliceSends.cipherMsg).to.match(/^[\w\-]+$/);
-    expect(aliceSends.cipherMsg).to.match(/^[\w\-]+$/);
+    expect(aliceSends.nonce).to.match(/^[\w\-]+$/);
   });
 
   it('should decrypt the message with private key as Buffer', function() {
