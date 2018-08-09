@@ -31,7 +31,7 @@ describe('JLINC.validateAcknowledgedSisaEvent', function() {
 
   context('when given an invalid acknowledgedSisaEvent', function() {
     it('should throw the error ""', function(){
-      const { sisaEvent, acknowledgedSisaEvent } = this;
+      const { sisaEvent } = this;
       expect(() => {
         JLINC.validateAcknowledgedSisaEvent({
           sisaEvent,
@@ -43,7 +43,7 @@ describe('JLINC.validateAcknowledgedSisaEvent', function() {
 
   context('when given a acknowledgedSisaEvent that was not acknowledged', function() {
     it('should throw the error ""', function(){
-      const { sisaEvent, acknowledgedSisaEvent } = this;
+      const { sisaEvent } = this;
       expect(() => {
         JLINC.validateAcknowledgedSisaEvent({
           sisaEvent,

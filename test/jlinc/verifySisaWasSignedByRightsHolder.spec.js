@@ -12,7 +12,7 @@ describe('JLINC.verifySisaWasSignedByRightsHolder', function() {
 
   context('when given a mismatching rightsHolder', function() {
     it('should return true', function(){
-      const { rightsHolder, sisa } = this;
+      const { sisa } = this;
       expect(()=>{
         JLINC.verifySisaWasSignedByRightsHolder({
           sisa,

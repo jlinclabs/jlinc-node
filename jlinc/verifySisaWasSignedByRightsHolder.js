@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function verifySisaWasSignedByRightsHolder({ sisa, rightsHolder }){
-  const { JWTVerificationError, InvalidSignatureError, SisaVerificationError } = this;
+  const { JWTVerificationError, SisaVerificationError } = this;
 
   if (!sisa) throw new Error('sisa is required');
   if (!rightsHolder) throw new Error('rightsHolder is required');

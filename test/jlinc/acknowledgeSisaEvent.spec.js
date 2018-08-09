@@ -6,13 +6,13 @@ const { generateSisaEvent } = require('../helpers');
 describe('JLINC.acknowledgeSisaEvent', function() {
 
   before(function() {
-    const { dataCustodian, rightsHolder, sisa, sisaEvent } = generateSisaEvent();
+    const { dataCustodian, sisa, sisaEvent } = generateSisaEvent();
     Object.assign(this, { dataCustodian, sisa, sisaEvent });
   });
 
   context('when given an invalid dataCustodian', function() {
     it('should throw a InvalidDataCustodianError', function(){
-      const { dataCustodian, sisa, sisaEvent } = this;
+      const { sisa, sisaEvent } = this;
       expect(()=>{
         JLINC.acknowledgeSisaEvent({
           dataCustodian: {},
@@ -25,7 +25,7 @@ describe('JLINC.acknowledgeSisaEvent', function() {
 
   context('when given an invalid sisa', function() {
     it('should throw an InvalidSisaError', function(){
-      const { dataCustodian, sisa, sisaEvent } = this;
+      const { dataCustodian, sisaEvent } = this;
       expect(()=> {
         JLINC.acknowledgeSisaEvent({
           dataCustodian,
@@ -38,7 +38,7 @@ describe('JLINC.acknowledgeSisaEvent', function() {
 
   context('when given a dataCustodian that does not match the sisa', function() {
     it('should throw a InvalidDataCustodianError', function(){
-      const { dataCustodian, sisa, sisaEvent } = this;
+      const { sisa, sisaEvent } = this;
       expect(()=>{
         JLINC.acknowledgeSisaEvent({
           dataCustodian: JLINC.createDataCustodian(),
@@ -51,7 +51,7 @@ describe('JLINC.acknowledgeSisaEvent', function() {
 
   context('when given an invalid sisaEvent', function() {
     it('should throw an InvalidSisaEventError', function(){
-      const { dataCustodian, sisa, sisaEvent } = this;
+      const { dataCustodian, sisa } = this;
       expect(()=> {
         JLINC.acknowledgeSisaEvent({
           dataCustodian,

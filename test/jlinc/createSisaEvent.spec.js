@@ -107,7 +107,7 @@ describe('JLINC.createSisaEvent', function() {
 
   context('when given an invalid eventType', function(){
     it('should throw an InvalidSisaError', function(){
-      const { eventType, event, sisa, latestSisaEvent, rightsHolder } = this;
+      const { event, sisa, latestSisaEvent, rightsHolder } = this;
       expect(()=>{
         JLINC.createSisaEvent({
           eventType: 'donkey',
@@ -122,7 +122,7 @@ describe('JLINC.createSisaEvent', function() {
 
   context('when given an invalid event', function(){
     it('should throw an InvalidSisaError', function(){
-      const { eventType, event, sisa, latestSisaEvent, rightsHolder } = this;
+      const { eventType, sisa, latestSisaEvent, rightsHolder } = this;
       expect(()=>{
         JLINC.createSisaEvent({
           eventType,
@@ -146,7 +146,7 @@ describe('JLINC.createSisaEvent', function() {
 
   context('when given an invalid sisa', function(){
     it('should throw an InvalidSisaError', function(){
-      const { eventType, event, sisa, latestSisaEvent, rightsHolder } = this;
+      const { eventType, event, latestSisaEvent, rightsHolder } = this;
       expect(()=>{
         JLINC.createSisaEvent({
           eventType,

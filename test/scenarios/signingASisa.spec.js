@@ -38,7 +38,4 @@ it('signing a SISA', function() {
   JLINC.validateSisa({ sisa: copyOfSisa });
 
   JLINC.verifySisaWasOfferedByDataCustodian({ sisa: copyOfSisa, dataCustodian });
-  const expandedSisa = JLINC.expandSisa({ sisa: copyOfSisa });
-  const rightsHolderId = expandedSisa.acceptedSisa.rightsHolderId;
-
 });

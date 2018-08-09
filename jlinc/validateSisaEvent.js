@@ -3,7 +3,7 @@
 const isISODateString = require('./isISODateString');
 
 module.exports = function validateSisaEvent({ sisaEvent }) {
-  const { InvalidSisaEventError, JWTVerificationError, InvalidSignatureError, SisaEventVerificationError } = this;
+  const { InvalidSisaEventError, SisaEventVerificationError } = this;
 
   // if (!sisa) throw new Error('sisa is required');
   if (!sisaEvent) throw new Error('sisaEvent is required');

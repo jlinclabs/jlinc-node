@@ -6,14 +6,10 @@ const { generateSisa } = require('../helpers');
 it('changing personal data', function() {
   const {
     dataCustodian,
-    sisaOffering,
-    offeredSisaJwt,
-    acceptedSisa,
     rightsHolder,
     sisa,
     rightsHolderId,
     dataCustodianId,
-    sisaEvent,
   } = generateSisa();
 
   // On the A server
