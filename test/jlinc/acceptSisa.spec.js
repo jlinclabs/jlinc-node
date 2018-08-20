@@ -49,6 +49,7 @@ describe('JLINC.acceptSisa', function() {
         itemSigned: acceptedSisa.offeredSisaJwt,
         signature: acceptedSisa.rightsHolderSig,
         publicKey: this.rightsHolder.publicKey,
+        version: JLINC.contextUrl
       })
     ).to.be.true;
   });

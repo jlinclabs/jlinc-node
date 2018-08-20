@@ -53,6 +53,7 @@ describe('JLINC.createSisaOffering', function() {
         itemSigned: sisaOffering.offeredSisa.agreementJwt,
         signature: sisaOffering.offeredSisa.dataCustodianSig,
         publicKey: dataCustodian.publicKey,
+        version: JLINC.contextUrl
       })
     ).to.be.true;
   });

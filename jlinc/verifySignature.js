@@ -3,8 +3,8 @@
 const sodium = require('sodium').api;
 const b64 = require('urlsafe-base64');
 
-module.exports = function verifySignature({ itemSigned, signature, publicKey, oldVersion }){
-  if (oldVersion) {
+module.exports = function verifySignature({ itemSigned, signature, publicKey, version }){
+  if (this.getContextVersion(version) < 6) {
     const { InvalidSignatureError } = this;
     const invalidSignatureError = new InvalidSignatureError('invalid signature');
 
