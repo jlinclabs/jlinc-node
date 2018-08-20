@@ -35,6 +35,9 @@ module.exports =  {
   SisaEventVerificationError: class SisaEventVerificationError extends CustomError {},
   AcknowledgedSisaEventVerificationError: class AcknowledgedSisaEventVerificationError extends CustomError {},
 
+  EncryptError: class EncryptError extends CustomError {},
+  DecryptError: class DecryptError extends CustomError {},
+
   // utilities
   now: require('./now'),
   createNonce: require('./createNonce'),
@@ -49,6 +52,9 @@ module.exports =  {
 
   createDataCustodian: require('./createDataCustodian'),
   createRightsHolder: require('./createRightsHolder'),
+
+  pubkeyEncrypt: require('./pubkeyEncrypt'),
+  pubkeyDecrypt: require('./pubkeyDecrypt'),
 
   // creating and signing a sisa
   createSisaOffering: require('./createSisaOffering'),
