@@ -31,4 +31,3 @@ module.exports = function createSisaOffering({ agreementURI, dataCustodian }) {
     }
   };
 };
-

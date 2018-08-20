@@ -35,8 +35,8 @@ module.exports = function createSisaEvent({ eventType, event, sisa, latestSisaEv
     itemToHash: `${sisaId}.${eventJwt}.${previousId}.${createdAt}`
   });
 
-  const rightsHolderSig = this.signItem({
-    itemToSign: eventId,
+  const rightsHolderSig = this.signHash({
+    hashToSign: eventId,
     privateKey: rightsHolder.privateKey,
   });
 

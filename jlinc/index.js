@@ -10,7 +10,8 @@ class CustomError extends Error {
 
 module.exports =  {
   version: require('../package.json').version,
-  contextUrl: 'https://protocol.jlinc.org/context/jlinc-v5.jsonld',
+  contextUrl: 'https://protocol.jlinc.org/context/jlinc-v6.jsonld',
+  contextRegExp: /^https:\/\/protocol\.jlinc\.org\/context\/jlinc\-v([\d]+)\.jsonld$/,
   defaultAgreementURI: 'https://sisa.jlinc.org/v1/3b39160c2b9ae7b2ef81c3311c7924f1c4d4fa9ca47cfe7c840c9852b50d68d5',
   signatureType: 'sha256:ed25519',
 
@@ -23,6 +24,7 @@ module.exports =  {
   // Custom Errors
   JWTVerificationError: class JWTVerificationError extends CustomError {},
   InvalidSignatureError: class InvalidSignatureError extends CustomError {},
+  InvalidPublicKeyError: class InvalidPublicKeyError extends CustomError {},
   InvalidSisaAgreementError: class InvalidSisaAgreementError extends CustomError {},
   InvalidOfferedSisaError: class InvalidOfferedSisaError extends CustomError {},
   InvalidSisaOfferingError: class InvalidSisaOfferingError extends CustomError {},
@@ -44,8 +46,12 @@ module.exports =  {
   decodeJwt: require('./decodeJwt'),
   decodeAndVerifyJwt: require('./decodeAndVerifyJwt'),
 
+  getContextVersion: require('./getContextVersion'),
+
   signItem: require('./signItem'),
+  signHash: require('./signHash'),
   verifySignature: require('./verifySignature'),
+  verifyHashSignature: require('./verifyHashSignature'),
 
   createDataCustodian: require('./createDataCustodian'),
   createRightsHolder: require('./createRightsHolder'),

@@ -15,7 +15,7 @@ module.exports = function validateOfferedSisa({ offeredSisa }) {
   if (!('@context' in offeredSisa))
     throw new InvalidOfferedSisaError('offeredSisa must have key "@context"');
 
-  if (offeredSisa['@context'] !== this.contextUrl)
+  if (!this.contextRegExp.test(offeredSisa['@context']))
     throw new InvalidOfferedSisaError('offeredSisa["@context"] is invalid');
 
   // validating offeredSisa.agreementJwt
@@ -73,6 +73,7 @@ module.exports = function validateOfferedSisa({ offeredSisa }) {
       itemSigned: offeredSisa.agreementJwt,
       signature: offeredSisa.dataCustodianSig,
       publicKey: offeredSisa.dataCustodianId,
+      oldVersion: this.getContextVersion(offeredSisa['@context']) < 6
     });
   }catch(error){
     if (error instanceof InvalidSignatureError)

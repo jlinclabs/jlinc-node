@@ -15,7 +15,7 @@ module.exports = function validateSisaEvent({ sisaEvent }) {
   if (!('@context' in sisaEvent))
     throw new InvalidSisaEventError('sisaEvent must have key "@context"');
 
-  if (sisaEvent['@context'] !== this.contextUrl)
+  if (!this.contextRegExp.test(sisaEvent['@context']))
     throw new InvalidSisaEventError('sisaEvent["@context"] is invalid');
 
   // sisaEvent.eventJwt

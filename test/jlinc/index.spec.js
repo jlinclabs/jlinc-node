@@ -9,14 +9,14 @@ describe('JLINC.version', function() {
 });
 
 describe('JLINC.contextUrl', function() {
-  it('should be "https://context.jlinc.org/v05/jlinc.jsonld"', function(){
-    expect(JLINC.contextUrl).to.equal('https://protocol.jlinc.org/context/jlinc-v5.jsonld');
+  it('should be in the correct format', function(){
+    expect(JLINC.contextUrl).to.match(/^https:\/\/protocol\.jlinc\.org\/context\/jlinc\-v[\d]+\.jsonld$/);
   });
 });
 
 describe('JLINC.defaultAgreementURI', function() {
-  it('should be "https://sisa.jlinc.org/v1/3b39160c2b9ae7b2ef81c3311c7924f1c4d4fa9ca47cfe7c840c9852b50d68d5"', function(){
-    expect(JLINC.defaultAgreementURI).to.equal('https://sisa.jlinc.org/v1/3b39160c2b9ae7b2ef81c3311c7924f1c4d4fa9ca47cfe7c840c9852b50d68d5');
+  it('should be in the correct format', function(){
+    expect(JLINC.defaultAgreementURI).to.match(/^https:\/\/sisa\.jlinc\.org\/v[\d]+\/[a-f0-9]+$/);
   });
 });
 

@@ -13,7 +13,7 @@ module.exports = function validateSisa({ sisa }){
   if (!('@context' in sisa))
     throw new InvalidSisaError('sisa must have key "@context"');
 
-  if (sisa['@context'] !== this.contextUrl)
+  if (!this.contextRegExp.test(sisa['@context']))
     throw new InvalidSisaError('sisa["@context"] is invalid');
 
   // validating sisa.acceptedSisaJwt
@@ -50,7 +50,7 @@ module.exports = function validateSisa({ sisa }){
   if (!('@context' in acceptedSisa))
     throw new InvalidSisaError('sisa.acceptedSisa must have key "@context"');
 
-  if (acceptedSisa['@context'] !== this.contextUrl)
+  if (!this.contextRegExp.test(acceptedSisa['@context']))
     throw new InvalidSisaError('sisa.acceptedSisa["@context"] is invalid');
 
   // validating acceptedSisa.offeredSisaJwt
@@ -108,6 +108,7 @@ module.exports = function validateSisa({ sisa }){
       itemSigned: acceptedSisa.offeredSisaJwt,
       signature: acceptedSisa.rightsHolderSig,
       publicKey: acceptedSisa.rightsHolderId,
+      oldVersion: this.getContextVersion(acceptedSisa['@context']) < 6
     });
   }catch(error){
     if (error instanceof InvalidSignatureError)

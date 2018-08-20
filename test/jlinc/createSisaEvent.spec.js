@@ -84,7 +84,7 @@ describe('JLINC.createSisaEvent', function() {
       expect(
         JLINC.expandSisaEvent({ sisaEvent })
       ).to.deep.equal({
-        '@context': 'https://protocol.jlinc.org/context/jlinc-v5.jsonld',
+        '@context': JLINC.contextUrl,
         audit: {
           eventType: 'dataEvent',
           sisaId: sisa.sisaId,
