@@ -52,7 +52,7 @@ describe('JLINC.verifyAcknowledgedSisaEventWasSignedByDataCustodian', function()
     });
   });
 
-  context('when given a version 5 acknowledgedSisaEvent that was signed by the given dataCustodian', function() {
+  context('when given a version 5 acknowledgedSisaEvent', function() {
     beforeEach(function() {
       this.acknowledgedSisaEvent = {
         '@context': 'https://protocol.jlinc.org/context/jlinc-v5.jsonld',
