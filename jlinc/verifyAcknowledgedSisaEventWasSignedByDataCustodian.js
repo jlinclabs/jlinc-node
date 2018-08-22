@@ -18,4 +18,5 @@ module.exports = function verifyAcknowledgedSisaEventWasSignedByDataCustodian({ 
     throw error;
   }
 
+  return true;
 };
