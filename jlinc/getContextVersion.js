@@ -1,14 +1,12 @@
 'use strict';
 
-module.exports = function getContextVersion(contextString) {
-  try {
-    let version =  parseInt(contextString.match(this.contextRegExp)[1]);
-    if ([5,6].indexOf(version) >= 0) {
-      return version;
-    } else {
-      return 0;
-    }
-  } catch (e) {
-    return 0;
-  }
+const VALID_JLINC_CONTEXT_URL_VERSIONS = Object.freeze([5,6]);
+
+module.exports = function getContextVersion(context) {
+  if (typeof context !== 'string') throw new Error('@context must be of type string');
+  const match = context.match(this.contextRegExp);
+  if (!match) throw new Error('invalid @context');
+  const version = parseInt(match[1], 10);
+  if (VALID_JLINC_CONTEXT_URL_VERSIONS.includes(version)) return version;
+  throw new Error(`invalid @context version number: ${version}`);
 };
