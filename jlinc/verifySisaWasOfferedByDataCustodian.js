@@ -26,7 +26,7 @@ module.exports = function verifySisaWasOfferedByDataCustodian({ sisa, dataCustod
       itemSigned: agreementJwt,
       signature: dataCustodianSig,
       publicKey: dataCustodian.publicKey,
-      version: sisa['@context']
+      contextUrl: sisa['@context']
     });
   }catch(error){
     if (error instanceof InvalidSignatureError)

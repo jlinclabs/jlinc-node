@@ -18,7 +18,7 @@ describe('JLINC.verifySignature', function() {
         signature,
         publicKey: rightsHolder.publicKey,
         itemSigned: itemToSign,
-        version: JLINC.contextUrl
+        contextUrl: JLINC.contextUrl
       })
     ).to.be.true;
 
@@ -27,7 +27,7 @@ describe('JLINC.verifySignature', function() {
         signature: 'some fake signature i made up',
         publicKey: rightsHolder.publicKey,
         itemSigned: itemToSign,
-        version: JLINC.contextUrl
+        contextUrl: JLINC.contextUrl
       });
     }).to.throw(JLINC.InvalidSignatureError, 'invalid signature');
 
@@ -36,7 +36,7 @@ describe('JLINC.verifySignature', function() {
         signature,
         publicKey: JLINC.createRightsHolder().publicKey, // using the wrong public key
         itemSigned: itemToSign,
-        version: JLINC.contextUrl
+        contextUrl: JLINC.contextUrl
       });
     }).to.throw(JLINC.InvalidSignatureError, 'invalid signature');
 
@@ -45,7 +45,7 @@ describe('JLINC.verifySignature', function() {
         signature,
         publicKey: rightsHolder.publicKey,
         itemSigned: 'this is not the item that was signed',
-        version: JLINC.contextUrl
+        contextUrl: JLINC.contextUrl
       });
     }).to.throw(JLINC.InvalidSignatureError, 'invalid signature');
   });

@@ -13,7 +13,7 @@ module.exports = function verifySisaOfferingIsFromDataCustodian({ sisaOffering, 
       itemSigned: agreementJwt,
       signature: dataCustodianSig,
       publicKey: dataCustodianId,
-      version: sisaOffering['@context']
+      contextUrl: sisaOffering['@context']
     });
   }catch(error){
     if (error instanceof InvalidSignatureError)

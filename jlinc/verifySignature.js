@@ -3,10 +3,14 @@
 const sodium = require('sodium').api;
 const b64 = require('urlsafe-base64');
 
-module.exports = function verifySignature({ itemSigned, signature, publicKey, version }){
+module.exports = function verifySignature({ itemSigned, signature, publicKey, contextUrl }){
+  if (!itemSigned) throw new Error('itemSigned is required');
+  if (!signature) throw new Error('signature is required');
+  if (!publicKey) throw new Error('publicKey is required');
+  if (!contextUrl) throw new Error('contextUrl is required');
   const { InvalidSignatureError, InvalidPublicKeyError } = this;
   const invalidSignatureError = new InvalidSignatureError('invalid signature');
-  if (this.getContextVersion(version) < 6) {
+  if (this.getContextVersion(contextUrl) < 6) {
 
     const decrypted = sodium.crypto_sign_open(b64.decode(signature), b64.decode(publicKey));
     if (!decrypted) throw invalidSignatureError;

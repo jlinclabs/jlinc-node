@@ -108,7 +108,7 @@ module.exports = function validateSisa({ sisa }){
       itemSigned: acceptedSisa.offeredSisaJwt,
       signature: acceptedSisa.rightsHolderSig,
       publicKey: acceptedSisa.rightsHolderId,
-      version: acceptedSisa['@context']
+      contextUrl: acceptedSisa['@context']
     });
   }catch(error){
     if (error instanceof InvalidSignatureError)

@@ -13,7 +13,7 @@ module.exports = function verifySisaEventWasSignedByRightsHolder({ sisaEvent, ri
         itemSigned: sisaEvent.audit.eventId,
         signature: sisaEvent.audit.rightsHolderSig,
         publicKey: rightsHolderId,
-        version: version
+        contextUrl: sisaEvent['@context']
       });
     } else {
       this.verifyHashSignature({

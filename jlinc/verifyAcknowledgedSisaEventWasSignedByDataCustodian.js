@@ -13,7 +13,7 @@ module.exports = function verifyAcknowledgedSisaEventWasSignedByDataCustodian({ 
         itemSigned: acknowledgedSisaEvent.audit.eventId,
         signature: acknowledgedSisaEvent.audit.dataCustodianSig,
         publicKey: dataCustodianId,
-        version: version
+        contextUrl: acknowledgedSisaEvent['@context']
       });
     } else {
       this.verifyHashSignature({
