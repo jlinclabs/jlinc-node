@@ -7,7 +7,7 @@ module.exports = function verifyAcknowledgedSisaEventWasSignedByDataCustodian({ 
   if (!dataCustodianId) throw new Error('dataCustodianId is required');
 
   try {
-    let version = this.getContextVersion(acknowledgedSisaEvent['@context']);
+    const version = this.getContextVersion(acknowledgedSisaEvent['@context']);
     if (version < 6) {
       this.verifySignature({
         itemSigned: acknowledgedSisaEvent.audit.eventId,
