@@ -11,7 +11,6 @@ class CustomError extends Error {
 module.exports =  {
   version: require('../package.json').version,
   contextUrl: 'https://protocol.jlinc.org/context/jlinc-v6.jsonld',
-  contextRegExp: /^https:\/\/protocol\.jlinc\.org\/context\/jlinc\-v([\d]+)\.jsonld$/,
   defaultAgreementURI: 'https://sisa.jlinc.org/v1/3b39160c2b9ae7b2ef81c3311c7924f1c4d4fa9ca47cfe7c840c9852b50d68d5',
   signatureType: 'sha256:ed25519',
 

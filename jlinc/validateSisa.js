@@ -13,8 +13,11 @@ module.exports = function validateSisa({ sisa }){
   if (!('@context' in sisa))
     throw new InvalidSisaError('sisa must have key "@context"');
 
-  if (!this.contextRegExp.test(sisa['@context']))
+  try{
+    this.getContextVersion(sisa['@context']);
+  }catch(error){
     throw new InvalidSisaError('sisa["@context"] is invalid');
+  }
 
   // validating sisa.acceptedSisaJwt
   if (!('acceptedSisaJwt' in sisa))
@@ -50,8 +53,11 @@ module.exports = function validateSisa({ sisa }){
   if (!('@context' in acceptedSisa))
     throw new InvalidSisaError('sisa.acceptedSisa must have key "@context"');
 
-  if (!this.contextRegExp.test(acceptedSisa['@context']))
+  try{
+    this.getContextVersion(acceptedSisa['@context']);
+  }catch(error){
     throw new InvalidSisaError('sisa.acceptedSisa["@context"] is invalid');
+  }
 
   // validating acceptedSisa.offeredSisaJwt
   if (!('offeredSisaJwt' in acceptedSisa))

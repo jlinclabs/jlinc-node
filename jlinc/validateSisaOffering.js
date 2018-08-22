@@ -12,8 +12,11 @@ module.exports = function validateSisaOffering({ sisaOffering }) {
   if (!('@context' in sisaOffering))
     throw new InvalidSisaOfferingError('sisaOffering must have key "@context"');
 
-  if (!this.contextRegExp.test(sisaOffering['@context']))
+  try{
+    this.getContextVersion(sisaOffering['@context']);
+  }catch(error){
     throw new InvalidSisaOfferingError('sisaOffering["@context"] is invalid');
+  }
 
   // validating sisaOffering.agreementJwt
   if (!('offeredSisa' in sisaOffering))
