@@ -10,7 +10,7 @@ module.exports = function verifyAcknowledgedSisaEventWasSignedByDataCustodian({ 
     const version = this.getContextVersion(acknowledgedSisaEvent['@context']);
     if (version < 6) {
       this.verifySignature({
-        itemSigned: acknowledgedSisaEvent.audit.eventId,
+        itemSigned: acknowledgedSisaEvent.eventJwt,
         signature: acknowledgedSisaEvent.audit.dataCustodianSig,
         publicKey: dataCustodianId,
         contextUrl: acknowledgedSisaEvent['@context']
