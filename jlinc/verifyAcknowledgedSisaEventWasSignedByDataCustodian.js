@@ -28,32 +28,5 @@ module.exports = function verifyAcknowledgedSisaEventWasSignedByDataCustodian({ 
     throw error;
   }
 
-  // if (this.getContextVersion(acknowledgedSisaEvent['@context']) < 6) {
-  //   try{
-  //     this.verifySignature({
-  //       itemSigned: acknowledgedSisaEvent.audit.eventId,
-  //       signature: acknowledgedSisaEvent.audit.dataCustodianSig,
-  //       publicKey: dataCustodianId,
-  //       oldVersion: true
-  //     });
-  //   }catch(error){
-  //     if (error instanceof InvalidSignatureError)
-  //       throw new AcknowledgedSisaEventVerificationError('acknowledgedSisaEvent was not signed by the given dataCustodian');
-  //     throw error;
-  //   }
-  // } else {
-  //   try{
-  //     this.verifyHashSignature({
-  //       signed: acknowledgedSisaEvent.audit.eventId,
-  //       signature: acknowledgedSisaEvent.audit.dataCustodianSig,
-  //       publicKey: dataCustodianId,
-  //     });
-  //   }catch(error){
-  //     if (error instanceof InvalidSignatureError)
-  //       throw new AcknowledgedSisaEventVerificationError('acknowledgedSisaEvent was not signed by the given dataCustodian');
-  //     throw error;
-  //   }
-  // }
-
   return true;
 };

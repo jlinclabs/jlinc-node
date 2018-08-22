@@ -28,32 +28,5 @@ module.exports = function verifySisaEventWasSignedByRightsHolder({ sisaEvent, ri
     throw error;
   }
 
-  // if (this.getContextVersion(sisaEvent['@context']) < 6) {
-  //   try{
-  //     this.verifySignature({
-  //       itemSigned: sisaEvent.audit.eventId,
-  //       signature: sisaEvent.audit.rightsHolderSig,
-  //       publicKey: rightsHolderId,
-  //       oldVersion: true
-  //     });
-  //   }catch(error){
-  //     if (error instanceof InvalidSignatureError)
-  //       throw new SisaEventVerificationError('sisaOffering is signed by the given rightsHolder');
-  //     throw error;
-  //   }
-  // } else {
-  //   try{
-  //     this.verifyHashSignature({
-  //       signed: sisaEvent.audit.eventId,
-  //       signature: sisaEvent.audit.rightsHolderSig,
-  //       publicKey: rightsHolderId,
-  //     });
-  //   }catch(error){
-  //     if (error instanceof InvalidSignatureError)
-  //       throw new SisaEventVerificationError('sisaOffering is signed by the given rightsHolder');
-  //     throw error;
-  //   }
-  // }
-
   return true;
 };

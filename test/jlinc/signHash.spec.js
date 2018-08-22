@@ -11,14 +11,19 @@ describe('JLINC.signHash', function() {
     const rightsHolder = JLINC.createRightsHolder();
     const hashToSign = b64.encode(sodium.crypto_hash_sha256(Buffer.from("What's the good of Mercator's North Poles and Equators")));
 
-    const signature = JLINC.signHash({ hashToSign, privateKey: rightsHolder.privateKey });
+    const signature = JLINC.signHash({
+      hashToSign,
+      privateKey: rightsHolder.privateKey
+    });
     expect(signature).to.aBase64EncodedString();
 
-    expect ( sodium.crypto_sign_verify_detached(
-      b64.decode(signature),
-      b64.decode(hashToSign),
-      b64.decode(rightsHolder.publicKey)
-    ) ).to.be.true;
+    expect(
+      sodium.crypto_sign_verify_detached(
+        b64.decode(signature),
+        b64.decode(hashToSign),
+        b64.decode(rightsHolder.publicKey)
+      )
+    ).to.be.true;
   });
 
 });

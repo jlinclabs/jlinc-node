@@ -4,7 +4,6 @@ const sodium = require('sodium').api;
 const b64 = require('urlsafe-base64');
 
 module.exports = function verifyHashSignature({ signed, signature, publicKey }){
-
   const { InvalidSignatureError, InvalidPublicKeyError } = this;
   const invalidSignatureError = new InvalidSignatureError('invalid signature');
   const invalidPublicKeyError = new InvalidPublicKeyError('invalid public key');
