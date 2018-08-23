@@ -10,6 +10,31 @@ describe('JLINC.verifySisaWasSignedByRightsHolder', function() {
     Object.assign(this, { dataCustodian, rightsHolder, sisa });
   });
 
+  context('when missing required arguments', function() {
+    it('should return true', function(){
+      const { sisa, rightsHolder } = this;
+
+      expect(()=>{
+        JLINC.verifySisaWasSignedByRightsHolder({
+
+        });
+      }).to.throw('sisa is required');
+
+      expect(()=>{
+        JLINC.verifySisaWasSignedByRightsHolder({
+          sisa,
+        });
+      }).to.throw('rightsHolder is required');
+
+      expect(()=>{
+        JLINC.verifySisaWasSignedByRightsHolder({
+          sisa,
+          rightsHolder,
+        });
+      }).to.not.throw();
+    });
+  });
+
   context('when given a mismatching rightsHolder', function() {
     it('should return true', function(){
       const { sisa } = this;

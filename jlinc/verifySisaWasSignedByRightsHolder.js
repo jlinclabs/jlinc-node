@@ -20,9 +20,6 @@ module.exports = function verifySisaWasSignedByRightsHolder({ sisa, rightsHolder
     throw error;
   }
 
-  if (acceptedSisa === null)
-    throw new SisaVerificationError('sisa.acceptedSisa is invalid');
-
   if (acceptedSisa.rightsHolderId !== rightsHolder.publicKey)
     throw new SisaVerificationError('sisa.acceptedSisa.rightsHolderId does not match given rightsHolder');
 
