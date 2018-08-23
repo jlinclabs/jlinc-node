@@ -33,5 +33,10 @@ jobs:
       # run tests!
       - run: npm test
 
+      - run:
+          name: compress coverage
+          command: tar -zcvf coverage.tgz coverage/
+
       - store_artifacts:
-          path: ./coverage
+          path: ./coverage.tgz
+          destination: coverage.tgz
