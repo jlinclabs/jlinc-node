@@ -10,6 +10,39 @@ describe('JLINC.acknowledgeSisaEvent', function() {
     Object.assign(this, { dataCustodian, sisa, sisaEvent });
   });
 
+  context('when missing required arguments', function() {
+    it('should throw an error', function(){
+      const { dataCustodian, sisa, sisaEvent } = this;
+
+      expect(()=>{
+        JLINC.acknowledgeSisaEvent({
+
+        });
+      }).to.throw('sisa is required');
+
+      expect(()=>{
+        JLINC.acknowledgeSisaEvent({
+          sisa,
+        });
+      }).to.throw('dataCustodian is required');
+
+      expect(()=>{
+        JLINC.acknowledgeSisaEvent({
+          sisa,
+          dataCustodian,
+        });
+      }).to.throw('sisaEvent is required');
+
+      expect(()=>{
+        JLINC.acknowledgeSisaEvent({
+          sisa,
+          dataCustodian,
+          sisaEvent,
+        });
+      }).to.not.throw();
+    });
+  });
+
   context('when given an invalid dataCustodian', function() {
     it('should throw a InvalidDataCustodianError', function(){
       const { sisa, sisaEvent } = this;
