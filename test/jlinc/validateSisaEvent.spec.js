@@ -354,8 +354,8 @@ describe('JLINC.validateSisaEvent', function() {
           itemToHash: `${sisaEvent.audit.sisaId}.${eventJwt}.${sisaEvent.audit.previousId}.${sisaEvent.audit.createdAt}`
         });
 
-        const rightsHolderSig = JLINC.signItem({
-          itemToSign: eventId,
+        const rightsHolderSig = JLINC.signHash({
+          hashToSign: eventId,
           privateKey: rightsHolder.privateKey,
         });
 
