@@ -4,6 +4,32 @@ const JLINC = require('../../jlinc');
 const { generateSisaEvent } = require('../helpers');
 
 describe('JLINC.verifySisaEventWasSignedByRightsHolder', function() {
+  context('when given missing arguments', function() {
+    it('should throw an error', function(){
+      const { rightsHolder, sisaEvent } = generateSisaEvent();
+      const rightsHolderId = rightsHolder.publicKey;
+
+      expect(()=>{
+        JLINC.verifySisaEventWasSignedByRightsHolder({
+
+        });
+      }).to.throw('sisaEvent is required');
+
+      expect(()=>{
+        JLINC.verifySisaEventWasSignedByRightsHolder({
+          sisaEvent,
+        });
+      }).to.throw('rightsHolderId is required');
+
+      expect(()=>{
+        JLINC.verifySisaEventWasSignedByRightsHolder({
+          sisaEvent,
+          rightsHolderId
+        });
+      }).to.not.throw();
+
+    });
+  });
   context('when given a sisaEvent', function() {
     context('that was signed by the given rightsHolder', function() {
       it('should return true', function(){
