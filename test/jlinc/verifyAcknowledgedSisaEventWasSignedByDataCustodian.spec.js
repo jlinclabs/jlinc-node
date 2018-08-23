@@ -4,6 +4,32 @@ const JLINC = require('../../jlinc');
 const { generateAcknowledgedSisaEvent } = require('../helpers');
 
 describe('JLINC.verifyAcknowledgedSisaEventWasSignedByDataCustodian', function() {
+
+  context('when missing required arguments', function() {
+    it('should throw and error', function(){
+      const { dataCustodian, acknowledgedSisaEvent } = generateAcknowledgedSisaEvent();
+      const dataCustodianId = dataCustodian.publicKey;
+      expect(() => {
+        JLINC.verifyAcknowledgedSisaEventWasSignedByDataCustodian({
+
+        });
+      }).to.throw('acknowledgedSisaEvent is required');
+
+      expect(() => {
+        JLINC.verifyAcknowledgedSisaEventWasSignedByDataCustodian({
+          acknowledgedSisaEvent,
+        });
+      }).to.throw('dataCustodianId is required');
+
+      expect(() => {
+        JLINC.verifyAcknowledgedSisaEventWasSignedByDataCustodian({
+          acknowledgedSisaEvent,
+          dataCustodianId,
+        });
+      }).to.not.throw();
+    });
+  });
+
   context('when given an acknowledgedSisaEvent', function() {
     context('that was signed by the given dataCustodian', function() {
       it('should return true', function(){
