@@ -28,7 +28,7 @@ describe('JLINC.getContextVersion', function() {
         ).to.equal(5);
       });
     });
-    context('that is version 3', function() {
+    context('that is version 6', function() {
       it('should return 6', function() {
         expect(
           JLINC.getContextVersion('https://protocol.jlinc.org/context/jlinc-v6.jsonld')
