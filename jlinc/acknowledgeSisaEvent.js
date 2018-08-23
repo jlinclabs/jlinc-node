@@ -10,16 +10,19 @@ module.exports = function acknowledgeSisaEvent({ sisa, dataCustodian, sisaEvent 
   this.validateSisaEvent({ sisaEvent });
   this.verifySisaWasOfferedByDataCustodian({ sisa, dataCustodian });
 
-  const acknowledgedSisaEvent = { ...sisaEvent };
-  acknowledgedSisaEvent.audit = {
-    ...sisaEvent.audit,
-    dataCustodianSigType: this.signatureType,
-    dataCustodianId: dataCustodian.publicKey,
-    dataCustodianSig: this.signItem({
-      itemToSign: sisaEvent.eventJwt,
-      privateKey: dataCustodian.privateKey,
-    }),
-  };
+  const acknowledgedSisaEvent = Object.assign({}, sisaEvent);
+  acknowledgedSisaEvent.audit = Object.assign(
+    {},
+    sisaEvent.audit,
+    {
+      dataCustodianSigType: this.signatureType,
+      dataCustodianId: dataCustodian.publicKey,
+      dataCustodianSig: this.signItem({
+        itemToSign: sisaEvent.eventJwt,
+        privateKey: dataCustodian.privateKey,
+      }),
+    }
+  );
 
   return acknowledgedSisaEvent;
 };
