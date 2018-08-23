@@ -9,7 +9,7 @@
   "description": "A node implementation of the JLINC protocol",
   "main": "./jlinc/index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "./scripts/test"
   },
   "repository": {
     "type": "git",
