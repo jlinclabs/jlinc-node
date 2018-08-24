@@ -24,6 +24,40 @@ describe('JLINC.validateAcknowledgedSisaEvent', function() {
     }).to.throw('acknowledgedSisaEvent is required');
   });
 
+  context('when the given acknowledgedSisaEvent is invalid', function() {
+    it('should a acknowledgedSisaEvent is invalid error', function(){
+      const { sisaEvent } = this;
+      expect(() => {
+        JLINC.validateAcknowledgedSisaEvent({
+          sisaEvent,
+          acknowledgedSisaEvent: {},
+        });
+      }).to.throw(
+        JLINC.InvalidSisaEventError,
+        'acknowledgedSisaEvent must have key "@context"',
+      );
+    });
+  });
+
+  context('when given a sisaEvent and acknowledgedSisaEvent with missmatching @context', function() {
+    it('should throw the error "????"', function(){
+      const { sisaEvent } = this;
+      const acknowledgedSisaEvent = getVersion5AcknowledgedSisaEvent();
+      expect(() => {
+        JLINC.validateAcknowledgedSisaEvent({
+          sisaEvent,
+          acknowledgedSisaEvent: {
+            ...acknowledgedSisaEvent,
+            '@context': 'https://protocol.jlinc.org/context/jlinc-v5.jsonld',
+          },
+        });
+      }).to.throw(
+        JLINC.InvalidAcknowledgedSisaEventError,
+        'acknowledgedSisaEvent["@context"] does not match sisaEvent["@context"]',
+      );
+    });
+  });
+
   context('when given an missmatching acknowledgedSisaEvent', function() {
     it('should throw the error "acknowledgedSisaEvent.eventJwt does not match sisaEvent.eventJwt"', function(){
       const { sisaEvent } = this;
@@ -183,23 +217,7 @@ describe('JLINC.validateAcknowledgedSisaEvent', function() {
         },
         eventJwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb25hbF9kYXRhIjp7ImZpcnN0bmFtZSI6IkphcmVkIiwiaG9tZXBob25lIjoiNDE1LjMwNy40MzYwIiwibGFzdG5hbWUiOiJBdHJvbiJ9fQ.rxMLaAmrWp9T66Qb3r1n7ocZZNjFpgRZUKG0QJ6ZhyA',
       };
-      const acknowledgedSisaEvent = {
-        '@context': 'https://protocol.jlinc.org/context/jlinc-v5.jsonld',
-        audit: {
-          sisaId: "P49VOAaQ37UDoiC0CV_0ayCAudbEmUHWJS_yVW8Hpi0",
-          eventId: "Q8eROYrCNr6cBoSAz30aH3_cxkZt1lPimwVGzI14234",
-          createdAt: "2018-07-26T19:07:35.844Z",
-          eventType: "dataEvent",
-          previousId: null,
-          rightsHolderId: "66cTWrceMHrdeyvfJHsUVXYxEU186K6OxM7FiO8zjjw",
-          rightsHolderSig: "qOBSdnOnx_3V-Lu_i-Z1YcLksetY4q-KwKiSr6mFqrksNwi68xdNPKOSTQTJYGk4UXp27UxM05ioFuYH2DZsBNS20Kz5KCYPdD0xHrZAr785WluRGOq3lY5evHrwIFF7",
-          rightsHolderSigType: "sha256:ed25519",
-          dataCustodianId: "A0skZV9j-HmvOawNSH0YvvOgwbRkkm1xkTDoEr9vY3I",
-          dataCustodianSig: "48DgI7nQi8REEKg7-f_NagQNHrcOZtN8aQVltAJw2crLf_RaC6hu1o_yjc2NRFCldcnO70Fx7uD6cAwsFEC6DgZEzwuEAEnemm-Jo6_QyfyQRHPilMAvR8h0xCmBRrcM",
-          dataCustodianSigType: "sha256:ed25519",
-        },
-        eventJwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb25hbF9kYXRhIjp7ImZpcnN0bmFtZSI6IkphcmVkIiwiaG9tZXBob25lIjoiNDE1LjMwNy40MzYwIiwibGFzdG5hbWUiOiJBdHJvbiJ9fQ.rxMLaAmrWp9T66Qb3r1n7ocZZNjFpgRZUKG0QJ6ZhyA',
-      };
+      const acknowledgedSisaEvent = getVersion5AcknowledgedSisaEvent();
       expect(
         JLINC.validateAcknowledgedSisaEvent({
           sisaEvent,
@@ -209,3 +227,24 @@ describe('JLINC.validateAcknowledgedSisaEvent', function() {
     });
   });
 });
+
+
+const getVersion5AcknowledgedSisaEvent = function(){
+  return {
+    '@context': 'https://protocol.jlinc.org/context/jlinc-v5.jsonld',
+    audit: {
+      sisaId: "P49VOAaQ37UDoiC0CV_0ayCAudbEmUHWJS_yVW8Hpi0",
+      eventId: "Q8eROYrCNr6cBoSAz30aH3_cxkZt1lPimwVGzI14234",
+      createdAt: "2018-07-26T19:07:35.844Z",
+      eventType: "dataEvent",
+      previousId: null,
+      rightsHolderId: "66cTWrceMHrdeyvfJHsUVXYxEU186K6OxM7FiO8zjjw",
+      rightsHolderSig: "qOBSdnOnx_3V-Lu_i-Z1YcLksetY4q-KwKiSr6mFqrksNwi68xdNPKOSTQTJYGk4UXp27UxM05ioFuYH2DZsBNS20Kz5KCYPdD0xHrZAr785WluRGOq3lY5evHrwIFF7",
+      rightsHolderSigType: "sha256:ed25519",
+      dataCustodianId: "A0skZV9j-HmvOawNSH0YvvOgwbRkkm1xkTDoEr9vY3I",
+      dataCustodianSig: "48DgI7nQi8REEKg7-f_NagQNHrcOZtN8aQVltAJw2crLf_RaC6hu1o_yjc2NRFCldcnO70Fx7uD6cAwsFEC6DgZEzwuEAEnemm-Jo6_QyfyQRHPilMAvR8h0xCmBRrcM",
+      dataCustodianSigType: "sha256:ed25519",
+    },
+    eventJwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb25hbF9kYXRhIjp7ImZpcnN0bmFtZSI6IkphcmVkIiwiaG9tZXBob25lIjoiNDE1LjMwNy40MzYwIiwibGFzdG5hbWUiOiJBdHJvbiJ9fQ.rxMLaAmrWp9T66Qb3r1n7ocZZNjFpgRZUKG0QJ6ZhyA',
+  };
+};
