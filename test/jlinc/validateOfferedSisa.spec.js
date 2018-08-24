@@ -1,7 +1,7 @@
 'use strict';
 
 const JLINC = require('../../jlinc');
-const { generateISODateStringOfOneMinuteFromNow } = require('../helpers');
+const { generateISODateStringInTheFuture } = require('../helpers');
 
 describe('JLINC.validateOfferedSisa', function() {
 
@@ -192,7 +192,7 @@ describe('JLINC.validateOfferedSisa', function() {
             dataCustodianSigType: JLINC.signatureType,
             dataCustodianId: offeredSisa.dataCustodianId,
             dataCustodianSig: offeredSisa.dataCustodianSig,
-            createdAt: generateISODateStringOfOneMinuteFromNow(),
+            createdAt: generateISODateStringInTheFuture(),
           }
         });
       }).to.throw(JLINC.InvalidOfferedSisaError, 'offeredSisa.createdAt cannot be in the future');

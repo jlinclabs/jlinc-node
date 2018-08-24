@@ -1,7 +1,7 @@
 'use strict';
 
 const JLINC = require('../../jlinc');
-const { generateISODateStringOfOneMinuteFromNow, generateSisa } = require('../helpers');
+const { generateISODateStringInTheFuture, generateSisa } = require('../helpers');
 
 describe('JLINC.validateSisa', function() {
 
@@ -342,7 +342,7 @@ describe('JLINC.validateSisa', function() {
             rightsHolderSigType: JLINC.signatureType,
             rightsHolderId: this.our.rightsHolder.publicKey,
             rightsHolderSig: this.our.acceptedSisa.rightsHolderSig,
-            createdAt: generateISODateStringOfOneMinuteFromNow(),
+            createdAt: generateISODateStringInTheFuture(),
           },
         })
       });

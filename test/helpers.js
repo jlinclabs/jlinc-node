@@ -2,13 +2,10 @@
 
 const JLINC = require('../jlinc');
 
-const zeroPadded = n => n >= 10 ? n : `0${n}`;
-
-const generateISODateStringOfOneMinuteFromNow = function(){
-  const isoDateString = new Date().toISOString();
-  return isoDateString.replace(/:(\d\d):(\d\d)\./, (_, m, s) =>
-    `:${zeroPadded(Number(m)+1)}:${s}.`
-  );
+const generateISODateStringInTheFuture = function(){
+  const date = new Date();
+  date.setMinutes(date.getMinutes() + 5);
+  return date.toISOString();
 };
 
 const generateSisa = function() {
@@ -121,7 +118,7 @@ const generateAcknowledgedSisaEvent = function() {
 };
 
 module.exports = {
-  generateISODateStringOfOneMinuteFromNow,
+  generateISODateStringInTheFuture,
   generateSisa,
   generateSisaEvent,
   generateAcknowledgedSisaEvent,
