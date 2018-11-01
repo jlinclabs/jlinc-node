@@ -16,6 +16,7 @@ module.exports =  {
 
   sisaEventTypes: Object.freeze([
     'dataEvent',
+    'sharingEvent',
     'permissionEvent',
     'statusEvent',
   ]),

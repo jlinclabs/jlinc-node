@@ -24,6 +24,7 @@ describe('JLINC.sisaEventTypes', function() {
   it('should be a frozen array', function(){
     expect(JLINC.sisaEventTypes).to.deep.equal([
       'dataEvent',
+      'sharingEvent',
       'permissionEvent',
       'statusEvent',
     ]);
