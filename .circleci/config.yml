@@ -15,6 +15,14 @@ jobs:
 
     steps:
       - checkout
+      - run: git submodule update --init
+      - run: wget -qO- https://binaries.cockroachdb.com/cockroach-v2.1.2.linux-amd64.tgz | tar  xvz
+      - run: sudo cp -i cockroach-v2.1.2.linux-amd64/cockroach /usr/local/bin
+      - run:
+          name: start cockroach
+          command: cockroach start --insecure --listen-addr=localhost
+          background: true
+
 
       # Download and cache dependencies
       - restore_cache:

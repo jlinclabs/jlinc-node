@@ -1,24 +1,25 @@
 'use strict';
 
 const JLINC = require('../../jlinc');
+const withDidServer = require('../helpers/withDidServer');
 
 describe('JLINC.verifySignature', function() {
+  withDidServer();
 
   beforeEach(function() {
-    const rightsHolder = JLINC.createRightsHolder();
+    const publicKey = 'xkgJW2lkSgD3sHF0bsGqiWBuA6ViJDyiKzJjw6RLNcU';
+    const privateKey = 'Qzq373Tu3VSu9GqFTkLWssovraDW8T534icxS5nT6gPGSAlbaWRKAPewcXRuwaqJYG4DpWIkPKIrMmPDpEs1xQ';
     const itemSigned = 'donkeys need food too';
     const signature = JLINC.signItem({
       itemToSign: itemSigned,
-      privateKey: rightsHolder.privateKey,
+      privateKey,
     });
-    const publicKey = rightsHolder.publicKey;
-    const contextUrl = JLINC.contextUrl;
-    Object.assign(this, { itemSigned, signature, publicKey, contextUrl });
+    Object.assign(this, { itemSigned, signature, publicKey });
   });
 
   context('when missing required arguments', function() {
     it('should throw an error', function(){
-      const { itemSigned, signature, publicKey, contextUrl } = this;
+      const { itemSigned, signature, publicKey } = this;
 
       expect(()=>{
         JLINC.verifySignature({
@@ -45,29 +46,19 @@ describe('JLINC.verifySignature', function() {
           signature,
           publicKey,
         });
-      }).to.throw('contextUrl is required');
-
-      expect(()=>{
-        JLINC.verifySignature({
-          itemSigned,
-          signature,
-          publicKey,
-          contextUrl,
-        });
       }).to.not.throw();
     });
   });
 
 
   it('should validate that the given signature is a signature of the give itemSigned and publicKey', function(){
-    const { itemSigned, signature, publicKey, contextUrl } = this;
+    const { itemSigned, signature, publicKey } = this;
 
     expect(
       JLINC.verifySignature({
         signature,
         publicKey,
         itemSigned,
-        contextUrl,
       })
     ).to.be.true;
 
@@ -76,16 +67,14 @@ describe('JLINC.verifySignature', function() {
         signature: 'some fake signature i made up',
         publicKey,
         itemSigned,
-        contextUrl,
       });
     }).to.throw(JLINC.InvalidSignatureError, 'invalid signature');
 
     expect(()=>{
       JLINC.verifySignature({
         signature,
-        publicKey: JLINC.createRightsHolder().publicKey, // using the wrong public key
+        publicKey: 'aqYorRm7-twGJ7WC5J2F1bMYxnkfB6Iy5rBn2ZzEGNA', // using the wrong public key
         itemSigned,
-        contextUrl,
       });
     }).to.throw(JLINC.InvalidSignatureError, 'invalid signature');
 
@@ -94,7 +83,6 @@ describe('JLINC.verifySignature', function() {
         signature,
         publicKey,
         itemSigned: 'this is not the item that was signed',
-        contextUrl,
       });
     }).to.throw(JLINC.InvalidSignatureError, 'invalid signature');
   });

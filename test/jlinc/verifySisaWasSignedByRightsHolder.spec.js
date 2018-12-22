@@ -1,12 +1,13 @@
 'use strict';
 
 const JLINC = require('../../jlinc');
-const { generateSisa } = require('../helpers');
+const withDidServer = require('../helpers/withDidServer');
 
 describe('JLINC.verifySisaWasSignedByRightsHolder', function() {
+  withDidServer();
 
-  before(function() {
-    const { dataCustodian, rightsHolder, sisa } = generateSisa();
+  before(async function() {
+    const { dataCustodian, rightsHolder, sisa } = await this.generateSisa();
     Object.assign(this, { dataCustodian, rightsHolder, sisa });
   });
 
@@ -36,29 +37,28 @@ describe('JLINC.verifySisaWasSignedByRightsHolder', function() {
   });
 
   context('when given a mismatching rightsHolder', function() {
-    it('should return true', function(){
+    it('should return true', async function(){
       const { sisa } = this;
+      const rightsHolder = await JLINC.createRightsHolder();
       expect(()=>{
-        JLINC.verifySisaWasSignedByRightsHolder({
-          sisa,
-          rightsHolder: JLINC.createRightsHolder(),
-        });
+        JLINC.verifySisaWasSignedByRightsHolder({ sisa, rightsHolder });
       }).to.throw(JLINC.SisaVerificationError, 'sisa.acceptedSisaJwt is not signed by the given rightsHolder');
     });
   });
 
   context('when given a weird rightsHolder with the right secret but wrong publicKey', function() {
-    it('should return true', function(){
+    it('should return true', async function(){
       const { rightsHolder, sisa } = this;
+      const otherRightsHolder = await JLINC.createRightsHolder();
       expect(()=>{
         JLINC.verifySisaWasSignedByRightsHolder({
           sisa,
           rightsHolder: {
-            ...JLINC.createRightsHolder(),
+            ...otherRightsHolder,
             secret: rightsHolder.secret,
           }
         });
-      }).to.throw(JLINC.SisaVerificationError, 'sisa.acceptedSisa.rightsHolderId does not match given rightsHolder');
+      }).to.throw(JLINC.SisaVerificationError, 'sisa.acceptedSisa.rightsHolderDid does not match given rightsHolder.did');
     });
   });
 

@@ -1,12 +1,13 @@
 'use strict';
 
+const withDidServer = require('../helpers/withDidServer');
 const JLINC = require('../../jlinc');
-const { generateSisaEvent } = require('../helpers');
 
 describe('JLINC.validateSisaEvent', function() {
+  withDidServer();
 
-  before(function() {
-    const { sisaEvent, rightsHolder } = generateSisaEvent();
+  before(async function() {
+    const { sisaEvent, rightsHolder } = await this.generateSisaEvent();
     Object.assign(this, { sisaEvent, rightsHolder });
   });
 
@@ -233,7 +234,7 @@ describe('JLINC.validateSisaEvent', function() {
             },
           },
         });
-      }).to.throw(JLINC.InsisaEventError, 'sisaEvent.audit must have key "rightsHolderId"');
+      }).to.throw(JLINC.InsisaEventError, 'sisaEvent.audit must have key "rightsHolderDid"');
 
       expect(() => {
         JLINC.validateSisaEvent({
@@ -247,11 +248,11 @@ describe('JLINC.validateSisaEvent', function() {
               createdAt: sisaEvent.audit.createdAt,
               previousId: sisaEvent.audit.previousId,
               rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
-              rightsHolderId: 'cows',
+              rightsHolderDid: {},
             },
           },
         });
-      }).to.throw(JLINC.InsisaEventError, 'sisaEvent.audit.rightsHolderId must be of length 43');
+      }).to.throw(JLINC.InsisaEventError, 'sisaEvent.audit.rightsHolderDid must be of type string');
 
       expect(() => {
         JLINC.validateSisaEvent({
@@ -265,7 +266,64 @@ describe('JLINC.validateSisaEvent', function() {
               createdAt: sisaEvent.audit.createdAt,
               previousId: sisaEvent.audit.previousId,
               rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
-              rightsHolderId: sisaEvent.audit.rightsHolderId,
+              rightsHolderDid: sisaEvent.audit.rightsHolderDid
+            },
+          },
+        });
+      }).to.throw(JLINC.InsisaEventError, 'sisaEvent.audit must have key "rightsHolderPublicKey"');
+
+      expect(() => {
+        JLINC.validateSisaEvent({
+          sisaEvent: {
+            '@context': sisaEvent['@context'],
+            eventJwt: sisaEvent.eventJwt,
+            audit: {
+              eventType: sisaEvent.audit.eventType,
+              sisaId: sisaEvent.audit.sisaId,
+              eventId: sisaEvent.audit.eventId,
+              createdAt: sisaEvent.audit.createdAt,
+              previousId: sisaEvent.audit.previousId,
+              rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
+              rightsHolderDid: sisaEvent.audit.rightsHolderDid,
+              rightsHolderPublicKey: {},
+            },
+          },
+        });
+      }).to.throw(JLINC.InsisaEventError, 'sisaEvent.audit.rightsHolderPublicKey must be of type string');
+
+      expect(() => {
+        JLINC.validateSisaEvent({
+          sisaEvent: {
+            '@context': sisaEvent['@context'],
+            eventJwt: sisaEvent.eventJwt,
+            audit: {
+              eventType: sisaEvent.audit.eventType,
+              sisaId: sisaEvent.audit.sisaId,
+              eventId: sisaEvent.audit.eventId,
+              createdAt: sisaEvent.audit.createdAt,
+              previousId: sisaEvent.audit.previousId,
+              rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
+              rightsHolderDid: sisaEvent.audit.rightsHolderDid,
+              rightsHolderPublicKey: 'fake key here',
+            },
+          },
+        });
+      }).to.throw(JLINC.InsisaEventError, 'sisaEvent.audit.rightsHolderPublicKey must be of length 43');
+
+      expect(() => {
+        JLINC.validateSisaEvent({
+          sisaEvent: {
+            '@context': sisaEvent['@context'],
+            eventJwt: sisaEvent.eventJwt,
+            audit: {
+              eventType: sisaEvent.audit.eventType,
+              sisaId: sisaEvent.audit.sisaId,
+              eventId: sisaEvent.audit.eventId,
+              createdAt: sisaEvent.audit.createdAt,
+              previousId: sisaEvent.audit.previousId,
+              rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
+              rightsHolderDid: sisaEvent.audit.rightsHolderDid,
+              rightsHolderPublicKey: sisaEvent.audit.rightsHolderPublicKey,
             },
           },
         });
@@ -283,7 +341,8 @@ describe('JLINC.validateSisaEvent', function() {
               createdAt: sisaEvent.audit.createdAt,
               previousId: sisaEvent.audit.previousId,
               rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
-              rightsHolderId: sisaEvent.audit.rightsHolderId,
+              rightsHolderDid: sisaEvent.audit.rightsHolderDid,
+              rightsHolderPublicKey: sisaEvent.audit.rightsHolderPublicKey,
               rightsHolderSig: sisaEvent.audit.rightsHolderSig,
             },
           },
@@ -302,7 +361,8 @@ describe('JLINC.validateSisaEvent', function() {
               createdAt: sisaEvent.audit.createdAt,
               previousId: sisaEvent.audit.previousId,
               rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
-              rightsHolderId: sisaEvent.audit.rightsHolderId,
+              rightsHolderDid: sisaEvent.audit.rightsHolderDid,
+              rightsHolderPublicKey: sisaEvent.audit.rightsHolderPublicKey,
               rightsHolderSig: sisaEvent.audit.rightsHolderSig,
             },
           },
@@ -321,7 +381,8 @@ describe('JLINC.validateSisaEvent', function() {
               createdAt: sisaEvent.audit.createdAt,
               previousId: sisaEvent.audit.previousId,
               rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
-              rightsHolderId: sisaEvent.audit.rightsHolderId,
+              rightsHolderDid: sisaEvent.audit.rightsHolderDid,
+              rightsHolderPublicKey: sisaEvent.audit.rightsHolderPublicKey,
               rightsHolderSig: 'asdsdsadsa',
             },
           },
@@ -356,7 +417,7 @@ describe('JLINC.validateSisaEvent', function() {
 
         const rightsHolderSig = JLINC.signHash({
           hashToSign: eventId,
-          privateKey: rightsHolder.privateKey,
+          privateKey: rightsHolder.signingPrivateKey,
         });
 
         const badSisaEvent = {
@@ -369,7 +430,8 @@ describe('JLINC.validateSisaEvent', function() {
             createdAt: sisaEvent.audit.createdAt,
             previousId: sisaEvent.audit.previousId,
             rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
-            rightsHolderId: sisaEvent.audit.rightsHolderId,
+            rightsHolderDid: sisaEvent.audit.rightsHolderDid,
+            rightsHolderPublicKey: sisaEvent.audit.rightsHolderPublicKey,
             rightsHolderSig,
           },
         };

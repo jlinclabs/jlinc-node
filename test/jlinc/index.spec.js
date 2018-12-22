@@ -3,8 +3,8 @@
 const JLINC = require('../../jlinc');
 
 describe('JLINC.version', function() {
-  it('should be 0.0.1', function(){
-    expect(JLINC.version).to.equal('0.0.1');
+  it('should be 0.1.0', function(){
+    expect(JLINC.version).to.equal('0.1.0');
   });
 });
 

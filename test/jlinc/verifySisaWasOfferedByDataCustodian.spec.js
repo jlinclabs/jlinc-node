@@ -1,9 +1,10 @@
 'use strict';
 
 const JLINC = require('../../jlinc');
-const { generateSisa } = require('../helpers');
+const withDidServer = require('../helpers/withDidServer');
 
 describe('JLINC.verifySisaWasOfferedByDataCustodian', function() {
+  withDidServer();
 
   context('when missing required arguments', function() {
     it('should throw an error', function(){
@@ -11,18 +12,35 @@ describe('JLINC.verifySisaWasOfferedByDataCustodian', function() {
         JLINC.verifySisaWasOfferedByDataCustodian({
 
         });
-      }).to.throw(Error, 'sisa is required');
+      }).to.throw('sisa is required');
+
       expect(()=>{
         JLINC.verifySisaWasOfferedByDataCustodian({
           sisa: {},
         });
-      }).to.throw(Error, 'dataCustodian is required');
+      }).to.throw('dataCustodian is required');
+
+      expect(()=>{
+        JLINC.verifySisaWasOfferedByDataCustodian({
+          sisa: {},
+          dataCustodian: {},
+        });
+      }).to.throw('dataCustodian.did is required');
+
+      expect(()=>{
+        JLINC.verifySisaWasOfferedByDataCustodian({
+          sisa: {},
+          dataCustodian: {
+            did: 'x',
+          },
+        });
+      }).to.throw('dataCustodian.secret is required');
     });
   });
 
   context('when given a sisa and dataCustodian that match', function() {
-    before(function() {
-      const { sisa, dataCustodian } = generateSisa();
+    before(async function() {
+      const { sisa, dataCustodian } = await this.generateSisa();
       Object.assign(this, { sisa, dataCustodian });
     });
     it('should return true', function(){
@@ -37,9 +55,9 @@ describe('JLINC.verifySisaWasOfferedByDataCustodian', function() {
   });
 
   context('when given a sisa and dataCustodian that do not match', function() {
-    before(function() {
-      const { sisa, dataCustodian } = generateSisa();
-      const otherDataCustodian = JLINC.createDataCustodian();
+    before(async function() {
+      const { sisa, dataCustodian } = await this.generateSisa();
+      const otherDataCustodian = await JLINC.createDataCustodian();
       Object.assign(this, { sisa, dataCustodian, otherDataCustodian });
     });
     it('should throw the error "invalid signature"', function(){
@@ -47,18 +65,21 @@ describe('JLINC.verifySisaWasOfferedByDataCustodian', function() {
       expect(()=>{
         JLINC.verifySisaWasOfferedByDataCustodian({
           sisa,
-          dataCustodian: otherDataCustodian
+          dataCustodian: {
+            did: otherDataCustodian.did,
+            secret: dataCustodian.secret,
+          }
         });
-      }).to.throw(JLINC.SisaVerificationError, 'sisa agreementJwt is not signed by the given dataCustodian');
+      }).to.throw(JLINC.SisaVerificationError, 'sisa.acceptedSisa.offeredSisa.dataCustodianDid does not match the given dataCustodian');
       expect(()=>{
         JLINC.verifySisaWasOfferedByDataCustodian({
           sisa,
           dataCustodian: {
-            secret: dataCustodian.secret,
-            publicKey: otherDataCustodian.publicKey,
+            did: dataCustodian.did,
+            secret: otherDataCustodian.secret,
           }
         });
-      }).to.throw(JLINC.SisaVerificationError, 'sisa dataCustodianSig does not match the given dataCustodian');
+      }).to.throw(JLINC.SisaVerificationError, 'sisa agreementJwt is not signed by the given dataCustodian');
     });
   });
 

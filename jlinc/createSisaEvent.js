@@ -8,9 +8,19 @@ module.exports = function createSisaEvent({ eventType, event, sisa, latestSisaEv
   if (!event) throw new Error('event is required');
   if (!sisa) throw new Error('sisa is required');
   if (!latestSisaEvent && latestSisaEvent !== null) throw new Error('latestSisaEvent is required');
-  if (!rightsHolder) throw new Error('rightsHolder is required');
+  if (!rightsHolder)                   throw new Error('rightsHolder is required');
+  if (!rightsHolder.did)               throw new Error('rightsHolder.did is required');
+  if (!rightsHolder.secret)            throw new Error('rightsHolder.secret is required');
+  if (!rightsHolder.signingPrivateKey) throw new Error('rightsHolder.signingPrivateKey is required');
+  if (!rightsHolder.signingPublicKey)  throw new Error('rightsHolder.signingPublicKey is required');
 
   this.validateSisa({ sisa });
+
+  const expandedSisa = this.expandSisa({ sisa });
+
+  if (expandedSisa.acceptedSisa.rightsHolderDid !== rightsHolder.did)
+    throw new Error(`rightsholder.did does not match sisa`);
+
   this.verifySisaWasSignedByRightsHolder({ sisa, rightsHolder });
 
   if (!this.sisaEventTypes.includes(eventType))
@@ -22,7 +32,7 @@ module.exports = function createSisaEvent({ eventType, event, sisa, latestSisaEv
   if (latestSisaEvent !== null)
     this.validateSisaEvent({ sisaEvent: latestSisaEvent });
 
-  const sisaId = sisa.sisaId;
+  const { sisaId } = sisa;
   const createdAt = this.now();
   const previousId = latestSisaEvent ? latestSisaEvent.audit.eventId : null;
 
@@ -37,7 +47,7 @@ module.exports = function createSisaEvent({ eventType, event, sisa, latestSisaEv
 
   const rightsHolderSig = this.signHash({
     hashToSign: eventId,
-    privateKey: rightsHolder.privateKey,
+    privateKey: rightsHolder.signingPrivateKey,
   });
 
   return {
@@ -48,8 +58,9 @@ module.exports = function createSisaEvent({ eventType, event, sisa, latestSisaEv
       eventId,
       createdAt,
       previousId,
+      rightsHolderDid: rightsHolder.did,
+      rightsHolderPublicKey: rightsHolder.signingPublicKey,
       rightsHolderSigType: this.signatureType,
-      rightsHolderId: rightsHolder.publicKey,
       rightsHolderSig,
     },
     eventJwt,

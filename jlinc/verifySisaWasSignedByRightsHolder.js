@@ -6,8 +6,6 @@ module.exports = function verifySisaWasSignedByRightsHolder({ sisa, rightsHolder
   if (!sisa) throw new Error('sisa is required');
   if (!rightsHolder) throw new Error('rightsHolder is required');
 
-  this.validateSisa({ sisa });
-
   let acceptedSisa;
   try{
     acceptedSisa = this.decodeAndVerifyJwt({
@@ -20,8 +18,10 @@ module.exports = function verifySisaWasSignedByRightsHolder({ sisa, rightsHolder
     throw error;
   }
 
-  if (acceptedSisa.rightsHolderId !== rightsHolder.publicKey)
-    throw new SisaVerificationError('sisa.acceptedSisa.rightsHolderId does not match given rightsHolder');
+  if (acceptedSisa.rightsHolderDid !== rightsHolder.did)
+    throw new SisaVerificationError('sisa.acceptedSisa.rightsHolderDid does not match given rightsHolder.did');
+
+
 
   return true;
 };

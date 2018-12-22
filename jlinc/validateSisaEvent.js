@@ -82,12 +82,22 @@ module.exports = function validateSisaEvent({ sisaEvent }) {
   if (sisaEvent.audit.rightsHolderSigType !== this.signatureType)
     throw new InvalidSisaEventError('sisaEvent.audit.rightsHolderSigType is invalid');
 
-  // sisaEvent.audit.rightsHolderId
-  if (!('rightsHolderId' in sisaEvent.audit))
-    throw new InvalidSisaEventError('sisaEvent.audit must have key "rightsHolderId"');
+  // sisaEvent.audit.rightsHolderDid
+  if (!('rightsHolderDid' in sisaEvent.audit))
+    throw new InvalidSisaEventError('sisaEvent.audit must have key "rightsHolderDid"');
 
-  if (sisaEvent.audit.rightsHolderId.length !== 43)
-    throw new InvalidSisaEventError('sisaEvent.audit.rightsHolderId must be of length 43');
+  if (typeof sisaEvent.audit.rightsHolderDid !== 'string')
+    throw new InvalidSisaEventError('sisaEvent.audit.rightsHolderDid must be of type string');
+
+  // sisaEvent.audit.rightsHolderPublicKey
+  if (!('rightsHolderPublicKey' in sisaEvent.audit))
+    throw new InvalidSisaEventError('sisaEvent.audit must have key "rightsHolderPublicKey"');
+
+  if (typeof sisaEvent.audit.rightsHolderPublicKey !== 'string')
+    throw new InvalidSisaEventError('sisaEvent.audit.rightsHolderPublicKey must be of type string');
+
+  if (sisaEvent.audit.rightsHolderPublicKey.length !== 43)
+    throw new InvalidSisaEventError('sisaEvent.audit.rightsHolderPublicKey must be of length 43');
 
   // sisaEvent.audit.rightsHolderSig
   if (!('rightsHolderSig' in sisaEvent.audit))
@@ -96,7 +106,7 @@ module.exports = function validateSisaEvent({ sisaEvent }) {
   try{
     this.verifySisaEventWasSignedByRightsHolder({
       sisaEvent,
-      rightsHolderId: sisaEvent.audit.rightsHolderId,
+      rightsHolderPublicKey: sisaEvent.audit.rightsHolderPublicKey,
     });
   }catch(error){
     if (error instanceof SisaEventVerificationError)

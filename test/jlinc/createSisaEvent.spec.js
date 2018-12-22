@@ -1,12 +1,13 @@
 'use strict';
 
 const JLINC = require('../../jlinc');
-const { generateSisa } = require('../helpers');
+const withDidServer = require('../helpers/withDidServer');
 
 describe('JLINC.createSisaEvent', function() {
+  withDidServer();
 
-  before(function() {
-    const { sisa, rightsHolder } = generateSisa();
+  before(async function() {
+    const { sisa, rightsHolder } = await this.generateSisa();
     const eventType = 'dataEvent';
     const event = {
       personal_data: {
@@ -53,31 +54,99 @@ describe('JLINC.createSisaEvent', function() {
         latestSisaEvent: 'x',
       });
     }).to.throw(Error, 'rightsHolder is required');
+
+    expect(()=>{
+      JLINC.createSisaEvent({
+        eventType: 'x',
+        event: 'x',
+        sisa: 'x',
+        latestSisaEvent: 'x',
+        rightsHolder: {},
+      });
+    }).to.throw(Error, 'rightsHolder.did is required');
+
+    expect(()=>{
+      JLINC.createSisaEvent({
+        eventType: 'x',
+        event: 'x',
+        sisa: 'x',
+        latestSisaEvent: 'x',
+        rightsHolder: {
+          did: 'x',
+        },
+      });
+    }).to.throw(Error, 'rightsHolder.secret is required');
+
+    expect(()=>{
+      JLINC.createSisaEvent({
+        eventType: 'x',
+        event: 'x',
+        sisa: 'x',
+        latestSisaEvent: 'x',
+        rightsHolder: {
+          did: 'x',
+          secret: 'x',
+        },
+      });
+    }).to.throw(Error, 'rightsHolder.signingPrivateKey is required');
+
+    expect(()=>{
+      JLINC.createSisaEvent({
+        eventType: 'x',
+        event: 'x',
+        sisa: 'x',
+        latestSisaEvent: 'x',
+        rightsHolder: {
+          did: 'x',
+          secret: 'x',
+          signingPrivateKey: 'x',
+        },
+      });
+    }).to.throw(Error, 'rightsHolder.signingPublicKey is required');
+
+    expect(()=>{
+      JLINC.createSisaEvent({
+        eventType: 'x',
+        event: 'x',
+        sisa: 'x',
+        latestSisaEvent: 'x',
+        rightsHolder: {
+          did: 'x',
+          secret: 'x',
+          signingPrivateKey: 'x',
+          signingPublicKey: 'x',
+        },
+      });
+    }).to.throw(Error, 'sisa must be of type object');
   });
 
   context('when given all valid options', function(){
     it('should return a sisaEvent', function(){
       const { sisa, rightsHolder, eventType, event, latestSisaEvent } = this;
       const sisaEvent = JLINC.createSisaEvent({ sisa, rightsHolder, eventType, event, latestSisaEvent });
-      expect(sisaEvent).to.be.an('object');
 
-      expect(sisaEvent).to.be.an('object');
-      expect(sisaEvent['@context']).to.equal(JLINC.contextUrl);
+      expect(sisaEvent).to.matchPattern({
+        '@context': JLINC.contextUrl,
+        audit: {
+          eventType: 'dataEvent',
+          sisaId: sisa.sisaId,
+          eventId: _.isString,
+          createdAt: _.isRecentDatetimeInISOFormat,
+          previousId: null,
+          rightsHolderDid: rightsHolder.did,
+          rightsHolderPublicKey: rightsHolder.signingPublicKey,
+          rightsHolderSigType: JLINC.signatureType,
+          rightsHolderSig: _.isString,
+        },
+        eventJwt: _.isString
+      });
       expect(sisaEvent.eventJwt).to.be.aJwtSignedWith(rightsHolder.secret);
       expect(sisaEvent.eventJwt).to.be.aJwtEncodingOf(event);
-      expect(sisaEvent.audit).to.be.an('object');
-      expect(sisaEvent.audit.eventType).to.equal('dataEvent');
-      expect(sisaEvent.audit.sisaId).to.equal(sisa.sisaId);
-      expect(sisaEvent.audit.eventId).to.be.a('string');
-      expect(sisaEvent.audit.previousId).to.be.null;
-      expect(sisaEvent.audit.rightsHolderSigType).to.equal(JLINC.signatureType);
-      expect(sisaEvent.audit.rightsHolderId).to.equal(rightsHolder.publicKey);
-      expect(sisaEvent.audit.rightsHolderSig).to.be.a('string');
 
       expect(
         JLINC.verifySisaEventWasSignedByRightsHolder({
           sisaEvent,
-          rightsHolderId: rightsHolder.publicKey,
+          rightsHolderPublicKey: rightsHolder.signingPublicKey,
         })
       ).to.be.true;
 
@@ -92,7 +161,8 @@ describe('JLINC.createSisaEvent', function() {
           createdAt: sisaEvent.audit.createdAt,
           previousId: null,
           rightsHolderSigType: sisaEvent.audit.rightsHolderSigType,
-          rightsHolderId: sisaEvent.audit.rightsHolderId,
+          rightsHolderDid: rightsHolder.did,
+          rightsHolderPublicKey: rightsHolder.signingPublicKey,
           rightsHolderSig: sisaEvent.audit.rightsHolderSig,
         },
         event: {
@@ -144,20 +214,22 @@ describe('JLINC.createSisaEvent', function() {
     });
   });
 
-  context('when given an invalid sisa', function(){
-    it('should throw an InvalidSisaError', function(){
-      const { eventType, event, latestSisaEvent, rightsHolder } = this;
-      expect(()=>{
-        JLINC.createSisaEvent({
-          eventType,
-          event,
-          sisa: {},
-          latestSisaEvent,
-          rightsHolder,
-        });
-      }).to.throw(JLINC.InvalidSisaError);
-    });
-  });
+  // commented this out because it used to call JLINC.validateSisa before this branch
+  // made validataSisa async and talk to the did server
+  // context('when given an invalid sisa', function(){
+  //   it('should throw an InvalidSisaError', function(){
+  //     const { eventType, event, latestSisaEvent, rightsHolder } = this;
+  //     expect(()=>{
+  //       JLINC.createSisaEvent({
+  //         eventType,
+  //         event,
+  //         sisa: {},
+  //         latestSisaEvent,
+  //         rightsHolder,
+  //       });
+  //     }).to.throw(JLINC.InvalidSisaError);
+  //   });
+  // });
 
   context('when given an invalid latestSisaEvent', function() {
     it('should throw InvalidSisaEventError', function(){
@@ -199,17 +271,20 @@ describe('JLINC.createSisaEvent', function() {
   });
 
   context('when given a rightsHolder that does not match the given sisa', function() {
+    beforeEach(async function(){
+      this.otherRightsHolder = await JLINC.createRightsHolder();
+    });
     it('should throw InvalidSisaError "sisa.acceptedSisa.rightsHolderId does not match given rightsHolder"', function(){
-      const { eventType, event, sisa, latestSisaEvent } = this;
+      const { eventType, event, sisa, latestSisaEvent, otherRightsHolder } = this;
       expect(()=>{
         JLINC.createSisaEvent({
           eventType,
           event,
           sisa,
           latestSisaEvent,
-          rightsHolder: JLINC.createRightsHolder(),
+          rightsHolder: otherRightsHolder,
         });
-      }).to.throw(JLINC.SisaVerificationError, 'sisa.acceptedSisaJwt is not signed by the given rightsHolder');
+      }).to.throw('rightsholder.did does not match sisa');
     });
   });
 

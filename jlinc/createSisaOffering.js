@@ -16,7 +16,7 @@ module.exports = function createSisaOffering({ agreementURI, dataCustodian }) {
 
   const dataCustodianSig = this.signItem({
     itemToSign: agreementJwt,
-    privateKey: dataCustodian.privateKey,
+    privateKey: dataCustodian.signingPrivateKey,
   });
 
   return {
@@ -25,7 +25,8 @@ module.exports = function createSisaOffering({ agreementURI, dataCustodian }) {
       '@context': this.contextUrl,
       agreementJwt,
       dataCustodianSigType: this.signatureType,
-      dataCustodianId: dataCustodian.publicKey,
+      dataCustodianDid: dataCustodian.did,
+      dataCustodianPublicKey: dataCustodian.signingPublicKey,
       dataCustodianSig,
       createdAt: this.now(),
     }

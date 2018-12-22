@@ -1,3 +1,5 @@
 'use strict';
 
-module.exports = require('./createParty');
+module.exports = async function createDataCustodian(){
+  return await this.createEntity();
+};

@@ -74,7 +74,10 @@ module.exports = function validateSisa({ sisa }){
     throw new InvalidSisaError('sisa.acceptedSisa.offeredSisaJwt is invalid');
 
   try{
-    this.validateOfferedSisa({ offeredSisa });
+    this.validateOfferedSisa({
+      offeredSisa,
+      dataCustodianDid: offeredSisa.dataCustodianDid,
+    });
   }catch(error){
     if (error instanceof InvalidOfferedSisaError){
       throw new InvalidSisaError(error.message.replace('offeredSisa', 'sisa.acceptedSisa.offeredSisa'));
@@ -92,15 +95,19 @@ module.exports = function validateSisa({ sisa }){
   if (acceptedSisa.rightsHolderSigType !== this.signatureType)
     throw new InvalidSisaError('sisa.acceptedSisa.rightsHolderSigType is invalid');
 
-  // validating acceptedSisa.rightsHolderId
-  if (!('rightsHolderId' in acceptedSisa))
-    throw new InvalidSisaError('sisa.acceptedSisa must have key "rightsHolderId"');
+  // validating acceptedSisa.rightsHolderDid
+  if (!('rightsHolderDid' in acceptedSisa))
+    throw new InvalidSisaError('sisa.acceptedSisa must have key "rightsHolderDid"');
 
-  if (typeof acceptedSisa.rightsHolderId !== 'string')
-    throw new InvalidSisaError('sisa.acceptedSisa.rightsHolderId must be of type string');
+  if (typeof acceptedSisa.rightsHolderDid !== 'string')
+    throw new InvalidSisaError('sisa.acceptedSisa.rightsHolderDid must be of type string');
 
-  if (acceptedSisa.rightsHolderId.length !== 43)
-    throw new InvalidSisaError('sisa.acceptedSisa.rightsHolderId must be of length 43');
+  // validating acceptedSisa.rightsHolderPublicKey
+  if (!('rightsHolderPublicKey' in acceptedSisa))
+    throw new InvalidSisaError('sisa.acceptedSisa must have key "rightsHolderPublicKey"');
+
+  if (acceptedSisa.rightsHolderPublicKey.length !== 43)
+    throw new InvalidSisaError('sisa.acceptedSisa.rightsHolderPublicKey must be of length 43');
 
   // validating acceptedSisa.rightsHolderSig
   if (!('rightsHolderSig' in acceptedSisa))
@@ -113,7 +120,7 @@ module.exports = function validateSisa({ sisa }){
     this.verifySignature({
       itemSigned: acceptedSisa.offeredSisaJwt,
       signature: acceptedSisa.rightsHolderSig,
-      publicKey: acceptedSisa.rightsHolderId,
+      publicKey: acceptedSisa.rightsHolderPublicKey,
       contextUrl: acceptedSisa['@context']
     });
   }catch(error){

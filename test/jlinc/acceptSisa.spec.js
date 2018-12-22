@@ -1,12 +1,13 @@
 'use strict';
 
 const JLINC = require('../../jlinc');
-const { generateSisa } = require('../helpers');
+const withDidServer = require('../helpers/withDidServer');
 
 describe('JLINC.acceptSisa', function() {
+  withDidServer();
 
-  beforeEach(function() {
-    const { sisaOffering, rightsHolder } = generateSisa();
+  beforeEach(async function() {
+    const { sisaOffering, rightsHolder } = await this.generateSisa();
     Object.assign(this, { sisaOffering, rightsHolder });
   });
 
@@ -28,27 +29,33 @@ describe('JLINC.acceptSisa', function() {
 
     expect(sisa).to.be.an('object');
     expect(sisa).to.be.serializable();
-
-    expect(sisa['@context']).to.equal(JLINC.contextUrl);
-    expect(sisa.acceptedSisaJwt).to.be.aJwtSignedWith(this.rightsHolder.secret);
-    expect(sisa.sisaId).to.be.a('string');
+    expect(sisa).to.matchPattern({
+      '@context': JLINC.contextUrl,
+      acceptedSisaJwt: _.isJwtSignedWith(rightsHolder.secret),
+      sisaId: _.isString,
+    });
 
     const acceptedSisa = JLINC.decodeAndVerifyJwt({
       jwt: sisa.acceptedSisaJwt,
-      secret: this.rightsHolder.secret,
+      secret: rightsHolder.secret,
     });
-    expect(acceptedSisa['@context']).to.equal(JLINC.contextUrl);
-    expect(acceptedSisa.offeredSisaJwt).to.be.aJwtSignedWith(this.rightsHolder.secret);
+    expect(acceptedSisa).to.matchPattern({
+      '@context': JLINC.contextUrl,
+      offeredSisaJwt: _.isString,
+      rightsHolderDid: rightsHolder.did,
+      rightsHolderPublicKey: rightsHolder.signingPublicKey,
+      rightsHolderSigType: JLINC.signatureType,
+      rightsHolderSig: _.isString,
+      createdAt: _.isRecentDatetimeInISOFormat,
+    });
+    expect(acceptedSisa.offeredSisaJwt).to.be.aJwtSignedWith(rightsHolder.secret);
     expect(acceptedSisa.offeredSisaJwt).to.be.aJwtEncodingOf(sisaOffering.offeredSisa);
-    expect(acceptedSisa.rightsHolderSigType).to.equal(JLINC.signatureType);
-    expect(acceptedSisa.rightsHolderId).to.equal(this.rightsHolder.publicKey);
-    expect(acceptedSisa.rightsHolderSig).to.be.a('string');
 
     expect(
       JLINC.verifySignature({
         itemSigned: acceptedSisa.offeredSisaJwt,
         signature: acceptedSisa.rightsHolderSig,
-        publicKey: this.rightsHolder.publicKey,
+        publicKey: rightsHolder.signingPublicKey,
         contextUrl: JLINC.contextUrl
       })
     ).to.be.true;

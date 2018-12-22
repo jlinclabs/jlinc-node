@@ -7,6 +7,7 @@ module.exports = function validateAcknowledgedSisaEvent({ sisaEvent, acknowledge
   if (!acknowledgedSisaEvent) throw new Error('acknowledgedSisaEvent is required');
 
   this.validateSisaEvent({ sisaEvent });
+
   try{
     this.validateSisaEvent({ sisaEvent: acknowledgedSisaEvent });
   }catch(error){
@@ -28,8 +29,11 @@ module.exports = function validateAcknowledgedSisaEvent({ sisaEvent, acknowledge
   if (acknowledgedSisaEvent.audit.timestamp !== sisaEvent.audit.timestamp)
     throw new InvalidAcknowledgedSisaEventError('acknowledgedSisaEvent.audit.timestamp does not match sisaEvent.audit.timestamp');
 
-  if (!acknowledgedSisaEvent.audit.dataCustodianId)
-    throw new InvalidAcknowledgedSisaEventError('acknowledgedSisaEvent.audit.dataCustodianId is missing');
+  if (!acknowledgedSisaEvent.audit.dataCustodianDid)
+    throw new InvalidAcknowledgedSisaEventError('acknowledgedSisaEvent.audit.dataCustodianDid is missing');
+
+  if (!acknowledgedSisaEvent.audit.dataCustodianPublicKey)
+    throw new InvalidAcknowledgedSisaEventError('acknowledgedSisaEvent.audit.dataCustodianPublicKey is missing');
 
   if (!acknowledgedSisaEvent.audit.dataCustodianSigType)
     throw new InvalidAcknowledgedSisaEventError('acknowledgedSisaEvent.audit.dataCustodianSigType is missing');
@@ -40,7 +44,7 @@ module.exports = function validateAcknowledgedSisaEvent({ sisaEvent, acknowledge
   try{
     this.verifyAcknowledgedSisaEventWasSignedByDataCustodian({
       acknowledgedSisaEvent,
-      dataCustodianId: acknowledgedSisaEvent.audit.dataCustodianId,
+      dataCustodianPublicKey: acknowledgedSisaEvent.audit.dataCustodianPublicKey,
     });
   }catch(error){
     if (error instanceof AcknowledgedSisaEventVerificationError)

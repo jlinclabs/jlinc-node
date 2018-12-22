@@ -1,3 +1,5 @@
 'use strict';
 
-module.exports = require('./createParty');
+module.exports = async function createRightsHolder(){
+  return await this.createEntity();
+};

@@ -1,18 +1,19 @@
 'use strict';
 
 const JLINC = require('../../jlinc');
-const { generateSisaEvent } = require('../helpers');
+const withDidServer = require('../helpers/withDidServer');
 
 describe('JLINC.acknowledgeSisaEvent', function() {
+  withDidServer();
 
-  before(function() {
-    const { dataCustodian, sisa, sisaEvent } = generateSisaEvent();
+  before(async function() {
+    const { dataCustodian, sisa, sisaEvent } = await this.generateSisaEvent();
     Object.assign(this, { dataCustodian, sisa, sisaEvent });
   });
 
   context('when missing required arguments', function() {
     it('should throw an error', function(){
-      const { dataCustodian, sisa, sisaEvent } = this;
+      const { sisa, sisaEvent, dataCustodian } = this;
 
       expect(()=>{
         JLINC.acknowledgeSisaEvent({
@@ -24,20 +25,49 @@ describe('JLINC.acknowledgeSisaEvent', function() {
         JLINC.acknowledgeSisaEvent({
           sisa,
         });
-      }).to.throw('dataCustodian is required');
-
-      expect(()=>{
-        JLINC.acknowledgeSisaEvent({
-          sisa,
-          dataCustodian,
-        });
       }).to.throw('sisaEvent is required');
 
       expect(()=>{
         JLINC.acknowledgeSisaEvent({
           sisa,
-          dataCustodian,
           sisaEvent,
+        });
+      }).to.throw('dataCustodian is required');
+
+      expect(()=>{
+        JLINC.acknowledgeSisaEvent({
+          sisa,
+          sisaEvent,
+          dataCustodian: {},
+        });
+      }).to.throw('dataCustodian.did is required');
+
+      expect(()=>{
+        JLINC.acknowledgeSisaEvent({
+          sisa,
+          sisaEvent,
+          dataCustodian: {
+            did: dataCustodian.did,
+          },
+        });
+      }).to.throw('dataCustodian.signingPublicKey is required');
+
+      expect(()=>{
+        JLINC.acknowledgeSisaEvent({
+          sisa,
+          sisaEvent,
+          dataCustodian: {
+            did: dataCustodian.did,
+            signingPublicKey: dataCustodian.signingPublicKey,
+          },
+        });
+      }).to.throw('dataCustodian.signingPrivateKey is required');
+
+      expect(()=>{
+        JLINC.acknowledgeSisaEvent({
+          sisa,
+          sisaEvent,
+          dataCustodian,
         });
       }).to.not.throw();
     });
@@ -56,45 +86,6 @@ describe('JLINC.acknowledgeSisaEvent', function() {
     });
   });
 
-  context('when given an invalid sisa', function() {
-    it('should throw an InvalidSisaError', function(){
-      const { dataCustodian, sisaEvent } = this;
-      expect(()=> {
-        JLINC.acknowledgeSisaEvent({
-          dataCustodian,
-          sisa: {},
-          sisaEvent,
-        });
-      }).to.throw(JLINC.InvalidSisaError);
-    });
-  });
-
-  context('when given a dataCustodian that does not match the sisa', function() {
-    it('should throw a InvalidDataCustodianError', function(){
-      const { sisa, sisaEvent } = this;
-      expect(()=>{
-        JLINC.acknowledgeSisaEvent({
-          dataCustodian: JLINC.createDataCustodian(),
-          sisa,
-          sisaEvent,
-        });
-      }).to.throw(JLINC.SisaVerificationError, 'sisa agreementJwt is not signed by the given dataCustodian');
-    });
-  });
-
-  context('when given an invalid sisaEvent', function() {
-    it('should throw an InvalidSisaEventError', function(){
-      const { dataCustodian, sisa } = this;
-      expect(()=> {
-        JLINC.acknowledgeSisaEvent({
-          dataCustodian,
-          sisa,
-          sisaEvent: {},
-        });
-      }).to.throw(JLINC.InvalidSisaEventError);
-    });
-  });
-
   context('when given all valid arguments', function() {
     it('should return a new acknowledgedSisaEvent', function() {
       const { dataCustodian, sisa, sisaEvent } = this;
@@ -105,30 +96,23 @@ describe('JLINC.acknowledgeSisaEvent', function() {
       });
       expect(acknowledgedSisaEvent).to.be.an('object');
       expect(acknowledgedSisaEvent).to.not.equal(sisaEvent);
-
-      // acknowledgedSisaEvent should be a clone of the given sisaEvent
-      expect(acknowledgedSisaEvent['@context']              ).to.equal(sisaEvent['@context']);
-      expect(acknowledgedSisaEvent.eventJwt                 ).to.equal(sisaEvent.eventJwt);
-      expect(acknowledgedSisaEvent.eventJwt                 ).to.equal(sisaEvent.eventJwt);
-      expect(acknowledgedSisaEvent.audit.eventType          ).to.equal(sisaEvent.audit.eventType);
-      expect(acknowledgedSisaEvent.audit.sisaId             ).to.equal(sisaEvent.audit.sisaId);
-      expect(acknowledgedSisaEvent.audit.eventId            ).to.equal(sisaEvent.audit.eventId);
-      expect(acknowledgedSisaEvent.audit.timestamp          ).to.equal(sisaEvent.audit.timestamp);
-      expect(acknowledgedSisaEvent.audit.previousId         ).to.equal(sisaEvent.audit.previousId);
-      expect(acknowledgedSisaEvent.audit.rightsHolderSigType).to.equal(sisaEvent.audit.rightsHolderSigType);
-      expect(acknowledgedSisaEvent.audit.rightsHolderId     ).to.equal(sisaEvent.audit.rightsHolderId);
-      expect(acknowledgedSisaEvent.audit.rightsHolderSig    ).to.equal(sisaEvent.audit.rightsHolderSig);
-
-      // new keys
-      expect(acknowledgedSisaEvent.audit.dataCustodianSigType).to.equal(JLINC.signatureType);
-      expect(acknowledgedSisaEvent.audit.dataCustodianId).to.equal(dataCustodian.publicKey);
-      expect(acknowledgedSisaEvent.audit.dataCustodianSig).to.be.a('string');
+      expect(acknowledgedSisaEvent).to.matchPattern({
+        '@context': sisaEvent['@context'],
+        eventJwt: sisaEvent.eventJwt,
+        audit: {
+          ...sisaEvent.audit,
+          dataCustodianSigType: JLINC.signatureType,
+          dataCustodianDid: dataCustodian.did,
+          dataCustodianPublicKey: dataCustodian.signingPublicKey,
+          dataCustodianSig: _.isString,
+        },
+      });
 
       expect(
         JLINC.verifyHashSignature({
           signed: acknowledgedSisaEvent.audit.eventId,
           signature: acknowledgedSisaEvent.audit.dataCustodianSig,
-          publicKey: dataCustodian.publicKey,
+          publicKey: dataCustodian.signingPublicKey,
         })
       ).to.be.true;
     });

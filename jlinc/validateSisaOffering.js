@@ -24,7 +24,7 @@ module.exports = function validateSisaOffering({ sisaOffering }) {
 
   try{
     this.validateOfferedSisa({
-      offeredSisa: sisaOffering.offeredSisa
+      offeredSisa: sisaOffering.offeredSisa,
     });
   }catch(error){
     if (error instanceof InvalidOfferedSisaError){

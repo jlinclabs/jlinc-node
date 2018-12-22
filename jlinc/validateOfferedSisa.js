@@ -54,15 +54,22 @@ module.exports = function validateOfferedSisa({ offeredSisa }) {
   if (offeredSisa.dataCustodianSigType !== this.signatureType)
     throw new InvalidOfferedSisaError('offeredSisa.dataCustodianSigType is invalid');
 
-  // validating offeredSisa.dataCustodianId
-  if (!('dataCustodianId' in offeredSisa))
-    throw new InvalidOfferedSisaError('offeredSisa must have key "dataCustodianId"');
+  // validating offeredSisa.dataCustodianDid
+  if (!('dataCustodianDid' in offeredSisa))
+    throw new InvalidOfferedSisaError('offeredSisa must have key "dataCustodianDid"');
 
-  if (typeof offeredSisa.dataCustodianId !== 'string')
-    throw new InvalidOfferedSisaError('offeredSisa.dataCustodianId must be of type string');
+  if (typeof offeredSisa.dataCustodianDid !== 'string')
+    throw new InvalidOfferedSisaError('offeredSisa.dataCustodianDid must be of type string');
 
-  if (offeredSisa.dataCustodianId.length !== 43)
-    throw new InvalidOfferedSisaError('offeredSisa.dataCustodianId must be of length 43');
+  // validating offeredSisa.dataCustodianPublicKey
+  if (!('dataCustodianPublicKey' in offeredSisa))
+    throw new InvalidOfferedSisaError('offeredSisa must have key "dataCustodianPublicKey"');
+
+  if (typeof offeredSisa.dataCustodianPublicKey !== 'string')
+    throw new InvalidOfferedSisaError('offeredSisa.dataCustodianPublicKey must be of type string');
+
+  if (offeredSisa.dataCustodianPublicKey.length !== 43)
+    throw new InvalidOfferedSisaError('offeredSisa.dataCustodianPublicKey must be of length 43');
 
   // validating offeredSisa.dataCustodianSig
   if (!('dataCustodianSig' in offeredSisa))
@@ -75,7 +82,7 @@ module.exports = function validateOfferedSisa({ offeredSisa }) {
     this.verifySignature({
       itemSigned: offeredSisa.agreementJwt,
       signature: offeredSisa.dataCustodianSig,
-      publicKey: offeredSisa.dataCustodianId,
+      publicKey: offeredSisa.dataCustodianPublicKey,
       contextUrl: offeredSisa['@context']
     });
   }catch(error){
@@ -92,7 +99,7 @@ module.exports = function validateOfferedSisa({ offeredSisa }) {
     throw new InvalidOfferedSisaError('offeredSisa.createdAt must be of type string');
 
   if (!isISODateString(offeredSisa.createdAt))
-    throw new InvalidSisaError('offeredSisa.createdAt must be an ISO Date String');
+    throw new InvalidOfferedSisaError('offeredSisa.createdAt must be an ISO Date String');
 
   if (new Date(offeredSisa.createdAt).getTime() > Date.now())
     throw new InvalidOfferedSisaError('offeredSisa.createdAt cannot be in the future');

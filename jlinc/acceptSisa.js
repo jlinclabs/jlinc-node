@@ -13,14 +13,15 @@ module.exports = function acceptSisa({ sisaOffering, rightsHolder }){
 
   const rightsHolderSig = this.signItem({
     itemToSign: offeredSisaJwt,
-    privateKey: rightsHolder.privateKey,
+    privateKey: rightsHolder.signingPrivateKey,
   });
 
   const acceptedSisa = {
     '@context': this.contextUrl,
     offeredSisaJwt,
     rightsHolderSigType: this.signatureType,
-    rightsHolderId: rightsHolder.publicKey,
+    rightsHolderDid: rightsHolder.did,
+    rightsHolderPublicKey: rightsHolder.signingPublicKey,
     rightsHolderSig,
     createdAt: this.now(),
   };

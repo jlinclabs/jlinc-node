@@ -1,9 +1,29 @@
 'use strict';
 
+const { inspect } = require('util');
 const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+const chaiMatchPattern = require('chai-match-pattern');
+const sinonChai = require('sinon-chai');
 const jsonwebtoken = require('jsonwebtoken');
 const sodium = require('sodium').api;
 const b64 = require('urlsafe-base64');
+
+chai.use(chaiAsPromised);
+chai.use(chaiMatchPattern);
+chai.use(sinonChai);
+
+global.expect = chai.expect;
+global._ = chaiMatchPattern.getLodashModule();
+
+global.console.inspect = function(...args){
+  return global.console.log(...args.map(arg => inspect(arg, { showHidden: true, depth: null })));
+};
+
+global.console.json = function(...args) {
+  return global.console.log(args.map(o => JSON.stringify(o, null, 2)).join("\n"));
+};
+
 
 chai.Assertion.addMethod('aJwt', function(){
   expect(this._obj).to.match(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/);
@@ -44,23 +64,41 @@ chai.Assertion.addMethod('serializable', function(){
   ).to.deep.equal(this._obj);
 });
 
-chai.Assertion.addMethod('aPublicKey', function(){
+chai.Assertion.addMethod('anEncryptingPublicKey', function(){
   expect(this._obj).to.be.aBase64EncodedString();
   expect(this._obj).to.have.lengthOf(43);
 });
 
-chai.Assertion.addMethod('aPrivateKey', function(){
+chai.Assertion.addMethod('anEncryptingPrivateKey', function(){
+  expect(this._obj).to.be.aBase64EncodedString();
+  expect(this._obj).to.have.lengthOf(43);
+});
+
+chai.Assertion.addMethod('aSigningPublicKey', function(){
+  expect(this._obj).to.be.aBase64EncodedString();
+  expect(this._obj).to.have.lengthOf(43);
+});
+
+chai.Assertion.addMethod('aSigningPrivateKey', function(){
   expect(this._obj).to.be.aBase64EncodedString();
   expect(this._obj).to.have.lengthOf(86);
 });
 
+// TODO remove helper?
 chai.Assertion.addMethod('aSecret', function(){
   expect(this._obj).to.be.aBase64EncodedString();
   expect(this._obj).to.have.lengthOf(32);
 });
 
-chai.Assertion.addMethod('aCryptoSignKeypair', function(){
+chai.Assertion.addMethod('aRegistrationSecret', function(){
+  expect(this._obj).to.be.aBase64EncodedString();
+  expect(this._obj).to.have.lengthOf(64);
+});
+
+chai.Assertion.addMethod('aSigningKeypair', function(){
   const { publicKey, privateKey } = this._obj;
+  expect(publicKey ).to.be.aSigningPublicKey();
+  expect(privateKey).to.be.aSigningPrivateKey();
   const itemToSign = `${Math.random()} is my favorite number`;
   expect(
     sodium.crypto_sign_open(
@@ -73,15 +111,93 @@ chai.Assertion.addMethod('aCryptoSignKeypair', function(){
   ).to.equal(itemToSign);
 });
 
-chai.Assertion.addMethod('aJlincParty', function(){
-  const party = this._obj;
-  expect(party).to.be.an('object');
-  expect(party).to.have.all.keys('publicKey', 'privateKey', 'secret');
-  expect(party.publicKey).to.be.aPublicKey();
-  expect(party.privateKey).to.be.aPrivateKey();
-  expect(party.secret).to.be.aSecret();
+chai.Assertion.addMethod('anEncryptinKeypair', function(){
+  const { publicKey, privateKey } = this._obj;
+  expect(publicKey ).to.be.anEncryptingPublicKey();
+  expect(privateKey).to.be.anEncryptingPrivateKey();
+});
+
+chai.Assertion.addMethod('aJlincDid', function(){
+  expect(this._obj).to.match(/^did:jlinc:.*$/);
+});
+
+chai.Assertion.addMethod('aJlincEntity', function(){
+  const entity = this._obj;
+  expect(entity).to.have.all.keys([
+    'did',
+    'signingPublicKey',
+    'signingPrivateKey',
+    'encryptingPublicKey',
+    'encryptingPrivateKey',
+    'secret',
+    'registrationSecret',
+  ]);
+  expect(entity.did).to.be.a('string');
+  expect(entity.did).to.be.aJlincDid();
+  expect(entity.secret).to.be.aSecret();
+  expect(entity.registrationSecret).to.be.aRegistrationSecret();
   expect({
-    publicKey: party.publicKey,
-    privateKey: party.privateKey,
-  }).to.be.aCryptoSignKeypair();
+    publicKey:  entity.signingPublicKey,
+    privateKey: entity.signingPrivateKey,
+  }).to.be.aSigningKeypair();
+  expect({
+    publicKey:  entity.encryptingPublicKey,
+    privateKey: entity.encryptingPrivateKey,
+  }).to.be.anEncryptinKeypair();
+});
+
+
+_.mixin({
+
+  isDateString(target){
+    return _.isString(target) && target.match(/^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d.\d\d\dZ$/);
+  },
+
+  isRecentDatetimeInISOFormat(target){
+    expect(target).to.be.aRecentDatetimeInISOFormat();
+    return true;
+  },
+
+  isJwt(jwt){
+    expect(jwt).to.be.aJwt();
+    return true;
+  },
+
+  isJwtSignedWith(secret){
+    return jwt => {
+      expect(jwt).to.be.aJwtSignedWith(secret);
+      return true;
+    };
+  },
+
+  isJlincDid(target){
+    expect(target).to.be.aJlincDid();
+    return true;
+  },
+
+  isSigningPublicKey(target){
+    expect(target).to.be.aSigningPublicKey();
+    return true;
+  },
+
+  isSigningPrivateKey(target){
+    expect(target).to.be.aSigningPrivateKey();
+    return true;
+  },
+
+  isEncryptingPublicKey(target){
+    expect(target).to.be.anEncryptingPublicKey();
+    return true;
+  },
+
+  isEncryptingPrivateKey(target){
+    expect(target).to.be.anEncryptingPrivateKey();
+    return true;
+  },
+
+  isNonce(target){
+    expect(target).to.be.aNonce();
+    return true;
+  }
+
 });
