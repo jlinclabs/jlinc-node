@@ -60,10 +60,10 @@ describe('changing personal data', function() {
       rightsHolderDid: rightsHolder.did,
     });
 
-    // JLINC.verifySisaEventWasSignedByRightsHolder({
-    //   sisaEvent: copyOfSisaEvent,
-    //   rightsHolderPublicKey: rightsHolder.signingPublicKey,
-    // });
+    JLINC.verifySisaEventWasSignedByRightsHolder({
+      sisaEvent: copyOfSisaEvent,
+      rightsHolderPublicKey: rightsHolder.signingPublicKey,
+    });
 
     const acknowledgedSisaEvent = JLINC.acknowledgeSisaEvent({
       sisa,
