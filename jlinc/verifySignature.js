@@ -11,11 +11,11 @@ module.exports = function verifySignature({ itemSigned, signature, publicKey }){
 
   const hash = sodium.crypto_hash_sha256(Buffer.from(itemSigned));
 
-  let sig = b64.decode(signature);
+  const sig = b64.decode(signature);
   if (sig.length !== sodium.crypto_sign_BYTES) {
     throw new InvalidSignatureError('invalid signature');
   }
-  let pk = b64.decode(publicKey);
+  const pk = b64.decode(publicKey);
   if (pk.length !== sodium.crypto_sign_PUBLICKEYBYTES) {
     throw new InvalidPublicKeyError('invalid public key');;
   }
