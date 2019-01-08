@@ -68,24 +68,7 @@ describe('signing a SISA', function(){
     expect(sisa.acceptedSisaJwt)
       .to.be.aJwtSignedWith(rightsHolder.secret);
 
-    // simulate sending sisa across an HTTP request
-    const copyOfSisa = JSON.parse(JSON.stringify(sisa));
-
-    /******************
-     * On the B Server
-     ******************/
-
-    JLINC.validateSisa({ sisa: copyOfSisa });
-    JLINC.verifySisaWasOfferedByDataCustodian({
-      sisa: copyOfSisa,
-      dataCustodian,
-    });
-    await JLINC.verifySisaRightsHolderDid({
-      sisa: copyOfSisa,
-    });
-
-
-    const expandedSisa = JLINC.expandSisa({ sisa: copyOfSisa });
+    const expandedSisa = JLINC.expandSisa({ sisa });
     expect(expandedSisa).to.matchPattern({
       '@context': JLINC.contextUrl,
       sisaId: _.isString,
@@ -111,6 +94,23 @@ describe('signing a SISA', function(){
         },
       },
     });
+
+    // simulate sending sisa across an HTTP request
+    const copyOfSisa = JSON.parse(JSON.stringify(sisa));
+
+    /******************
+     * On the B Server
+     ******************/
+
+    JLINC.validateSisa({ sisa: copyOfSisa });
+    JLINC.verifySisaWasOfferedByDataCustodian({
+      sisa: copyOfSisa,
+      dataCustodian,
+    });
+    await JLINC.verifySisaRightsHolderDid({
+      sisa: copyOfSisa,
+    });
+
 
     // …save SISA in the database
 
