@@ -46,7 +46,7 @@ describe('JLINC.verifyPublicKeyIsOwnedByDID', function() {
           did: 'did:jlinc:CY5BkgpYLFZ9JZW5Lpmn5uN9G_3qcT-BSNKAuJZidUY',
           publicKey: 'CY5BkgpYLFZ9JZW5Lpmn5uN9G_3qcT-BSNKAuJZidUY',
         })
-      ).to.be.rejectedWith('unable to verify public key is owned by DID: DID not found');
+      ).to.be.rejectedWith('unable to verify public key is owned by DID: did not found');
     });
   });
 });
