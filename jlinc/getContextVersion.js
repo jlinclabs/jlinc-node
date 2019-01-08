@@ -1,6 +1,6 @@
 'use strict';
 
-const VALID_JLINC_CONTEXT_URL_VERSIONS = Object.freeze([5,6]);
+const VALID_JLINC_CONTEXT_URL_VERSIONS = Object.freeze([7]);
 const CONTEXT_REG_EXP = /^https:\/\/protocol\.jlinc\.org\/context\/jlinc\-v([\d]+)\.jsonld$/;
 
 module.exports = function getContextVersion(context) {

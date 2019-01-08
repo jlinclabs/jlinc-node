@@ -21,26 +21,26 @@ describe('JLINC.getContextVersion', function() {
   });
 
   context('when given a valid context', function() {
-    context('that is version 5', function() {
-      it('should return 5', function() {
-        expect(
-          JLINC.getContextVersion('https://protocol.jlinc.org/context/jlinc-v5.jsonld')
-        ).to.equal(5);
-      });
-    });
-    context('that is version 6', function() {
-      it('should return 6', function() {
-        expect(
-          JLINC.getContextVersion('https://protocol.jlinc.org/context/jlinc-v6.jsonld')
-        ).to.equal(6);
-      });
-    });
-    context('that is version 3', function() {
-      it('should return 3', function() {
-        expect(()=>{
-          JLINC.getContextVersion('https://protocol.jlinc.org/context/jlinc-v3.jsonld');
-        }).to.throw('invalid @context version number: 3');
-      });
+    it('should return a number', function() {
+      expect(()=>{
+        JLINC.getContextVersion('https://protocol.jlinc.org/context/jlinc-v3.jsonld');
+      }).to.throw('invalid @context version number: 3');
+
+      expect(()=>{
+        JLINC.getContextVersion('https://protocol.jlinc.org/context/jlinc-v4.jsonld');
+      }).to.throw('invalid @context version number: 4');
+
+      expect(()=>{
+        JLINC.getContextVersion('https://protocol.jlinc.org/context/jlinc-v5.jsonld');
+      }).to.throw('invalid @context version number: 5');
+
+      expect(()=>{
+        JLINC.getContextVersion('https://protocol.jlinc.org/context/jlinc-v6.jsonld');
+      }).to.throw('invalid @context version number: 6');
+
+      expect(
+        JLINC.getContextVersion('https://protocol.jlinc.org/context/jlinc-v7.jsonld')
+      ).to.equal(7);
     });
   });
 
