@@ -1,12 +1,16 @@
 'use strict';
 
-const debug = require('debug')('withDidServer');
 const path = require('path');
 const request = require('request-promise');
 const { spawn, execSync } = require('child_process');
 const JLINC = require('../../jlinc');
+const PUBLIC_KEY = 'xRliWWNCToxApYwfRFf8hIUf2x7E6sn2MmIfwAJzokI';
+const PRIVATE_KEY = '8hwb4iOJ05LqzuhAi4r8sHccPh_HgkOd_ugbAGhZE74';
+const DATABASE_HOST = process.env.DATABASE_HOST || 'postgres://localhost';
 
 const didServerHelpers = {
+  DID_SERVER_PUBLIC_KEY: PUBLIC_KEY,
+  DID_SERVER_PRIVATE_KEY: PRIVATE_KEY,
 
   async getDidServerIndex() {
     return await didServer.request('get', '/');
@@ -148,40 +152,36 @@ const didServer = {
     return {
       shell: true,
       cwd: this.path,
+      stdio: ['ignore', 'ignore', 'inherit'],
       env: {
-        DATABASE_URL: `postgres://root@localhost:26257/${this.db}?sslmode=disable`,
+        ...process.env,
+        DATABASE_URL: `${DATABASE_HOST}/${this.db}?sslmode=disable`,
         URL: this.url,
         PORT: `${this.port}`,
-        PUBLIC_KEY:  'xRliWWNCToxApYwfRFf8hIUf2x7E6sn2MmIfwAJzokI',
-        PRIVATE_KEY: '8hwb4iOJ05LqzuhAi4r8sHccPh_HgkOd_ugbAGhZE74',
+        PUBLIC_KEY,
+        PRIVATE_KEY,
         CONTEXT: 'https://w3id.org/did/v1',
       },
     };
   },
 
+  execScript(script){
+    return execSync(`${this.path}/scripts/${script}`, this.execOptions());
+  },
+
   async setup(){
-    execSync('./scripts/db-reset', {
-      ...this.execOptions(),
-      silent: true,
-    });
+    this.execScript('db-setup');
   },
 
   async start(){
     if (this.childProcess) return;
     await this.setup();
-    this.childProcess = spawn('./scripts/start', [], {
-      ...this.execOptions(),
-      stdio: ['ignore', 'pipe', 'pipe'],
-    });
-    this.childProcess.stdout.on('data', chunk => { debug(`${chunk}`); });
-    this.childProcess.stderr.on('data', chunk => { debug(`${chunk}`); });
+    this.childProcess = spawn(`${this.path}/scripts/start`, [], this.execOptions());
     await tryForXMilliseconds(() => this.getMasterPublicKey());
   },
 
   async reset(){
-    execSync(
-      `cockroach sql --insecure --execute="SET database = ${this.db}; TRUNCATE didstore"`
-    );
+    this.execScript('db-reset');
   },
 
   async stop(){
@@ -199,8 +199,7 @@ const didServer = {
   async getMasterPublicKey(){
     const { masterPublicKey } = await this.request('get', '/');
     return masterPublicKey;
-  },
-
+  }
 };
 
 function onExit(){ didServer.stop(); }
