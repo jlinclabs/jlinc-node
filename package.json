@@ -29,7 +29,7 @@
   "dependencies": {
     "debug": "^4.1.0",
     "is-plain-object": "^2.0.4",
-    "jlinc-did-client": "github:jlinclabs/jlinc-did-client#323bd3633dae5ed319ca2b908212754b63681711",
+    "jlinc-did-client": "github:jlinclabs/jlinc-did-client#12277d931fb6d27a3a0d0eb935016b401f196101",
     "jsonwebtoken": "^8.4.0",
     "sodium": "^2.0.3",
     "urlsafe-base64": "^1.0.0"
