@@ -50,6 +50,6 @@ module.exports = {
     "dot-notation": 0,
     "no-sequences": "error",
     "comma-dangle": ["error", "only-multiline"],
-    "one-var": ["error", "never"],
+    "one-var": ["error", {"const": "never"}],
   }
 };

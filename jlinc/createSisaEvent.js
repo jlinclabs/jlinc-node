@@ -19,7 +19,7 @@ module.exports = function createSisaEvent({ eventType, event, sisa, latestSisaEv
   const expandedSisa = this.expandSisa({ sisa });
 
   if (expandedSisa.acceptedSisa.rightsHolderDid !== rightsHolder.did)
-    throw new Error(`rightsholder.did does not match sisa`);
+    throw new Error(`rightsHolder.did does not match sisa`);
 
   this.verifySisaWasSignedByRightsHolder({ sisa, rightsHolder });
 

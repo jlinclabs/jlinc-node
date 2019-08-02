@@ -41,6 +41,13 @@ chai.Assertion.addMethod('aJwtEncodingOf', function(expectedObject){
   expect( decoded ).to.deep.equal(expectedObject);
 });
 
+chai.Assertion.addMethod('aJwtMatchingPattern', function(expectedPattern){
+  expect(this._obj).to.be.aJwt();
+  const decoded = jsonwebtoken.decode(this._obj);
+  if (!('iat' in expectedPattern)) delete decoded.iat;
+  expect( decoded ).to.matchPattern(expectedPattern);
+});
+
 chai.Assertion.addMethod('aBase64EncodedString', function(){
   expect(this._obj).to.be.a('string');
   // taken from https://github.com/RGBboy/urlsafe-base64/blob/master/lib/urlsafe-base64.js#L75
@@ -121,6 +128,10 @@ chai.Assertion.addMethod('aJlincDid', function(){
   expect(this._obj).to.match(/^did:jlinc:.*$/);
 });
 
+chai.Assertion.addMethod('aJlincId', function(){
+  expect(this._obj).to.be.aNonce();
+});
+
 chai.Assertion.addMethod('aJlincEntity', function(){
   const entity = this._obj;
   expect(entity).to.have.all.keys([
@@ -168,6 +179,25 @@ _.mixin({
       expect(jwt).to.be.aJwtSignedWith(secret);
       return true;
     };
+  },
+
+  isAJwtEncodingOf(expected){
+    return jwt => {
+      expect(jwt).to.be.aJwtEncodingOf(expected);
+      return true;
+    };
+  },
+
+  isAJwtMatchingPattern(pattern){
+    return jwt => {
+      expect(jwt).to.be.aJwtMatchingPattern(pattern);
+      return true;
+    };
+  },
+
+  isAJlincId(target){
+    expect(target).to.be.aJlincId();
+    return true;
   },
 
   isJlincDid(target){

@@ -126,6 +126,127 @@ const didServerHelpers = {
     };
   },
 
+
+
+
+
+
+
+  async generateBisaOffering() {
+    const offeror = await JLINC.createDataCustodian();
+    const target = await JLINC.createDataCustodian();
+    const bisaOffering = JLINC.createBisaOffering({
+      dataCustodian: offeror,
+      targetAcceptorDid: target.did,
+    });
+    const { offeredBisa } = bisaOffering;
+    return {
+      offeror,
+      target,
+      bisaOffering,
+      offeredBisa,
+    };
+  },
+
+  async generateBisa() {
+    const {
+      offeror,
+      target,
+      bisaOffering,
+      offeredBisa,
+    } = await this.generateBisaOffering();
+    const agreement = JLINC.decodeJwt({ jwt: bisaOffering.offeredBisa.agreementJwt });
+    const bisa = JLINC.acceptBisa({
+      bisaOffering,
+      dataCustodian: target,
+    });
+    const expandedBisa = JLINC.expandBisa({ bisa });
+    const acceptedBisa = JLINC.decodeJwt({ jwt: bisa.acceptedBisaJwt });
+    return {
+      offeror,
+      target,
+      bisaOffering,
+      offeredBisa,
+      agreement,
+      bisa,
+      expandedBisa,
+      acceptedBisa,
+    };
+  },
+
+  async generateBisaEvent(){
+    const {
+      offeror,
+      target,
+      bisaOffering,
+      offeredBisa,
+      agreement,
+      bisa,
+      expandedBisa,
+      acceptedBisa,
+    } = await this.generateBisa();
+
+    const event = {
+      canShowRelationshipPublicly: true,
+    };
+
+    const bisaEvent = JLINC.createBisaEvent({
+      eventType: 'permissionEvent',
+      event,
+      bisa,
+      latestBisaEvent: null,
+      dataCustodian: offeror,
+    });
+
+    return {
+      offeror,
+      target,
+      bisaOffering,
+      offeredBisa,
+      agreement,
+      bisa,
+      expandedBisa,
+      acceptedBisa,
+      bisaEvent,
+      event,
+    };
+  },
+
+  async generateAcknowledgedBisaEvent(){
+    const {
+      offeror,
+      target,
+      bisaOffering,
+      offeredBisa,
+      agreement,
+      bisa,
+      expandedBisa,
+      acceptedBisa,
+      bisaEvent,
+      event,
+    } = await this.generateBisaEvent();
+
+    const acknowledgedBisaEvent = JLINC.acknowledgeBisaEvent({
+      bisa,
+      bisaEvent,
+      dataCustodian: target,
+    });
+
+    return {
+      offeror,
+      target,
+      bisaOffering,
+      offeredBisa,
+      agreement,
+      bisa,
+      expandedBisa,
+      acceptedBisa,
+      bisaEvent,
+      event,
+      acknowledgedBisaEvent,
+    };
+  },
+
 };
 
 module.exports = function withDidServer(){

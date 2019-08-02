@@ -25,6 +25,10 @@ module.exports =  {
     'statusEvent',
   ]),
 
+  bisaEventTypes: Object.freeze([
+    'permissionEvent',
+  ]),
+
   // Custom Errors
   JWTVerificationError: class JWTVerificationError extends CustomError {},
   DIDVerificationError: class DIDVerificationError extends CustomError {},
@@ -41,6 +45,17 @@ module.exports =  {
   SisaVerificationError: class SisaVerificationError extends CustomError {},
   SisaEventVerificationError: class SisaEventVerificationError extends CustomError {},
   AcknowledgedSisaEventVerificationError: class AcknowledgedSisaEventVerificationError extends CustomError {},
+
+  InvalidBisaOfferingError: class InvalidBisaOfferingError extends CustomError {},
+  InvalidOfferedBisaError: class InvalidOfferedBisaError extends CustomError {},
+  InvalidBisaAgreementError: class InvalidBisaAgreementError extends CustomError {},
+  InvalidBisaError: class InvalidBisaError extends CustomError {},
+  OfferedBisaVerificationError: class OfferedBisaVerificationError extends CustomError {},
+  BisaVerificationError: class BisaVerificationError extends CustomError {},
+  InvalidBisaEventError: class InvalidBisaEventError extends CustomError {},
+  BisaEventVerificationError: class BisaEventVerificationError extends CustomError {},
+  AcknowledgedBisaEventVerificationError: class AcknowledgedBisaEventVerificationError extends CustomError {},
+  InvalidAcknowledgedBisaEventError: class InvalidAcknowledgedBisaEventError extends CustomError {},
 
   // utilities
   now: require('./now'),
@@ -90,4 +105,26 @@ module.exports =  {
   validateAcknowledgedSisaEvent: require('./validateAcknowledgedSisaEvent'),
   verifyAcknowledgedSisaEventWasSignedByDataCustodian: require('./verifyAcknowledgedSisaEventWasSignedByDataCustodian'),
   verifyAcknowledgedSisaEventDataCustodianDid: require('./verifyAcknowledgedSisaEventDataCustodianDid'),
+
+  // creating and signing a bisa
+  createBisaOffering: require('./createBisaOffering'),
+  validateBisaOffering: require('./validateBisaOffering'),
+  validateOfferedBisa: require('./validateOfferedBisa'),
+  validateBisaAgreement: require('./validateBisaAgreement'),
+  verifyBisaOfferingDid: require('./verifyBisaOfferingDid'),
+  acceptBisa: require('./acceptBisa'),
+  validateBisa: require('./validateBisa'),
+  verifyBisaAcceptorDid: require('./verifyBisaAcceptorDid'),
+  verifyBisaWasSignedBy: require('./verifyBisaWasSignedBy'),
+
+  expandBisa: require('./expandBisa'),
+
+  // Bisa Events
+  createBisaEvent: require('./createBisaEvent'),
+  expandBisaEvent: require('./expandBisaEvent'),
+  validateBisaEvent: require('./validateBisaEvent'),
+  verifyBisaEventSignature: require('./verifyBisaEventSignature'),
+  acknowledgeBisaEvent: require('./acknowledgeBisaEvent'),
+  validateAcknowledgedBisaEvent: require('./validateAcknowledgedBisaEvent'),
+  verifyAcknowledgedBisaEventWasSignedBy: require('./verifyAcknowledgedBisaEventWasSignedBy'),
 };

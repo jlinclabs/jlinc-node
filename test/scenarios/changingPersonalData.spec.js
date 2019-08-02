@@ -39,7 +39,7 @@ describe('changing personal data', function() {
         rightsHolderSigType: JLINC.signatureType,
         rightsHolderSig: _.isString,
       },
-      eventJwt: _.isString,
+      eventJwt: _.isJwt,
     });
 
     // alice sends the sisaEvent to bob

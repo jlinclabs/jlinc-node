@@ -284,7 +284,7 @@ describe('JLINC.createSisaEvent', function() {
           latestSisaEvent,
           rightsHolder: otherRightsHolder,
         });
-      }).to.throw('rightsholder.did does not match sisa');
+      }).to.throw('rightsHolder.did does not match sisa');
     });
   });
 
