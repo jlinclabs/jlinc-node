@@ -27,6 +27,7 @@ module.exports =  {
 
   bisaEventTypes: Object.freeze([
     'permissionEvent',
+    'networkEvent',
   ]),
 
   // Custom Errors
