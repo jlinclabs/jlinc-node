@@ -32,9 +32,9 @@ module.exports =  {
   // Custom Errors
   JWTVerificationError: class JWTVerificationError extends CustomError {},
   DIDVerificationError: class DIDVerificationError extends CustomError {},
-  InvalidSignatureError: class InvalidSignatureError extends CustomError {},
-  InvalidPublicKeyError: class InvalidPublicKeyError extends CustomError {},
+  InvalidKeyError: class InvalidKeyError extends CustomError {},
   InvalidEntityError: class InvalidEntityError extends CustomError {},
+  InvalidSignatureError: class InvalidSignatureError extends CustomError {},
   InvalidSisaAgreementError: class InvalidSisaAgreementError extends CustomError {},
   InvalidOfferedSisaError: class InvalidOfferedSisaError extends CustomError {},
   InvalidSisaOfferingError: class InvalidSisaOfferingError extends CustomError {},
@@ -74,6 +74,8 @@ module.exports =  {
 
   // creating entities
   createEntity: require('./createEntity'),
+  validateEncryptingKeypair: require('./validateEncryptingKeypair'),
+  validateSigningKeypair: require('./validateSigningKeypair'),
   validateEntity: require('./validateEntity'),
   createDataCustodian: require('./createDataCustodian'),
   createRightsHolder: require('./createRightsHolder'),

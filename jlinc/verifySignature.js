@@ -7,7 +7,7 @@ module.exports = function verifySignature({ itemSigned, signature, publicKey }){
   if (!itemSigned) throw new Error('itemSigned is required');
   if (!signature) throw new Error('signature is required');
   if (!publicKey) throw new Error('publicKey is required');
-  const { InvalidSignatureError, InvalidPublicKeyError } = this;
+  const { InvalidSignatureError, InvalidKeyError } = this;
 
   const hash = sodium.crypto_hash_sha256(Buffer.from(itemSigned));
 
@@ -17,7 +17,7 @@ module.exports = function verifySignature({ itemSigned, signature, publicKey }){
   }
   const pk = b64.decode(publicKey);
   if (pk.length !== sodium.crypto_sign_PUBLICKEYBYTES) {
-    throw new InvalidPublicKeyError('invalid public key');;
+    throw new InvalidKeyError('invalid public key');;
   }
 
   if (!sodium.crypto_sign_verify_detached(sig, hash, pk)) {
