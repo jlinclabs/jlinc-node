@@ -79,6 +79,10 @@ module.exports =  {
   // verifying DIDs
   verifyPublicKeyIsOwnedByDID: require('./verifyPublicKeyIsOwnedByDID'),
 
+  // ZCAPs
+  createZcap: require('./createZcap'),
+  validateZcap: require('./validateZcap'),
+
   // creating and signing a sisa
   createSisaOffering: require('./createSisaOffering'),
   validateSisaOffering: require('./validateSisaOffering'),
