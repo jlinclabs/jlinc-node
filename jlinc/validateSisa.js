@@ -2,6 +2,7 @@
 
 const isISODateString = require('./isISODateString');
 const isJwt = require('./isJwt');
+const isFutureDate = require('./isFutureDate');
 
 module.exports = function validateSisa({ sisa }){
   const { InvalidSisaError, InvalidOfferedSisaError, InvalidSignatureError } = this;
@@ -139,7 +140,7 @@ module.exports = function validateSisa({ sisa }){
   if (!isISODateString(acceptedSisa.createdAt))
     throw new InvalidSisaError('sisa.acceptedSisa.createdAt must be an ISO Date String');
 
-  if (new Date(acceptedSisa.createdAt).getTime() > Date.now())
+  if (isFutureDate(acceptedSisa.createdAt))
     throw new InvalidSisaError('sisa.acceptedSisa.createdAt cannot be in the future');
 
   return true;

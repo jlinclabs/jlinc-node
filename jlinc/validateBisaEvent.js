@@ -1,6 +1,7 @@
 'use strict';
 
 const isISODateString = require('./isISODateString');
+const isFutureDate = require('./isFutureDate');
 
 module.exports = function validateBisaEvent({ bisa, bisaEvent }) {
   const {
@@ -64,7 +65,7 @@ module.exports = function validateBisaEvent({ bisa, bisaEvent }) {
   if (!isISODateString(bisaEvent.audit.createdAt))
     throw new InvalidBisaEventError('bisaEvent.audit.createdAt must be an ISO Date String');
 
-  if (new Date(bisaEvent.audit.createdAt).getTime() > Date.now())
+  if (isFutureDate(bisaEvent.audit.createdAt))
     throw new InvalidBisaEventError('bisaEvent.audit.createdAt cannot be in the future');
 
   // bisaEvent.audit.previousId

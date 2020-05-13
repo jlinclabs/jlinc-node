@@ -3,6 +3,7 @@
 const isISODateString = require('./isISODateString');
 const isJwt = require('./isJwt');
 const isDid = require('./isDid');
+const isFutureDate = require('./isFutureDate');
 
 module.exports = function validateBisa({ bisa }){
   const { InvalidBisaError, InvalidOfferedBisaError, InvalidSignatureError } = this;
@@ -132,7 +133,7 @@ module.exports = function validateBisa({ bisa }){
   if (!isISODateString(acceptedBisa.createdAt))
     throw new InvalidBisaError('bisa.acceptedBisa.createdAt must be an ISO Date String');
 
-  if (new Date(acceptedBisa.createdAt).getTime() > Date.now())
+  if (isFutureDate(acceptedBisa.createdAt))
     throw new InvalidBisaError('bisa.acceptedBisa.createdAt cannot be in the future');
 
   return true;

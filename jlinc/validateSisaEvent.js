@@ -1,6 +1,7 @@
 'use strict';
 
 const isISODateString = require('./isISODateString');
+const isFutureDate = require('./isFutureDate');
 
 module.exports = function validateSisaEvent({ sisaEvent }) {
   const { InvalidSisaEventError, SisaEventVerificationError } = this;
@@ -58,7 +59,7 @@ module.exports = function validateSisaEvent({ sisaEvent }) {
   if (!isISODateString(sisaEvent.audit.createdAt))
     throw new InvalidSisaEventError('sisaEvent.audit.createdAt must be an ISO Date String');
 
-  if (new Date(sisaEvent.audit.createdAt).getTime() > Date.now())
+  if (isFutureDate(sisaEvent.audit.createdAt))
     throw new InvalidSisaEventError('sisaEvent.audit.createdAt cannot be in the future');
 
   // sisaEvent.audit.previousId
