@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "^8.11.1",
+    "node": "^12.16.3",
     "npm": "^6.2.0"
   },
   "description": "A node implementation of the JLINC protocol",
@@ -29,9 +29,9 @@
   "dependencies": {
     "debug": "^4.1.0",
     "is-plain-object": "^2.0.4",
-    "jlinc-did-client": "github:jlinclabs/jlinc-did-client#323bd3633dae5ed319ca2b908212754b63681711",
+    "jlinc-did-client": "github:jlinclabs/jlinc-did-client#b6afd9be49586affac88dc8d555a7c2b488b12fe",
     "jsonwebtoken": "^8.4.0",
-    "sodium": "^2.0.3",
+    "sodium": "^3.0.2",
     "urlsafe-base64": "^1.0.0"
   },
   "devDependencies": {
