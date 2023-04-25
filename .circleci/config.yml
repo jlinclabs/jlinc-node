@@ -9,7 +9,7 @@ jobs:
 
     docker:
       # specify the version you desire here
-      - image: circleci/node:12.16.3
+      - image: node:18.13.0
         environment:
         - NODE_ENV: test
         - DATABASE_HOST: postgresql://root@127.0.0.1
@@ -20,9 +20,9 @@ jobs:
         - POSTGRES_USER: root
 
     steps:
-      - run: sudo apt-get clean
-      - run: sudo apt-get update
-      - run: sudo apt-get install -y postgresql-client
+      - run: apt-get clean
+      - run: apt-get update
+      - run: apt-get install -y postgresql-client
 
       - checkout
       - run: git submodule update --init
