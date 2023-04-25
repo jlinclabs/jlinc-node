@@ -1,6 +1,6 @@
 'use strict';
 
-const sodium = require('sodium').api;
+const sodium = require('sodium-native');
 const b64 = require('urlsafe-base64');
 
 const withDidServer = require('../helpers/withDidServer');
@@ -11,7 +11,12 @@ describe('JLINC.signHash', function() {
 
   it('should sign the given hash with the given privateKey', async function(){
     const rightsHolder = await JLINC.createRightsHolder();
-    const hashToSign = b64.encode(sodium.crypto_hash_sha256(Buffer.from("What's the good of Mercator's North Poles and Equators")));
+    const hashBuffer = Buffer.alloc(sodium.crypto_hash_sha256_BYTES);
+    sodium.crypto_hash_sha256(
+      hashBuffer,
+      Buffer.from("What's the good of Mercator's North Poles and Equators")
+    );
+    const hashToSign = b64.encode(hashBuffer);
 
     const signature = JLINC.signHash({
       hashToSign,

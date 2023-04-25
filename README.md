@@ -5,7 +5,13 @@ A node implementation of the JLINC protocol
 Spec: https://protocol.jlinc.org/#5-sisa-events
 
 
-## Nomenclature
+## Development
+
+```sh
+git submodule update --init
+createdb jlinc_did_server_test
+DATABASE_HOST=postgresql://localhost npm run test
+```
 
 
 

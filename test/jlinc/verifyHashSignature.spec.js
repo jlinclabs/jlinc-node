@@ -1,7 +1,7 @@
 'use strict';
 
 const JLINC = require('../../jlinc');
-const sodium = require('sodium').api;
+const sodium = require('sodium-native');
 const b64 = require('urlsafe-base64');
 
 describe('JLINC.verifyHashSignature', function() {
@@ -9,7 +9,9 @@ describe('JLINC.verifyHashSignature', function() {
   before(function(){
     const publicKey = 'xkgJW2lkSgD3sHF0bsGqiWBuA6ViJDyiKzJjw6RLNcU';
     const privateKey = 'Qzq373Tu3VSu9GqFTkLWssovraDW8T534icxS5nT6gPGSAlbaWRKAPewcXRuwaqJYG4DpWIkPKIrMmPDpEs1xQ';
-    const signed = b64.encode(sodium.crypto_hash_sha256(Buffer.from('A perfect and absolute blank!')));
+    const hash = Buffer.alloc(sodium.crypto_hash_sha256_BYTES);
+    sodium.crypto_hash_sha256(hash, Buffer.from('A perfect and absolute blank!'));
+    const signed = b64.encode(hash);
     const signature = JLINC.signHash({ hashToSign: signed, privateKey });
     Object.assign(this, { publicKey, signed, signature });
   });

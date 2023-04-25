@@ -6,8 +6,8 @@ const chaiAsPromised = require('chai-as-promised');
 const chaiMatchPattern = require('chai-match-pattern');
 const sinonChai = require('sinon-chai');
 const jsonwebtoken = require('jsonwebtoken');
-const sodium = require('sodium').api;
-const b64 = require('urlsafe-base64');
+
+const JLINC = require('../jlinc');
 
 chai.use(chaiAsPromised);
 chai.use(chaiMatchPattern);
@@ -23,7 +23,6 @@ global.console.inspect = function(...args){
 global.console.json = function(...args) {
   return global.console.log(args.map(o => JSON.stringify(o, null, 2)).join("\n"));
 };
-
 
 chai.Assertion.addMethod('aJwt', function(){
   expect(this._obj).to.match(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/);
@@ -107,15 +106,10 @@ chai.Assertion.addMethod('aSigningKeypair', function(){
   expect(publicKey ).to.be.aSigningPublicKey();
   expect(privateKey).to.be.aSigningPrivateKey();
   const itemToSign = `${Math.random()} is my favorite number`;
+  const signature = JLINC.signItem({ itemToSign, privateKey });
   expect(
-    sodium.crypto_sign_open(
-      sodium.crypto_sign(
-        Buffer.from(itemToSign, 'utf8'),
-        b64.decode(privateKey),
-      ),
-      b64.decode(publicKey)
-    ).toString()
-  ).to.equal(itemToSign);
+    JLINC.verifySignature({itemSigned: itemToSign, signature, publicKey})
+  ).to.be.true;
 });
 
 chai.Assertion.addMethod('anEncryptinKeypair', function(){

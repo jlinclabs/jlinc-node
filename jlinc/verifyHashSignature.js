@@ -1,6 +1,6 @@
 'use strict';
 
-const sodium = require('sodium').api;
+const sodium = require('sodium-native');
 const b64 = require('urlsafe-base64');
 
 module.exports = function verifyHashSignature({ signed, signature, publicKey }){
