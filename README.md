@@ -4,6 +4,12 @@ A node implementation of the JLINC protocol
 
 Spec: https://protocol.jlinc.org/#5-sisa-events
 
+## Setup
+``` bash
+git submodule init
+git submodule update
+npm install
+```
 
 ## Nomenclature
 
